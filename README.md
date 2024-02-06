@@ -14,6 +14,10 @@ To compile the Steam 2 Front End, ensure you have a C++ compiler installed (e.g.
 ```bash
 g++ -o steam2 main.cpp UserSession.cpp UserAccounts.cpp GameInventory.cpp TransactionProcessing.cpp FileIO.cpp Utilities.cpp AdminActions.cpp
 ```
+Then run
+```bash
+steam2
+```
 
 ## Features
 
