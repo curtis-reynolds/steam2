@@ -1,11 +1,15 @@
 #include "UserSession.h"
 #include <iostream>
+//Temporary additions to prove in phase 2 that our functions are being loaded properly.
+#include <string>
+#include <sstream>
 
 UserSession::UserSession() {
     // Initialize variables
     loggedIn = false;
     currentUserType = UserType::None;
 }
+
 
 void UserSession::login() {
     std::string username;
@@ -25,26 +29,38 @@ void UserSession::login() {
     std::cout << "User '" << currentUser << "' logged in as Full-Standard." << std::endl;
 }
 
-void UserSession::logout() {
+/* Fucntion used for the action of login out.
+   It verifies if a user is logged in and returns a message. In the event that it is, then it proceeds 
+   to log out the user send a message confirming that the user has been logged out as well as generate
+   the daily transaction file. In the event that no user is logged in then a message will be made notifying
+   that no user is logged in. */
+std::string UserSession::logout() {
+    std::ostringstream logoutMessage;
+     //Verifies user logged in or logged out.
     if (loggedIn) {
-        std::cout << "User '" << currentUser << "' logged out." << std::endl;
+        logoutMessage << "User '" << currentUser << "' logged out." << std::endl;
         loggedIn = false;
         currentUser.clear();
         currentUserType = UserType::None;
         // Write out the daily transaction file here
     } else {
-        std::cout << "No user is currently logged in." << std::endl;
+        logoutMessage << "No user is currently logged in." << std::endl;
     }
+
+    return logoutMessage.str();
 }
 
+// Function returns the boolean variable "loggedIn". 
 bool UserSession::isLoggedIn() const {
     return loggedIn;
 }
 
+// Function returns the current users username.
 std::string UserSession::getCurrentUser() const {
     return currentUser;
 }
 
+// Function returns the current user type.
 UserType UserSession::getCurrentUserType() const {
     return currentUserType;
 }
