@@ -43,4 +43,11 @@ void AdminActions::addCredit(const std::string& username, float amount) {
     std::cout << "Added " << amount << " credit to '" << username << "' successfully." << std::endl;
 }
 
+void AdminActions::displayAllAccounts() const {
+    auto accountsInfo = userAccounts.getAllAccountsInfo();
+    for (const auto& info : accountsInfo) {
+        std::cout << info << std::endl;
+    }
+}
+
 // Implement other administrative actions as necessary

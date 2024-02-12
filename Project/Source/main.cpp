@@ -18,7 +18,8 @@ void displayMenu() {
     std::cout << "6. Purchase Game (Buy-standard or Admin only)\n";
     std::cout << "7. Add Credit\n";
     std::cout << "8. Refund (Admin only)\n";
-    std::cout << "9. Exit\n";
+    std::cout << "9. Display All Accounts (Admin only)\n"; 
+    std::cout << "10. Exit\n";
     std::cout << "==========================================\n";
     std::cout << "Select an option: ";
 }
@@ -104,9 +105,17 @@ int main() {
                 std::cout << "Refund selected.\n";
                 // adminActions.issueRefund(...);
                 break;
-            case 9: // Exit
+            case 9: { // Display All Accounts (Admin only)
+                if (userSession.getCurrentUserType() == UserType::Admin) {
+                    adminActions.displayAllAccounts();
+                } else {
+                    std::cout << "This action is only available to admin users.\n";
+                }
+                break;
+            }
+            case 10:
                 running = false;
-                std::cout << "Exiting Steam 2..." << std::endl;
+                std::cout << "Exiting Steam 2...\n";
                 break;
             default:
                 std::cout << "Invalid option, please try again." << std::endl;

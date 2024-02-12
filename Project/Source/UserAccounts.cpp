@@ -46,6 +46,17 @@ void UserAccounts::loadAccounts() {
     file.close();
 }
 
+std::vector<std::string> UserAccounts::getAllAccountsInfo() const {
+    std::vector<std::string> accountsInfo;
+    for (const auto& account : accounts) {
+        std::string info = "Username: " + account.username + 
+                           ", Type: " + userTypeToString(account.type) + 
+                           ", Credit: " + std::to_string(account.credit);
+        accountsInfo.push_back(info);
+    }
+    return accountsInfo;
+}
+
 void UserAccounts::createUser(const std::string& username, UserType type, float credit) {
     if (std::any_of(accounts.begin(), accounts.end(), [&](const UserAccount& account) {
         return account.username == username;
@@ -99,7 +110,7 @@ void UserAccounts::saveAccounts() {
     file.close();
 }
 
-std::string UserAccounts::userTypeToString(UserType type) {
+std::string UserAccounts::userTypeToString(UserType type) const {
     switch (type) {
         case UserType::Admin: return "admin";
         case UserType::FullStandard: return "full-standard";

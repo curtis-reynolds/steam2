@@ -18,6 +18,7 @@ public:
     void deleteUser(const std::string& username);
     void issueRefund(const std::string& buyerUsername, const std::string& sellerUsername, float amount);
     void addCredit(const std::string& username, float amount);
+    void displayAllAccounts() const;
 
     // Add other administrative functions as necessary
 };
