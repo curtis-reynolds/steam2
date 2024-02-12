@@ -6,6 +6,19 @@ This project aims to create a Digital Distribution Service similar to Steam, whe
 - **Front End**: A C++ console application handling user interactions, including login/logout, buying/selling games, and managing user accounts.
 - **Back End**: A batch processor (written in Python or Java) that updates the master games file and user accounts based on daily transactions.
 
+## Installation and Running Instructions
+
+### Compiling the Project
+To compile the Steam 2 Front End, ensure you have a C++ compiler installed (e.g., GCC). Navigate to Project/Source and run the following command in the terminal:
+
+```bash
+g++ -o steam2 main.cpp UserSession.cpp UserAccounts.cpp GameInventory.cpp TransactionProcessing.cpp FileIO.cpp Utilities.cpp AdminActions.cpp
+```
+Then run
+```bash
+steam2
+```
+
 ## Features
 
 ### Front End

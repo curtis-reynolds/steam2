@@ -13,7 +13,7 @@ private:
 public:
     UserSession();
     void login();
-    void logout();
+    std::string logout();
     bool isLoggedIn() const;
     std::string getCurrentUser() const;
     UserType getCurrentUserType() const;
