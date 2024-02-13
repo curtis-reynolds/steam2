@@ -10,7 +10,6 @@ UserSession::UserSession() {
     currentUserType = UserType::None;
 }
 
-
 void UserSession::login() {
     std::string username;
     std::cout << "Please enter your username: ";
@@ -24,9 +23,9 @@ void UserSession::login() {
     // Determine the user type (Admin, Full-Standard, Buy-Standard, Sell-Standard)
     // This would typically be loaded from the user accounts file
     // For the sake of the example, let's say all users are Full-Standard
-    currentUserType = UserType::FullStandard;
+    currentUserType = UserType::Admin;
 
-    std::cout << "User '" << currentUser << "' logged in as Full-Standard." << std::endl;
+    std::cout << "User '" << currentUser << "' logged in as Admin." << std::endl;
 }
 
 /* Fucntion used for the action of login out.

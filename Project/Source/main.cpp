@@ -34,6 +34,7 @@ int main() {
 
     bool running = true;
     int choice;
+    std::string logoutMessage;
 
     while (running) {
         displayMenu();
@@ -45,7 +46,8 @@ int main() {
                 userSession.login();
                 break;
             case 2: // Logout
-                userSession.logout();
+                logoutMessage = userSession.logout();
+                std::cout << logoutMessage;
                 break;
             case 3: {// Create User (Admin only)
                 std::cout << "Create User selected.\n";
