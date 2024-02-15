@@ -17,11 +17,11 @@ struct UserAccount {
 class UserAccounts {
 private:
     std::vector<UserAccount> accounts;
-    std::string accountsFilePath;
+    std::string accountsFilePath = "user_accounts.txt";
 
     void loadAccounts();
     void saveAccounts();
-    std::string userTypeToString(UserType type);
+    std::string userTypeToString(UserType type) const;
 
 public:
     UserAccounts();
@@ -30,6 +30,7 @@ public:
     void deleteUser(const std::string& username);
     bool userExists(const std::string& username);
     void addCredit(const std::string& username, float amount);
+    std::vector<std::string> getAllAccountsInfo() const;
     // Other necessary member functions...
 };
 

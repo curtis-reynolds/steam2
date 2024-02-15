@@ -1,0 +1,2 @@
+user123,admin,100
+newUser1,admin,50

@@ -3,6 +3,7 @@
 //Temporary additions to prove in phase 2 that our functions are being loaded properly.
 #include <string>
 #include <sstream>
+#include <fstream>
 
 UserSession::UserSession() {
     // Initialize variables
@@ -10,24 +11,58 @@ UserSession::UserSession() {
     currentUserType = UserType::None;
 }
 
-
 void UserSession::login() {
-    std::string username;
+    std::string username, line, fileUsername, userType, otherInfoStr; // Use a string for otherInfo to initially read from the line
+    int otherInfo; // To store the numeric value after parsing
+
     std::cout << "Please enter your username: ";
     std::getline(std::cin, username);
 
-    // Here you would normally check against the user accounts file
-    // For now, we'll just simulate a successful login
-    loggedIn = true;
-    currentUser = username;
+    std::ifstream userFile("user_accounts.txt");
+    bool userFound = false;
 
-    // Determine the user type (Admin, Full-Standard, Buy-Standard, Sell-Standard)
-    // This would typically be loaded from the user accounts file
-    // For the sake of the example, let's say all users are Full-Standard
-    currentUserType = UserType::FullStandard;
+    if (userFile.is_open()) {
+        while (std::getline(userFile, line)) {
+            std::istringstream iss(line);
 
-    std::cout << "User '" << currentUser << "' logged in as Full-Standard." << std::endl;
+            // Use std::getline with a delimiter to correctly parse the line
+            if (!(std::getline(iss, fileUsername, ',') &&
+                  std::getline(iss, userType, ',') &&
+                  std::getline(iss, otherInfoStr))) {
+                std::cerr << "Error parsing line: " << line << std::endl;
+                break; // Skip malformed lines or handle error
+            }
+
+            // Convert otherInfoStr to an integer
+            otherInfo = std::stoi(otherInfoStr);
+
+            if (username == fileUsername) {
+                loggedIn = true;
+                currentUser = username;
+                userFound = true;
+
+                // Determine the user type based on the 'userType' string
+                if (userType == "admin") {
+                    currentUserType = UserType::Admin;
+                } else {
+                    // Add conditions for other user types here
+                    currentUserType = UserType::FullStandard; // Example default case
+                }
+
+                std::cout << "User '" << currentUser << "' logged in as " << userType << "." << std::endl;
+                break;
+            }
+        }
+        userFile.close();
+
+        if (!userFound) {
+            std::cout << "Login failed: User not found." << std::endl;
+        }
+    } else {
+        std::cout << "Unable to open user accounts file." << std::endl;
+    }
 }
+
 
 /* Fucntion used for the action of login out.
    It verifies if a user is logged in and returns a message. In the event that it is, then it proceeds 
