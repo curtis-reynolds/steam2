@@ -9,6 +9,7 @@ UserAccounts::UserAccounts() {
     // Initialize with default values or load from a default file path
 }
 
+// Takes in value of the AccountsFile variable and passes it to the loadAccounts function.
 UserAccounts::UserAccounts(const std::string& accountsFile)
 : accountsFilePath(accountsFile) {
     loadAccounts();
