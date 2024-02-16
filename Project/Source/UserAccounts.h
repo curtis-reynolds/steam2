@@ -17,7 +17,7 @@ struct UserAccount {
 class UserAccounts {
 private:
     std::vector<UserAccount> accounts;
-    std::string accountsFilePath = "user_accounts.txt";
+    std::string accountsFilePath;
 
     void loadAccounts();
     void saveAccounts();

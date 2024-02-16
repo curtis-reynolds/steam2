@@ -7,6 +7,7 @@
 
 UserAccounts::UserAccounts() {
     // Initialize with default values or load from a default file path
+    accountsFilePath = "user_accounts.txt";
 }
 
 UserAccounts::UserAccounts(const std::string& accountsFile)
