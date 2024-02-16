@@ -49,14 +49,38 @@ void UserAccounts::loadAccounts() {
 
 std::vector<std::string> UserAccounts::getAllAccountsInfo() const {
     std::vector<std::string> accountsInfo;
-    for (const auto& account : accounts) {
-        std::string info = "Username: " + account.username + 
-                           ", Type: " + userTypeToString(account.type) + 
-                           ", Credit: " + std::to_string(account.credit);
+    std::ifstream file(accountsFilePath);
+    std::string line;
+
+    if (!file) {
+        std::cerr << "Error: Unable to open accounts file at " << accountsFilePath << std::endl;
+        return accountsInfo; // Return the empty vector if file cannot be opened
+    }
+
+    while (getline(file, line)) {
+        std::istringstream iss(line);
+        std::string username, userTypeStr;
+        float credit;
+        char delim;
+
+        // Assuming the file format is: username,userType,credit
+        if (!(std::getline(iss, username, ',') &&
+              std::getline(iss, userTypeStr, ',') &&
+              iss >> credit)) {
+            std::cerr << "Error parsing line: " << line << std::endl;
+            continue; // Skip malformed lines
+        }
+
+        // Formatting the output string
+        std::string info = "Username: " + username + 
+                           ", Type: " + userTypeStr + 
+                           ", Credit: " + std::to_string(credit);
         accountsInfo.push_back(info);
     }
+
     return accountsInfo;
 }
+
 
 void UserAccounts::createUser(const std::string& username, UserType type, float credit) {
     if (std::any_of(accounts.begin(), accounts.end(), [&](const UserAccount& account) {
