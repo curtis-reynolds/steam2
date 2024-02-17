@@ -1,13 +1,15 @@
 #include <iostream>
 #include <string>
+// Include classes that handle different aspects of the application
 #include "UserSession.h"
 #include "UserAccounts.h"
 #include "GameInventory.h"
 #include "TransactionProcessing.h"
 #include "AdminActions.h"
 #include "Types.h"
-#include <limits>
+#include <limits> // Used for std::cin.ignore() to handle input buffer
 
+// Function prototype for displaying the main menu to the console.
 void displayMenu() {
     std::cout << "\n===== Steam 2 - Menu =====\n";
     std::cout << "1. Login\n";
@@ -24,23 +26,27 @@ void displayMenu() {
     std::cout << "Select an option: ";
 }
 
+// Main function - entry point of the application
 int main() {
     // Initialization of necessary components
-    UserAccounts userAccounts;
-    GameInventory gameInventory;
-    TransactionProcessing transactionProcessing(userAccounts, gameInventory);
-    AdminActions adminActions(userAccounts, transactionProcessing);
-    UserSession userSession;
+    UserAccounts userAccounts; // Manages user account operations.
+    GameInventory gameInventory; // Handles the game inventory.
+    TransactionProcessing transactionProcessing(userAccounts, gameInventory); // Processes transactions.
+    AdminActions adminActions(userAccounts, transactionProcessing); // Executes admin-specific actions.
+    UserSession userSession; // Manages user session state, like login status.
 
-    bool running = true;
-    int choice;
-    std::string logoutMessage;
+    bool running = true; // Controls the main loop of the application.
+    int choice; // Stores the user's menu choice
+    std::string logoutMessage; // Stores the message returned by the logout action.
 
+    // Main loop that keeps the application running until the user chooses to exit.
     while (running) {
-        displayMenu();
-        std::cin >> choice;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear the input buffer
+        displayMenu(); // Displays the main menu options to the user.
+        std::cin >> choice; // Reads the user's choice.
+        // Clears the input buffer to prevent leftover input from affecting subsequent reads.
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
 
+        // Switch statement to handle the user's menu choice.
         switch (choice) {
             case 1: // Login
                 userSession.login();
