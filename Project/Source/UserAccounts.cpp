@@ -9,13 +9,14 @@
 // This constructor sets the path to 'user_accounts.txt', allowing for loading without specifying a path.
 UserAccounts::UserAccounts() {
     accountsFilePath = "user_accounts.txt"; // Sets the default file path for user accounts.
+    loadAccounts(); // Calls loadAccounts to read and process the user data from the file.
 }
 
 // Constructor with a file path parameter for specifying a custom path to the user accounts file.
 // This allows the class to work with different files as needed, increasing flexibility.
 UserAccounts::UserAccounts(const std::string& accountsFile)
 : accountsFilePath(accountsFile) {
-    loadAccounts(); // Calls loadAccounts to read and process the user data from the file.
+    loadAccounts(); 
 }
 
 // Loads user account data from the specified file.
@@ -27,25 +28,24 @@ void UserAccounts::loadAccounts() {
         return; // Exits the function if the file cannot be opened.
     }
 
-    // Processes each line of the file, assuming a specific format.
     std::string line;
     while (getline(file, line)) {
-        // Parses the line to extract user account data.
         std::istringstream iss(line);
-        std::string username, type;
-        float credit;
-        char delim; // Unused delimiter, assuming a specific file format.
-
-        // Extracts username, type, and credit from the line.
-        iss >> username >> delim >> type >> delim >> credit;
-
-        // Converts the type string to the UserType enum.
+        std::string username, typeStr;
+        float credit = 0.0f;
         UserType userType = UserType::None; // Default value for safety.
-        if (type == "admin") userType = UserType::Admin;
-        else if (type == "full-standard") userType = UserType::FullStandard;
-        else if (type == "buy-standard") userType = UserType::BuyStandard;
-        else if (type == "sell-standard") userType = UserType::SellStandard;
-        // Additional conditionals to match the type string with the corresponding UserType.
+
+        // Use getline to correctly handle commas as delimiters.
+        std::getline(iss, username, ',');
+        std::getline(iss, typeStr, ',');
+        iss >> credit;
+
+        // Convert the type string to the UserType enum.
+        if (typeStr == "admin") userType = UserType::Admin;
+        else if (typeStr == "full-standard") userType = UserType::FullStandard;
+        else if (typeStr == "buy-standard") userType = UserType::BuyStandard;
+        else if (typeStr == "sell-standard") userType = UserType::SellStandard;
+        // Additional conditionals can be added here for other user types.
 
         // Creates a UserAccount object with the parsed data and adds it to the accounts vector.
         UserAccount account(username, userType, credit);
@@ -54,6 +54,7 @@ void UserAccounts::loadAccounts() {
 
     file.close(); // Closes the file after processing all lines.
 }
+
 
 // Retrieves information for all user accounts in a formatted string vector.
 std::vector<std::string> UserAccounts::getAllAccountsInfo() const {
