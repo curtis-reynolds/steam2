@@ -46,6 +46,14 @@ int main() {
         // Clears the input buffer to prevent leftover input from affecting subsequent reads.
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
 
+        // Will prevent an infinite loop from occurring if the user enters a non-integer value.
+        if (std::cin.fail()) {
+            std::cin.clear(); // clear the error flags
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // discard the input
+            std::cout << "Invalid input, please try again." << std::endl;
+            continue;
+        }
+
         // Switch statement to handle the user's menu choice.
         switch (choice) {
             case 1: // Login
@@ -127,6 +135,7 @@ int main() {
                 break;
             default:
                 std::cout << "Invalid option, please try again." << std::endl;
+                break;
         }
     }
     return 0;

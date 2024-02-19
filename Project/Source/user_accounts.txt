@@ -1,2 +1,4 @@
-user123,admin,100
-newUser1,admin,50
+BuyStandardTest,buy-standard,50
+Test123,buy-standard,500
+TestTest2,full-standard,500
+newUser1234,admin,45

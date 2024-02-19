@@ -42,6 +42,9 @@ void UserAccounts::loadAccounts() {
         // Converts the type string to the UserType enum.
         UserType userType = UserType::None; // Default value for safety.
         if (type == "admin") userType = UserType::Admin;
+        else if (type == "full-standard") userType = UserType::FullStandard;
+        else if (type == "buy-standard") userType = UserType::BuyStandard;
+        else if (type == "sell-standard") userType = UserType::SellStandard;
         // Additional conditionals to match the type string with the corresponding UserType.
 
         // Creates a UserAccount object with the parsed data and adds it to the accounts vector.
