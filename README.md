@@ -16,7 +16,7 @@ g++ -o steam2 main.cpp UserSession.cpp UserAccounts.cpp GameInventory.cpp Transa
 ```
 Then run
 ```bash
-steam2
+steam2 user_accounts.txt availablegames.txt gamescollection.txt transout.atf
 ```
 
 ## Features
