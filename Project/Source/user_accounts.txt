@@ -1,1 +1,3 @@
 TestUser,admin,50
+newUser123,sell-standard,100
+EpicGamer22,buy-standard,0

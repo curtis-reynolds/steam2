@@ -7,7 +7,8 @@
 #include "TransactionProcessing.h"
 #include "AdminActions.h"
 #include "Types.h"
-#include <limits> // Used for std::cin.ignore() to handle input buffer
+#include <limits>
+#include <cctype>
 
 // Function prototype for displaying the main menu to the console.
 void displayMenu() {
@@ -77,6 +78,7 @@ int main(int argc, char* argv[]) {
                 std::cout << "Create User selected.\n";
                 std::string username;
                 std::string userTypeStr;
+                std::string initialCreditStr;
                 float initialCredit;
                 UserType userType;
 
@@ -86,15 +88,28 @@ int main(int argc, char* argv[]) {
                 std::getline(std::cin, userTypeStr);
                 std::cout << "Enter initial credit: ";
                 std::cin >> initialCredit;
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+             //   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-                if (userTypeStr == "Admin") {
+                // Attempt to convert initialCreditStr to float
+                try {
+                    initialCredit = std::stof(initialCreditStr);
+                } catch (const std::invalid_argument& ia) {
+                    std::cerr << "Invalid initial credit input, please enter a numeric value." << std::endl;
+                    break; // Exit this case to avoid creating a user with an invalid credit
+                } catch (const std::out_of_range& oor) {
+                    std::cerr << "Initial credit input is out of range." << std::endl;
+                    break;
+                }
+
+                for (auto& c : userTypeStr) c = std::tolower(c);
+
+                if (userTypeStr == "admin") {
                     userType = UserType::Admin;
-                } else if (userTypeStr == "FullStandard") {
+                } else if (userTypeStr == "fullstandard") {
                     userType = UserType::FullStandard;
-                } else if (userTypeStr == "BuyStandard") {
+                } else if (userTypeStr == "buystandard") {
                     userType = UserType::BuyStandard;
-                } else if (userTypeStr == "SellStandard") {
+                } else if (userTypeStr == "sellstandard") {
                     userType = UserType::SellStandard;
                 } else {
                     std::cerr << "Invalid user type specified. Please try again." << std::endl;

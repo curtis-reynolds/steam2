@@ -6,7 +6,8 @@
 
 // Default constructor that initializes the inventory file path to an empty string.
 // This can be used when the inventory file path will be set later or loaded from a default location.
-GameInventory::GameInventory() : inventoryFilePath("") {
+GameInventory::GameInventory() {
+    inventoryFilePath; 
     // Optionally, load inventory based on a default file path
 }
 
