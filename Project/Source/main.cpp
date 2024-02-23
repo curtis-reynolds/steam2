@@ -14,12 +14,12 @@ void displayMenu() {
     std::cout << "\n===== Steam 2 - Menu =====\n";
     std::cout << "1. Login\n";
     std::cout << "2. Logout\n";
-    std::cout << "3. Create User (Admin only)\n";
+    std::cout << "3. Create User\n";
     std::cout << "4. Delete User (Admin only)\n";
     std::cout << "5. Add Game (Sell-standard or Admin only)\n";
     std::cout << "6. Purchase Game (Buy-standard or Admin only)\n";
     std::cout << "7. Add Credit\n";
-    std::cout << "8. Refund (Admin only)\n";
+    std::cout << "8. Refund\n";
     std::cout << "9. Display All Accounts (Admin only)\n"; 
     std::cout << "10. Exit\n";
     std::cout << "==========================================\n";
@@ -27,10 +27,20 @@ void displayMenu() {
 }
 
 // Main function - entry point of the application
-int main() {
-    // Initialization of necessary components
-    UserAccounts userAccounts; // Manages user account operations.
-    GameInventory gameInventory; // Handles the game inventory.
+int main(int argc, char* argv[]) {
+    if (argc != 5) {
+        std::cerr << "Usage: " << argv[0] << " user_accounts.txt availablegames.txt gamescollection.txt transout.atf\n";
+        return 1;
+    }
+
+    std::string currentAccountsFile = argv[1];
+    std::string availableGamesFile = argv[2];
+    std::string gamesCollectionFile = argv[3];
+    std::string transactionOutputFile = argv[4];
+
+    // Initialize components with command line arguments
+    UserAccounts userAccounts(currentAccountsFile);
+    GameInventory gameInventory(availableGamesFile); 
     TransactionProcessing transactionProcessing(userAccounts, gameInventory); // Processes transactions.
     AdminActions adminActions(userAccounts, transactionProcessing); // Executes admin-specific actions.
     UserSession userSession; // Manages user session state, like login status.

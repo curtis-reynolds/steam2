@@ -8,7 +8,7 @@
 // Default constructor that initializes the file path to a default value.
 // This constructor sets the path to 'user_accounts.txt', allowing for loading without specifying a path.
 UserAccounts::UserAccounts() {
-    accountsFilePath = "user_accounts.txt"; // Sets the default file path for user accounts.
+    accountsFilePath; // Sets the default file path for user accounts.
     loadAccounts(); // Calls loadAccounts to read and process the user data from the file.
 }
 
