@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
     std::string logoutMessage; // Stores the message returned by the logout action.
 
     // Main loop that keeps the application running until the user chooses to exit.
-    while (running) {
+    while (!std::cin.eof() && running) {
         displayMenu(); // Displays the main menu options to the user.
         std::cin >> choice; // Reads the user's choice.
         // Clears the input buffer to prevent leftover input from affecting subsequent reads.
