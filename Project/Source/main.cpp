@@ -118,6 +118,12 @@ int main(int argc, char* argv[]) {
                 std::cout << logoutMessage;
                 break;
             case 3: {// Create User (Admin only)
+                // First, check if the current user is an admin
+                if (userSession.getCurrentUserType() != UserType::Admin) {
+                    std::cerr << "Error: Only admin users can create new accounts." << std::endl;
+                    break; // Exit this case since the current user is not an admin
+                }
+                
                 std::cout << "Create User selected.\n";
                 std::string username;
                 std::string userTypeStr;
@@ -158,8 +164,6 @@ int main(int argc, char* argv[]) {
                     break; // Exit this case to avoid creating a user with an invalid type
                 }
 
-                // Check if the user is admin or has necessary privileges
-                // Will be done later
                 adminActions.createUser(username, userType, initialCredit);
                 break;
             }
