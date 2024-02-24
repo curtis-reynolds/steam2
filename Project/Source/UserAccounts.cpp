@@ -110,6 +110,11 @@ void UserAccounts::createUser(const std::string& username, UserType type, float 
         std::cerr << "Error: Username exceeds maximum length of 15 characters." << std::endl;
         return;
     }
+    // Check if the initial credit exceeds the maximum allowed value.
+    if (credit > 999999.99) {
+        std::cerr << "Error: Initial credit exceeds maximum allowed value." << std::endl;
+        return;
+    }
 
     // Here we would add additional validation as necessary
     // If validation passes, creates a new UserAccount object and adds it to the accounts vector.
