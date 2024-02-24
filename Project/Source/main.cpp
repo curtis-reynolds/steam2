@@ -164,11 +164,11 @@ int main(int argc, char* argv[]) {
 
                 if (userTypeStr == "admin") {
                     userType = UserType::Admin;
-                } else if (userTypeStr == "fullstandard") {
+                } else if (userTypeStr == "fullstandard" || userTypeStr == "full standard") {
                     userType = UserType::FullStandard;
-                } else if (userTypeStr == "buystandard") {
+                } else if (userTypeStr == "buystandard" || userTypeStr == "buy standard") {
                     userType = UserType::BuyStandard;
-                } else if (userTypeStr == "sellstandard") {
+                } else if (userTypeStr == "sellstandard" || userTypeStr == "sell standard") {
                     userType = UserType::SellStandard;
                 } else {
                     std::cerr << "Invalid user type specified. Please try again." << std::endl;
@@ -188,6 +188,11 @@ int main(int argc, char* argv[]) {
 
                 std::cout << "Enter username to delete: ";
                 std::getline(std::cin, username);
+                // Check if the user is attempting to delete their own account in the same session
+                if (username == userSession.getCurrentUser()) {
+                    std::cerr << "Error: You cannot delete your own account." << std::endl;
+                    break; // Exit this case to avoid deleting the user's own account
+                }
 
                 adminActions.deleteUser(username);
                 break;
@@ -217,10 +222,34 @@ int main(int argc, char* argv[]) {
                 }
                 break;
             }
-            case 6: // Purchase Game (Buy-standard or Admin only)
-                std::cout << "Purchase Game selected.\n";
-                // transactionProcessing.processBuyTransaction(...);
+            case 6: { // Purchase Game (Buy-standard or Admin only)
+                // Assume userSession.getCurrentUserType() checks the logged-in user's type
+                UserType currentUserType = userSession.getCurrentUserType();
+                
+                // Check if the user is allowed to purchase (not SellStandard)
+                if (currentUserType == UserType::SellStandard) {
+                    std::cout << "Error: Sell-standard accounts are not eligible to purchase games." << std::endl;
+                    break;
+                }
+
+                // Prompt for game name and seller's username
+                std::string gameName, sellerUsername;
+                std::cout << "Enter the name of the game you wish to purchase: ";
+                std::getline(std::cin, gameName);
+                std::cout << "Enter the seller's username: ";
+                std::getline(std::cin, sellerUsername);
+
+                // Retrieve the buyer's username from the session
+                std::string buyerUsername = userSession.getCurrentUser();
+
+                // Prepare the arguments for processBuyTransaction
+                std::vector<std::string> args = {buyerUsername, gameName, sellerUsername};
+
+                // Execute the purchase transaction
+                transactionProcessing.processBuyTransaction(args);
+
                 break;
+            }
             case 7: // Add Credit
                 std::cout << "Add Credit selected.\n";
                 // transactionProcessing.processAddCreditTransaction(...);
@@ -238,6 +267,11 @@ int main(int argc, char* argv[]) {
                 break;
             }
             case 10:
+                // Ensure the user is not logged in before exiting
+                if (userSession.isLoggedIn()) {
+                    std::cout << "Please logout before exiting the application." << std::endl;
+                    break;
+                }
                 running = false;
                 std::cout << "Exiting Steam 2...\n";
                 break;

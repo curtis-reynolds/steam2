@@ -8,8 +8,7 @@
 // Default constructor that initializes the inventory file path to an empty string.
 // This can be used when the inventory file path will be set later or loaded from a default location.
 GameInventory::GameInventory() {
-    inventoryFilePath; 
-    // Optionally, load inventory based on a default file path
+    inventoryFilePath = "availablegames.txt";  
 }
 
 // Constructor that takes a file path as an argument and loads the game inventory from this file.
@@ -118,4 +117,25 @@ bool GameInventory::gameExists(const std::string& gameName) const {
                                return game.gameName == gameName;
                            });
     return it != inventory.end(); // Return true if the game is found, false otherwise
+}
+
+void GameInventory::removeGamesByUsername(const std::string& username) {
+    auto newEnd = std::remove_if(inventory.begin(), inventory.end(),
+                                 [&username](const Game& game) {
+                                     return game.sellerUsername == username;
+                                 });
+    inventory.erase(newEnd, inventory.end());
+    saveInventory(); // Save changes after removing games
+}
+
+float GameInventory::getGamePrice(const std::string& gameName, const std::string& sellerUsername) const {
+    auto it = std::find_if(inventory.begin(), inventory.end(), 
+                           [&gameName, &sellerUsername](const Game& game) {
+                               return game.gameName == gameName && game.sellerUsername == sellerUsername;
+                           });
+    if (it != inventory.end()) {
+        return it->price;
+    } else {
+        throw std::runtime_error("Game not found or seller username does not match.");
+    }
 }

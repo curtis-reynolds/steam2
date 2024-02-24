@@ -31,6 +31,11 @@ public:
     bool userExists(const std::string& username);
     void addCredit(const std::string& username, float amount);
     std::vector<std::string> getAllAccountsInfo() const;
+
+    bool isEligibleForPurchase(const std::string& username) const; // Check if an account is eligible for purchase
+    bool hasSufficientCredit(const std::string& username, float price) const; // Check if the buyer has enough credit
+    void processPurchase(const std::string& buyerUsername, const std::string& sellerUsername, float price); // Process the purchase transaction
+
     // Other necessary member functions...
 };
 

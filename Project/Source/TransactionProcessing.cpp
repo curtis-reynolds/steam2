@@ -3,6 +3,7 @@
 // TransactionProcessing class relies on UserAccounts and GameInventory to process transactions.
 #include "UserAccounts.h"
 #include "GameInventory.h"
+#include "GameCollection.h"
 
 // Constructor initializes the class with references to the UserAccounts and GameInventory,
 // allowing transactions to interact with user data and the game inventory.
@@ -60,9 +61,45 @@ void TransactionProcessing::processSellTransaction(const std::vector<std::string
 // Processes a buy transaction, allowing a user to purchase a game.
 // Validates the provided arguments and, if valid, updates the game inventory and the buyer's account.
 void TransactionProcessing::processBuyTransaction(const std::vector<std::string>& args) {
-    // TODO: Implement the logic to buy a game, e.g., validate args and update both game inventory and user account
-    std::cout << "Processing buy transaction" << std::endl;
+    // Create instance of GameCollection
+    GameCollection gameCollection;
+
+    if (args.size() < 3) {
+        std::cerr << "Error: Missing arguments for buying a game. Required: buyerUsername, gameName, sellerUsername." << std::endl;
+        return;
+    }
+
+    std::string buyerUsername = args[0];
+    std::string gameName = args[1];
+    std::string sellerUsername = args[2];
+
+    // Validate that the game exists and is available for sale
+    if (!gameInventory.gameExists(gameName)) {
+        std::cerr << "Error: The specified game is not available for sale by the user " << sellerUsername << "." << std::endl;
+        return;
+    }
+
+    float gamePrice = gameInventory.getGamePrice(gameName, sellerUsername);
+
+    // Check if the buyer has sufficient credit
+    if (!userAccounts.hasSufficientCredit(buyerUsername, gamePrice)) {
+        std::cerr << "Error: The buyer does not have sufficient credit to complete the purchase." << std::endl;
+        return;
+    }
+
+    // Check if the buyer already owns the game
+    if (gameCollection.ownsGame(buyerUsername, gameName)) {
+        std::cerr << "Error: The buyer already owns a copy of this game." << std::endl;
+        return;
+    }
+
+    // Process the transaction: Update credits and transfer game ownership
+    userAccounts.processPurchase(buyerUsername, sellerUsername, gamePrice);
+    gameCollection.addGameToUser(buyerUsername, gameName);
+
+    std::cout << "Purchase successful. " << gameName << " has been added to " << buyerUsername << "'s collection." << std::endl;
 }
+
 
 // Processes a refund transaction between two users.
 // Validates the provided arguments and, if valid, updates the accounts of the buyer and seller accordingly.

@@ -1,4 +1,5 @@
 #include "UserAccounts.h"
+#include "GameInventory.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -127,6 +128,7 @@ void UserAccounts::createUser(const std::string& username, UserType type, float 
 // Deletes a user from the system based on the username.
 // Searches for the user in the list of accounts and removes them if found.
 void UserAccounts::deleteUser(const std::string& username) {
+    GameInventory gameInventory; 
     // Uses std::remove_if to find and remove the user from the accounts vector based on the username.
     auto it = std::remove_if(accounts.begin(), accounts.end(), [&](const UserAccount& account) {
         return account.username == username;
@@ -135,6 +137,12 @@ void UserAccounts::deleteUser(const std::string& username) {
     if (it == accounts.end()) {
         std::cerr << "Error: User not found." << std::endl;
         return;
+    }
+
+    // If the user is SellStandard or Admin, remove all games they are selling from the inventory
+    if (it->type == UserType::SellStandard || it->type == UserType::Admin) {
+        // TODO: Call a method to remove all games listed by the user from the game inventory
+        gameInventory.removeGamesByUsername(username);
     }
 
     accounts.erase(it, accounts.end());
@@ -206,4 +214,52 @@ void UserAccounts::addCredit(const std::string& username, float amount) {
     }
     // If the user is not found, an error message is displayed.
     std::cerr << "Error: User '" << username << "' not found." << std::endl;
+}
+
+bool UserAccounts::isEligibleForPurchase(const std::string& username) const {
+    auto it = std::find_if(accounts.begin(), accounts.end(), [&username](const UserAccount& account) {
+        return account.username == username;
+    });
+
+    if (it != accounts.end()) {
+        // Assuming UserType::SellStandard is not allowed to make purchases
+        return it->type != UserType::SellStandard;
+    }
+
+    // If user not found or not eligible
+    return false;
+}
+
+bool UserAccounts::hasSufficientCredit(const std::string& username, float price) const {
+    auto it = std::find_if(accounts.begin(), accounts.end(), [&username](const UserAccount& account) {
+        return account.username == username;
+    });
+
+    if (it != accounts.end()) {
+        return it->credit >= price;
+    }
+
+    return false;
+}
+
+void UserAccounts::processPurchase(const std::string& buyerUsername, const std::string& sellerUsername, float price) {
+    // Deduct price from buyer
+    auto buyerIt = std::find_if(accounts.begin(), accounts.end(), [&buyerUsername](const UserAccount& account) {
+        return account.username == buyerUsername;
+    });
+
+    if (buyerIt != accounts.end()) {
+        buyerIt->credit -= price;
+    }
+
+    // Add price to seller
+    auto sellerIt = std::find_if(accounts.begin(), accounts.end(), [&sellerUsername](const UserAccount& account) {
+        return account.username == sellerUsername;
+    });
+
+    if (sellerIt != accounts.end()) {
+        sellerIt->credit += price;
+    }
+
+    saveAccounts(); // Save the updated accounts information
 }
