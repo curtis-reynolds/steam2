@@ -127,6 +127,13 @@ void TransactionProcessing::processAddCreditTransaction(const std::vector<std::s
     }
 
     std::string username = args[0];
+
+    // check if user exists
+    if (!userAccounts.userExists(username)) {
+        std::cerr << "Error: The specified user does not exist." << std::endl;
+        return;
+    }
+    
     float amount;
 
     // error check if the amount is invalid
