@@ -73,6 +73,12 @@ void TransactionProcessing::processBuyTransaction(const std::vector<std::string>
     std::string gameName = args[1];
     std::string sellerUsername = args[2];
 
+    // if the seller username does not match an existing user, return an error
+    if (!userAccounts.userExists(sellerUsername)) {
+        std::cerr << "Error: The specified seller does not exist." << std::endl;
+        return;
+    }
+
     // Validate that the game exists and is available for sale
     if (!gameInventory.gameExists(gameName)) {
         std::cerr << "Error: The specified game is not available for sale by the user " << sellerUsername << "." << std::endl;
