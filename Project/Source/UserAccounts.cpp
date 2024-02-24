@@ -204,16 +204,25 @@ bool UserAccounts::userExists(const std::string& username) {
 
 // Adds credit to a user's account, identified by username, in the amount specified.
 void UserAccounts::addCredit(const std::string& username, float amount) {
+    bool userFound = false;
     // Searches for the user in the accounts list and adds the specified amount to their credit.
     for (auto& account : accounts) {
         if (account.username == username) {
-            account.credit += amount;
-            // Make sure to implement any necessary checks, e.g., maximum credit limit
-            return;
+            account.credit += amount; // Update the user's credit
+            userFound = true;
+            std::cout << "Credit added successfully. New balance: $" << std::fixed << std::setprecision(2) << account.credit << std::endl;
+            break; // Exit the loop once the user is found and credit is added
         }
     }
-    // If the user is not found, an error message is displayed.
-    std::cerr << "Error: User '" << username << "' not found." << std::endl;
+
+    if (!userFound) {
+        // If the user is not found, display an error message.
+        std::cerr << "Error: User '" << username << "' not found." << std::endl;
+        return;
+    }
+
+    // After updating the credit for the user, save the updated accounts back to the file.
+    saveAccounts();
 }
 
 bool UserAccounts::isEligibleForPurchase(const std::string& username) const {
@@ -262,4 +271,13 @@ void UserAccounts::processPurchase(const std::string& buyerUsername, const std::
     }
 
     saveAccounts(); // Save the updated accounts information
+}
+
+UserType UserAccounts::getCurrentUserType(const std::string& username) const {
+    for (const auto& account : accounts) {
+        if (account.username == username) {
+            return account.type;
+        }
+    }
+    return UserType::None; // Consider UserType::None as a default or error state
 }

@@ -12,6 +12,7 @@ private:
     // References to other system components
     UserAccounts& userAccounts;
     GameInventory& gameInventory;
+    
 
 public:
     TransactionProcessing(UserAccounts& userAccounts, GameInventory& gameInventory);

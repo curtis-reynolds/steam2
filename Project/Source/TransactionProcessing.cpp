@@ -4,6 +4,9 @@
 #include "UserAccounts.h"
 #include "GameInventory.h"
 #include "GameCollection.h"
+#include "UserSession.h"
+
+UserSession userSession;
 
 // Constructor initializes the class with references to the UserAccounts and GameInventory,
 // allowing transactions to interact with user data and the game inventory.
@@ -117,9 +120,28 @@ void TransactionProcessing::processRefundTransaction(const std::vector<std::stri
 // Processes a transaction to add credit to a user's account.
 // Validates the provided arguments and, if valid, updates the user's account with the added credit.
 void TransactionProcessing::processAddCreditTransaction(const std::vector<std::string>& args) {
-    // TODO: Implement the logic to add credit to a user's account, e.g., validate args and update user account
-    std::cout << "Processing add credit transaction" << std::endl;
+    // In admin mode, args should contain username and amount. In user mode, just the amount.
+    if (args.empty()) {
+        std::cerr << "Error: No arguments provided for add credit transaction." << std::endl;
+        return;
+    }
+
+    std::string username = args[0];
+    float amount = std::stof(args[1]);
+
+    if (amount <= 0 || amount > 1000) {
+        std::cerr << "Error: Invalid amount. Must be between $0 and $1000." << std::endl;
+        return;
+    }
+
+    // Assuming userAccounts has a method for adding credit
+    userAccounts.addCredit(username, amount);
+    std::cout << "Successfully added $" << amount << " to " << username << "'s account." << std::endl;
+
+    // Save transaction to the daily transaction file
+    // This part requires implementation based on how you're handling transaction logging
 }
+
 
 // A specific method for processing refunds not triggered by the main transaction processing method.
 // This could be used for administrative refunds or other scenarios not covered by the standard transaction codes.

@@ -31,6 +31,7 @@ public:
     bool userExists(const std::string& username);
     void addCredit(const std::string& username, float amount);
     std::vector<std::string> getAllAccountsInfo() const;
+    UserType getCurrentUserType(const std::string& username) const;
 
     bool isEligibleForPurchase(const std::string& username) const; // Check if an account is eligible for purchase
     bool hasSufficientCredit(const std::string& username, float price) const; // Check if the buyer has enough credit

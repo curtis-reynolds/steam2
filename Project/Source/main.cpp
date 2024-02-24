@@ -135,7 +135,6 @@ int main(int argc, char* argv[]) {
                     break; // Exit this case since the current user is not an admin
                 }
 
-                std::cout << "Create User selected.\n";
                 std::string username;
                 std::string userTypeStr;
                 std::string initialCreditStr;
@@ -250,10 +249,31 @@ int main(int argc, char* argv[]) {
 
                 break;
             }
-            case 7: // Add Credit
-                std::cout << "Add Credit selected.\n";
-                // transactionProcessing.processAddCreditTransaction(...);
+            case 7: { // Add Credit
+                std::vector<std::string> args;
+                if (userSession.getCurrentUserType() == UserType::Admin) {
+                    std::string username;
+                    std::cout << "Enter username: ";
+                    std::getline(std::cin, username);
+                    args.push_back(username);
+                    std::string amountStr;
+                    std::cout << "Enter amount of credit to add: ";
+                    std::getline(std::cin, amountStr);
+                    args.push_back(amountStr);
+                        
+                    transactionProcessing.processAddCreditTransaction(args);
+                    break;
+                }
+                std::string username = userSession.getCurrentUser();
+                args.push_back(username);
+                std::string amountStr;
+                std::cout << "Enter amount of credit to add: ";
+                std::getline(std::cin, amountStr);
+                args.push_back(amountStr);
+
+                transactionProcessing.processAddCreditTransaction(args);
                 break;
+            }
             case 8: // Refund (Admin only)
                 std::cout << "Refund selected.\n";
                 // adminActions.issueRefund(...);
