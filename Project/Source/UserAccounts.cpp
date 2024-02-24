@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <iomanip>
 #include <sstream>
 
 // Default constructor that initializes the file path to a default value.
@@ -19,78 +20,79 @@ UserAccounts::UserAccounts(const std::string& accountsFile)
     loadAccounts(); 
 }
 
+// Utility function to trim spaces from the right of a string
+std::string rtrim(const std::string& s) {
+    size_t end = s.find_last_not_of(" ");
+    return (end == std::string::npos) ? "" : s.substr(0, end + 1);
+}
+
 // Loads user account data from the specified file.
 // Opens the file and reads each line, parsing the user data to create UserAccount objects.
 void UserAccounts::loadAccounts() {
-    std::ifstream file(accountsFilePath); // Attempts to open the file.
-    if (!file) { // Checks for file open failure.
-        std::cerr << "Error: Unable to open accounts file." << std::endl;
-        return; // Exits the function if the file cannot be opened.
+    std::ifstream file(accountsFilePath);
+    std::string line;
+    while (getline(file, line)) {
+        if (line.substr(0, 15).find("END") != std::string::npos) break; // Stop if "END" user found
+
+        std::string username = rtrim(line.substr(0, 15));
+        std::string userTypeStr = line.substr(16, 2);
+        std::string creditStr = line.substr(19, 9);
+
+        UserType userType;
+        if (userTypeStr == "AA") userType = UserType::Admin;
+        else if (userTypeStr == "FS") userType = UserType::FullStandard;
+        else if (userTypeStr == "BS") userType = UserType::BuyStandard;
+        else if (userTypeStr == "SS") userType = UserType::SellStandard;
+        else continue; // Skip invalid user types
+
+        float credit = std::stof(creditStr);
+
+        accounts.emplace_back(username, userType, credit);
+    }
+    file.close();
+}
+
+// Retrieves information for all user accounts in a formatted string vector.
+std::vector<std::string> UserAccounts::getAllAccountsInfo() const {
+    std::vector<std::string> accountsInfo;
+
+    std::ifstream file(accountsFilePath);
+    if (!file) {
+        std::cerr << "Error: Unable to open accounts file at " << accountsFilePath << std::endl;
+        return accountsInfo;
     }
 
     std::string line;
     while (getline(file, line)) {
-        std::istringstream iss(line);
-        std::string username, typeStr;
-        float credit = 0.0f;
-        UserType userType = UserType::None; // Default value for safety.
+        if (line.substr(0, 15).find("END") != std::string::npos) break; // Stop if "END" user found
 
-        // Use getline to correctly handle commas as delimiters.
-        std::getline(iss, username, ',');
-        std::getline(iss, typeStr, ',');
-        iss >> credit;
+        std::string username = line.substr(0, 15);
+        std::string userTypeStr = line.substr(16, 2);
+        std::string creditStr = line.substr(19, 9);
 
-        // Convert the type string to the UserType enum.
-        if (typeStr == "admin") userType = UserType::Admin;
-        else if (typeStr == "full-standard") userType = UserType::FullStandard;
-        else if (typeStr == "buy-standard") userType = UserType::BuyStandard;
-        else if (typeStr == "sell-standard") userType = UserType::SellStandard;
-        // Additional conditionals can be added here for other user types.
+        // Trim the username of trailing spaces for display
+        username.erase(username.find_last_not_of(" ") + 1);
 
-        // Creates a UserAccount object with the parsed data and adds it to the accounts vector.
-        UserAccount account(username, userType, credit);
-        accounts.push_back(account);
-    }
+        // Map user type code to descriptive string (if necessary)
+        std::string userType;
+        if (userTypeStr == "AA") userType = "Admin";
+        else if (userTypeStr == "FS") userType = "Full-Standard";
+        else if (userTypeStr == "BS") userType = "Buy-Standard";
+        else if (userTypeStr == "SS") userType = "Sell-Standard";
+        else userType = "Unknown"; // Fallback for unrecognized codes
 
-    file.close(); // Closes the file after processing all lines.
-}
+        // Convert credit string to float and back to string to remove leading zeros
+        float credit = std::stof(creditStr);
+        std::ostringstream creditStream;
+        creditStream << std::fixed << std::setprecision(2) << credit;
+        std::string formattedCredit = creditStream.str();
 
-
-// Retrieves information for all user accounts in a formatted string vector.
-std::vector<std::string> UserAccounts::getAllAccountsInfo() const {
-    std::vector<std::string> accountsInfo; // Vector to hold the formatted account information strings.
-
-    // Opens the user accounts file to read the data.
-    std::ifstream file(accountsFilePath);
-    if (!file) { // Checks if the file opening failed.
-        std::cerr << "Error: Unable to open accounts file at " << accountsFilePath << std::endl;
-        return accountsInfo; // Returns an empty vector if the file cannot be opened.
-    }
-
-    std::string line;
-    while (getline(file, line)) { // Reads each line from the file.
-        std::istringstream iss(line); // Uses istringstream for parsing.
-        std::string username, userTypeStr;
-        float credit;
-        char delim; // Represents the delimiter, used for parsing.
-
-        // Parses the line based on the expected format: "username,type,credit".
-        // Skips malformed lines and logs an error.
-        if (!(std::getline(iss, username, ',') &&
-              std::getline(iss, userTypeStr, ',') &&
-              iss >> credit)) {
-            std::cerr << "Error parsing line: " << line << std::endl;
-            continue; // Moves to the next line if the current line is malformed.
-        }
-
-        // Formats and adds the user account information to the vector.
-        std::string info = "Username: " + username + 
-                           ", Type: " + userTypeStr + 
-                           ", Credit: " + std::to_string(credit);
+        // Format the line for display
+        std::string info = "Username: " + username + ", Type: " + userType + ", Credit: " + formattedCredit;
         accountsInfo.push_back(info);
     }
 
-    return accountsInfo; // Returns the vector containing all account information strings.
+    return accountsInfo;
 }
 
 // Adds a new user to the system with the specified username, user type, and initial credit.
@@ -140,32 +142,39 @@ void UserAccounts::deleteUser(const std::string& username) {
 // Saves the current list of user accounts to the file specified by accountsFilePath.
 // Opens the file for writing and overwrites any existing content.
 void UserAccounts::saveAccounts() {
-    // Attempts to open the accounts file for writing.
     std::ofstream file(accountsFilePath);
     if (!file) {
         std::cerr << "Error: Unable to open accounts file for writing." << std::endl;
         return;
     }
-     // If successful, iterates through the accounts vector and writes each account's data to the file.
+
     for (const auto& account : accounts) {
-        file << account.username << ","
-             << userTypeToString(account.type) << ","
-             << account.credit << std::endl;
+        // Username: left-justified, padded with spaces
+        file << std::left << std::setw(15) << std::setfill(' ') << account.username;
+        file << " "; // Space separator
+
+        // User type
+        file << userTypeToString(account.type);
+
+        // Credit: right-justified, padded with zeros, ensuring two decimal places
+        file << " " << std::right << std::setw(9) << std::setfill('0') 
+             << std::fixed << std::setprecision(2) << account.credit;
+
+        file << std::endl;
     }
-    // Closes the file after writing is complete.
-    file.close();
+
+    // Write the "END" line with appropriate spacing and zeros
+    file << "END             __ 000000000\n";
 }
 
 // Converts a UserType enum to its corresponding string representation.
 std::string UserAccounts::userTypeToString(UserType type) const {
-    // Maps UserType enum values to their string equivalents for file storage and display purposes.
-    // Handles all defined UserType values, returning a string for each.
     switch (type) {
-        case UserType::Admin: return "admin";
-        case UserType::FullStandard: return "full-standard";
-        case UserType::BuyStandard: return "buy-standard";
-        case UserType::SellStandard: return "sell-standard";
-        default: return "none";
+        case UserType::Admin: return "AA";
+        case UserType::FullStandard: return "FS";
+        case UserType::BuyStandard: return "BS";
+        case UserType::SellStandard: return "SS";
+        default: return "__"; // Placeholder for unknown types
     }
 }
 
