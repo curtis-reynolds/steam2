@@ -127,7 +127,18 @@ void TransactionProcessing::processAddCreditTransaction(const std::vector<std::s
     }
 
     std::string username = args[0];
-    float amount = std::stof(args[1]);
+    float amount;
+
+    // error check if the amount is invalid
+    try {
+        amount = std::stof(args[1]);
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Error: Invalid amount format." << std::endl;
+        return;
+    } catch (const std::out_of_range& e) {
+        std::cerr << "Error: Amount is out of range." << std::endl;
+        return;
+    }
 
     if (amount <= 0 || amount > 1000) {
         std::cerr << "Error: Invalid amount. Must be between $0 and $1000." << std::endl;
