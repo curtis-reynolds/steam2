@@ -174,6 +174,11 @@ int main(int argc, char* argv[]) {
                 break;
             }
             case 4: { // Delete User (Admin only)
+                // First check if the current user is an admin
+                if (userSession.getCurrentUserType() != UserType::Admin) {
+                    std::cerr << "Error: Only admin users can delete accounts." << std::endl;
+                    break; // Exit this case since the current user is not an admin
+                }
                 std::string username;
 
                 std::cout << "Enter username to delete: ";

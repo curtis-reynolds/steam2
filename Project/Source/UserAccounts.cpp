@@ -116,7 +116,6 @@ void UserAccounts::createUser(const std::string& username, UserType type, float 
         return;
     }
 
-    // Here we would add additional validation as necessary
     // If validation passes, creates a new UserAccount object and adds it to the accounts vector.
     UserAccount newAccount(username, type, credit);
     accounts.push_back(newAccount);
