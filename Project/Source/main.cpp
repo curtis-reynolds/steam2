@@ -107,6 +107,12 @@ int main(int argc, char* argv[]) {
             std::cout << "Invalid input, please try again." << std::endl;
             continue;
         }
+        
+        // Ensure user is logged in for any option other than "Login" and "Exit"
+        if (!userSession.isLoggedIn() && choice != 1 && choice != 10) {
+            std::cout << "Please login to access this feature." << std::endl;
+            continue; // Skip to the next iteration of the loop, forcing the user to login or exit
+        }
 
         // Switch statement to handle the user's menu choice.
         switch (choice) {
@@ -123,7 +129,7 @@ int main(int argc, char* argv[]) {
                     std::cerr << "Error: Only admin users can create new accounts." << std::endl;
                     break; // Exit this case since the current user is not an admin
                 }
-                
+
                 std::cout << "Create User selected.\n";
                 std::string username;
                 std::string userTypeStr;
