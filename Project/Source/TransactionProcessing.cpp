@@ -32,8 +32,29 @@ void TransactionProcessing::processTransaction(const std::string& transactionCod
 // Processes a sell transaction, allowing a user to list a game for sale.
 // Validates the provided arguments and, if valid, adds the game to the game inventory.
 void TransactionProcessing::processSellTransaction(const std::vector<std::string>& args) {
-    // TODO: Implement the logic to sell a game, e.g., validate args and call gameInventory.addGame(...)
-    std::cout << "Processing sell transaction" << std::endl;
+    if (args.size() < 3) {
+        std::cerr << "Error: Missing arguments for selling a game." << std::endl;
+        return;
+    }
+
+    // Extract information from args
+    std::string gameName = args[0];
+    std::string sellerUsername = args[1];
+    float price;
+
+    // Try to convert price to float
+    try {
+        price = std::stof(args[2]);
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Error: Invalid price format." << std::endl;
+        return;
+    } catch (const std::out_of_range& e) {
+        std::cerr << "Error: Price is out of range." << std::endl;
+        return;
+    }
+
+    // Add the game to the inventory
+    gameInventory.addGame(gameName, price, sellerUsername);
 }
 
 // Processes a buy transaction, allowing a user to purchase a game.

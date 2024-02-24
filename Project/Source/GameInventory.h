@@ -25,6 +25,7 @@ public:
     GameInventory();
     GameInventory(const std::string& inventoryFile);
     void addGame(const std::string& gameName, float price, const std::string& sellerUsername);
+    bool gameExists(const std::string& gameName) const;
     // Other necessary member functions...
 };
 

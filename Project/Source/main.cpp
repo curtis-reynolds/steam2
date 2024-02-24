@@ -116,9 +116,14 @@ int main(int argc, char* argv[]) {
 
         // Switch statement to handle the user's menu choice.
         switch (choice) {
-            case 1: // Login
-                userSession.login();
+            case 1: { // Login
+                if (userSession.isLoggedIn()) { // If the user is already logged in, do not log them in again
+                    std::cout << "Error: A user is already logged in. Please logout before trying to login again." << std::endl;
+                } else {
+                    userSession.login();
+                }
                 break;
+            }
             case 2: // Logout
                 logoutMessage = userSession.logout();
                 std::cout << logoutMessage;
@@ -187,10 +192,31 @@ int main(int argc, char* argv[]) {
                 adminActions.deleteUser(username);
                 break;
             }
-            case 5: // Add Game (Sell-standard or Admin only)
-                std::cout << "Add Game selected.\n";
-                // transactionProcessing.processSellTransaction(...);
+            case 5: { // Add Game (Sell-standard or Admin only)
+                if (userSession.getCurrentUserType() == UserType::SellStandard || userSession.getCurrentUserType() == UserType::Admin) {
+                    std::vector<std::string> args;
+                    std::string gameName, sellerUsername, priceStr;
+
+                    std::cout << "Enter game name: ";
+                    std::getline(std::cin, gameName);
+                    args.push_back(gameName);
+
+                    // Assume sellerUsername is obtained from the current session
+                    sellerUsername = userSession.getCurrentUser();
+                    args.push_back(sellerUsername);
+
+                    std::cout << "Enter price: ";
+                    std::getline(std::cin, priceStr);
+                    args.push_back(priceStr);
+
+                    // Now, call processSellTransaction with args
+                    transactionProcessing.processSellTransaction(args);
+                } else {
+                    std::cout << "This action is only available to sell-standard or admin users.\n";
+                    break;
+                }
                 break;
+            }
             case 6: // Purchase Game (Buy-standard or Admin only)
                 std::cout << "Purchase Game selected.\n";
                 // transactionProcessing.processBuyTransaction(...);

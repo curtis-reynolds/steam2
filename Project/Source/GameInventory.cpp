@@ -3,6 +3,7 @@
 #include <fstream>
 #include <algorithm>
 #include <sstream>
+#include <iomanip>
 
 // Default constructor that initializes the inventory file path to an empty string.
 // This can be used when the inventory file path will be set later or loaded from a default location.
@@ -20,32 +21,33 @@ GameInventory::GameInventory(const std::string& inventoryFile)
 // Loads the game inventory from the specified file.
 // Opens the file, reads each line, and parses it to create Game objects which are added to the inventory.
 void GameInventory::loadInventory() {
-    // Attempts to open the file at the path stored in inventoryFilePath.
-    // If the file cannot be opened, an error message is displayed and the function returns early.
     std::ifstream file(inventoryFilePath);
     if (!file) {
         std::cerr << "Error: Unable to open inventory file." << std::endl;
         return;
     }
 
-    // Reads the file line by line. Each line is expected to represent a game with its details
-    // such as name, price, and seller's username separated by delimiters.
-    // Parses each line to extract these details and create a Game object,
-    // which is then added to the inventory vector.
     std::string line;
     while (getline(file, line)) {
-        // Parse the line to create a Game object
-        // Assume the line format is "gameName,price,sellerUsername"
-        std::istringstream iss(line);
-        std::string gameName, sellerUsername;
-        float price;
-        char delim;
+        if (line.substr(0, 3) == "END") break; // Stop if "END" line is found
 
-        iss >> gameName >> delim >> price >> delim >> sellerUsername;
+        // Extract game name, seller's username, and price based on fixed positions
+        std::string gameName = line.substr(0, 25);
+        std::string sellerUsername = line.substr(26, 16);
+        std::string priceStr = line.substr(43, 6);
+
+        // Trim the extracted values
+        gameName.erase(gameName.find_last_not_of(' ') + 1);
+        sellerUsername.erase(sellerUsername.find_last_not_of(' ') + 1);
+
+        // Convert price string to float
+        float price = std::stof(priceStr);
+
+        // Create and add the game to the inventory
         Game game(gameName, price, sellerUsername);
         inventory.push_back(game);
     }
-    // Closes the file after finishing reading.
+
     file.close();
 }
 
@@ -89,15 +91,31 @@ void GameInventory::saveInventory() {
         std::cerr << "Error: Unable to open inventory file for writing." << std::endl;
         return;
     }
-     // Iterates over the inventory vector, writing each game's details to the file.
+
     for (const auto& game : inventory) {
-        file << game.gameName << ","
-             << game.price << ","
-             << game.sellerUsername << std::endl;
+        // Format and write each game's details to the file
+        file << std::left << std::setw(25) << std::setfill(' ') << game.gameName; // Game name padded with spaces
+        file << " "; // Space separator
+        file << std::setw(16) << std::setfill(' ') << game.sellerUsername; // Seller's username padded with spaces
+        file << " "; // Space separator
+        file << std::right << std::setw(6) << std::setfill('0') 
+             << std::fixed << std::setprecision(2) << game.price; // Price formatted with leading zeros
+        file << std::endl;
     }
-    // Closes the file after finishing writing.
+
+    // Write the "END" line with appropriate spacing
+    file << "END" << std::setw(24) << std::setfill(' ') << " " // Pad the rest of the game name field with spaces
+         << std::setw(16) << " " // Pad the username field with spaces
+         << "000000" << std::endl; // Price field filled with zeros
+
     file.close();
 }
 
-// ... Additional methods to handle buying a game, searching for a game, etc.
-
+bool GameInventory::gameExists(const std::string& gameName) const {
+    // Use std::find_if with a lambda function to search for the game by name
+    auto it = std::find_if(inventory.begin(), inventory.end(), 
+                           [&gameName](const Game& game) {
+                               return game.gameName == gameName;
+                           });
+    return it != inventory.end(); // Return true if the game is found, false otherwise
+}
