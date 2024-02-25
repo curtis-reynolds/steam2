@@ -141,7 +141,6 @@ void UserAccounts::deleteUser(const std::string& username) {
 
     // If the user is SellStandard or Admin, remove all games they are selling from the inventory
     if (it->type == UserType::SellStandard || it->type == UserType::Admin) {
-        // TODO: Call a method to remove all games listed by the user from the game inventory
         gameInventory.removeGamesByUsername(username);
     }
 
