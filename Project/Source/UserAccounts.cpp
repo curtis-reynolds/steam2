@@ -204,6 +204,19 @@ bool UserAccounts::userExists(const std::string& username) {
 
 // Adds credit to a user's account, identified by username, in the amount specified.
 void UserAccounts::addCredit(const std::string& username, float amount) {
+    // check if the user already has max credit or if adding the amount would exceed the max credit
+    for (const auto& account : accounts) {
+        if (account.username == username) {
+            if (account.credit == 999999.99) {
+                std::cerr << "Error: User already has maximum credit." << std::endl;
+                return;
+            }
+            if (account.credit + amount > 999999.99) {
+                std::cerr << "Error: Adding the specified amount would exceed the maximum credit." << std::endl;
+                return;
+            }
+        }
+    }
     bool userFound = false;
     // Searches for the user in the accounts list and adds the specified amount to their credit.
     for (auto& account : accounts) {

@@ -274,10 +274,16 @@ int main(int argc, char* argv[]) {
                 transactionProcessing.processAddCreditTransaction(args);
                 break;
             }
-            case 8: // Refund (Admin only)
+            case 8:{ // Refund (Admin only)
+                // Ensure the user is an admin before allowing a refund
+                if (userSession.getCurrentUserType() != UserType::Admin) {
+                    std::cout << "This action is only available to admin users.\n";
+                    break;
+                }
                 std::cout << "Refund selected.\n";
                 // adminActions.issueRefund(...);
                 break;
+            }
             case 9: { // Display All Accounts (Admin only)
                 if (userSession.getCurrentUserType() == UserType::Admin) {
                     adminActions.displayAllAccounts();
