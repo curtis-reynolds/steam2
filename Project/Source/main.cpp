@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
     GameInventory gameInventory(availableGamesFile); 
     TransactionProcessing transactionProcessing(userAccounts, gameInventory); // Processes transactions.
     AdminActions adminActions(userAccounts, transactionProcessing); // Executes admin-specific actions.
-    UserSession userSession; // Manages user session state, like login status.
+    UserSession userSession(userAccounts); // Manages user session state, like login status.
 
     bool running = true; // Controls the main loop of the application.
     int choice; // Stores the user's menu choice

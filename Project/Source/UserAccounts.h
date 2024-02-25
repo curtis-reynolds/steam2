@@ -37,6 +37,7 @@ public:
     bool isEligibleForPurchase(const std::string& username) const; // Check if an account is eligible for purchase
     bool hasSufficientCredit(const std::string& username, float price) const; // Check if the buyer has enough credit
     void processPurchase(const std::string& buyerUsername, const std::string& sellerUsername, float price); // Process the purchase transaction
+    float getUserCredit(const std::string& username) const; 
 
     // Other necessary member functions...
 };

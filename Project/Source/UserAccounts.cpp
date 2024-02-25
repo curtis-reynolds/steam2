@@ -237,6 +237,7 @@ void UserAccounts::addCredit(const std::string& username, float amount) {
     saveAccounts();
 }
 
+
 void UserAccounts::deductCredit(const std::string& username, float amount) {
     for (auto& account : accounts) {
         if (account.username == username) {
@@ -306,4 +307,15 @@ UserType UserAccounts::getCurrentUserType(const std::string& username) const {
         }
     }
     return UserType::None; // Consider UserType::None as a default or error state
+}
+
+float UserAccounts::getUserCredit(const std::string& username) const {
+    for (const auto& account : accounts) {
+        if (account.username == username) {
+            return account.credit;
+        }
+    }
+    // If the user is not found, you might choose to return 0 or handle this case differently
+    std::cerr << "Error: User '" << username << "' not found." << std::endl;
+    return 0.0f;
 }

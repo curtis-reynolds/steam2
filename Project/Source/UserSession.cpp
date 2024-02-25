@@ -1,4 +1,5 @@
 #include "UserSession.h"
+#include "UserAccounts.h"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -6,7 +7,7 @@
 #include <iomanip>
 
 // Default constructor initializes the session state as not logged in and sets the user type to None.
-UserSession::UserSession() {
+UserSession::UserSession(UserAccounts& accounts): userAccounts(accounts) {
     loggedIn = false; // Initially, no user is logged in.
     currentUserType = UserType::None; // The user type is set to None indicating no current user.
 }
@@ -73,19 +74,55 @@ void UserSession::login() {
    that no user is logged in. */
 std::string UserSession::logout() {
     std::ostringstream logoutMessage;
-     //Verifies user logged in or logged out.
     if (loggedIn) {
-        logoutMessage << "User '" << currentUser << "' logged out." << std::endl;
+        logoutMessage << "User '" << currentUser << "' logged out.\n";
+
+        // Format the end of session transaction
+        std::string transactionCode = "00";
+        std::string userTypeStr = [this]() {
+            switch (currentUserType) {
+                case UserType::Admin: return "AA";
+                case UserType::FullStandard: return "FS";
+                case UserType::BuyStandard: return "BS";
+                case UserType::SellStandard: return "SS";
+                default: return "  "; // Placeholder for unknown or none
+            }
+        }();
+
+        float currentCredit = userAccounts.getUserCredit(currentUser);
+
+        std::ostringstream transactionStream;
+        transactionStream << std::left << std::setw(2) << transactionCode << "_"
+                          << std::setw(15) << currentUser << "_"
+                          << std::setw(2) << userTypeStr << "_"
+                          << std::right << std::setw(9) << std::setfill('0') 
+                          << std::fixed << std::setprecision(2) << currentCredit;
+
+        // Record end of session transaction
+        recordTransaction(transactionStream.str());
+
+        // Open transaction file for appending
+        std::ofstream transactionFile("transout.atf", std::ios::app);
+
+        // Write each transaction including end of session
+        for (const auto& transaction : transactionLogs) {
+            transactionFile << transaction << std::endl;
+        }
+        transactionFile.close(); // Close the file
+
+        // Clear transaction logs for next session
+        transactionLogs.clear();
+
         loggedIn = false;
         currentUser.clear();
         currentUserType = UserType::None;
-        // Write out the daily transaction file here
     } else {
-        logoutMessage << "No user is currently logged in." << std::endl;
+        logoutMessage << "No user is currently logged in.\n";
     }
 
     return logoutMessage.str();
 }
+
 
 // Function returns the boolean variable "loggedIn". 
 bool UserSession::isLoggedIn() const {
@@ -100,4 +137,8 @@ std::string UserSession::getCurrentUser() const {
 // Function returns the current user type.
 UserType UserSession::getCurrentUserType() const {
     return currentUserType;
+}
+
+void UserSession::recordTransaction(const std::string& transaction) {
+    transactionLogs.push_back(transaction);
 }

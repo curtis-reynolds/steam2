@@ -6,8 +6,6 @@
 #include "GameCollection.h"
 #include "UserSession.h"
 
-UserSession userSession;
-
 // Constructor initializes the class with references to the UserAccounts and GameInventory,
 // allowing transactions to interact with user data and the game inventory.
 TransactionProcessing::TransactionProcessing(UserAccounts& userAccounts, GameInventory& gameInventory)
