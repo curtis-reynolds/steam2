@@ -42,7 +42,7 @@ void AdminActions::deleteUser(const std::string& username) {
 void AdminActions::issueRefund(const std::string& buyerUsername, const std::string& sellerUsername, float amount) {
     // Process the refund
     transactionProcessing.processRefund(buyerUsername, sellerUsername, amount);
-    std::cout << "Refund of " << amount << " from '" << sellerUsername << "' to '" << buyerUsername << "' processed successfully." << std::endl;
+    //std::cout << "Refund of " << amount << " from '" << sellerUsername << "' to '" << buyerUsername << "' processed successfully." << std::endl;
 }
 
 // Adds credit to a user's account by their username and the specified amount.

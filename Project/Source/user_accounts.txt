@@ -1,5 +1,5 @@
 TestUser        AA 000050.00
 TestUser2       AA 000150.00
-TestUser3       BS 000240.00
-SellUser        SS 000160.00
+TestUser3       BS 000260.00
+SellUser        SS 000140.00
 END             __ 000000000

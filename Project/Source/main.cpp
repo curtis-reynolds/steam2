@@ -31,7 +31,7 @@ void displayMenu() {
     std::cout << "5. Sell Game (Sell-standard or Admin only)\n";
     std::cout << "6. Buy Game (Buy-standard or Admin only)\n";
     std::cout << "7. Add Credit\n";
-    std::cout << "8. Refund\n";
+    std::cout << "8. Refund (Admin Only)\n";
     std::cout << "9. Display All Accounts (Admin only)\n"; 
     std::cout << "10. Exit\n";
     std::cout << "==========================================\n";
@@ -280,8 +280,34 @@ int main(int argc, char* argv[]) {
                     std::cout << "This action is only available to admin users.\n";
                     break;
                 }
-                std::cout << "Refund selected.\n";
-                // adminActions.issueRefund(...);
+                // Ask for the buyer's username
+                std::string buyerUsername;
+                std::cout << "Enter the buyer's username: ";
+                std::getline(std::cin, buyerUsername);
+
+                // Ask for the seller's username
+                std::string sellerUsername;
+                std::cout << "Enter the seller's username: ";
+                std::getline(std::cin, sellerUsername);
+
+                // Ask for the amount of credit to transfer
+                std::string amountStr;
+                std::cout << "Enter the amount of credit to transfer: ";
+                std::getline(std::cin, amountStr);
+                float amount;
+                try {
+                    amount = std::stof(amountStr);
+                } catch (const std::invalid_argument& ia) {
+                    std::cerr << "Invalid input for amount. Please enter a numeric value." << std::endl;
+                    break; // Exit this case to avoid further processing with invalid input
+                } catch (const std::out_of_range& oor) {
+                    std::cerr << "Amount is out of range." << std::endl;
+                    break; // Exit this case to avoid further processing with invalid input
+                }
+
+                // Call issueRefund with the collected information
+                adminActions.issueRefund(buyerUsername, sellerUsername, amount);
+
                 break;
             }
             case 9: { // Display All Accounts (Admin only)

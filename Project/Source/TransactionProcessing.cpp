@@ -157,8 +157,34 @@ void TransactionProcessing::processAddCreditTransaction(const std::vector<std::s
 // A specific method for processing refunds not triggered by the main transaction processing method.
 // This could be used for administrative refunds or other scenarios not covered by the standard transaction codes.
 void TransactionProcessing::processRefund(const std::string& buyerUsername, const std::string& sellerUsername, float amount) {
-    // TODO: Implement logic to process a refund transaction
-    // This could involve verifying both accounts exist, adjusting their credits, etc.
-    std::cout << "Processing refund from '" << sellerUsername << "' to '" << buyerUsername << "' for $" << amount << std::endl;
+    // Verify both accounts exist
+    if (!userAccounts.userExists(buyerUsername)) {
+        std::cerr << "Error: Buyer username does not exist." << std::endl;
+        return;
+    }
+    if (!userAccounts.userExists(sellerUsername)) {
+        std::cerr << "Error: Seller username does not exist." << std::endl;
+        return;
+    }
+
+    // check if the seller is SellStandard user
+    if (userAccounts.getCurrentUserType(sellerUsername) != UserType::SellStandard) {
+        std::cerr << "Error: Seller is not a standard seller." << std::endl;
+        return;
+    } 
+
+    // Check if the seller has enough credit
+    if (!userAccounts.hasSufficientCredit(sellerUsername, amount)) {
+        std::cerr << "Error: Seller does not have sufficient credit to cover the refund." << std::endl;
+        return;
+    }
+
+    // Process the refund transaction
+    userAccounts.addCredit(buyerUsername, amount); // Add the refund amount to the buyer's account
+    userAccounts.deductCredit(sellerUsername, amount); // Deduct the refund amount from the seller's account
+
+    std::cout << "Refund of $" << amount << " from '" << sellerUsername << "' to '" << buyerUsername << "' processed successfully." << std::endl;
+    
+    // Optionally, log this transaction to the daily transaction file
 }
 

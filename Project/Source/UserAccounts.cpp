@@ -237,6 +237,20 @@ void UserAccounts::addCredit(const std::string& username, float amount) {
     saveAccounts();
 }
 
+void UserAccounts::deductCredit(const std::string& username, float amount) {
+    for (auto& account : accounts) {
+        if (account.username == username) {
+            account.credit -= amount; // Deduct the amount from the user's credit
+            // Ensure the account's credit doesn't drop below zero
+            if (account.credit < 0) {
+                account.credit = 0;
+            }
+            saveAccounts(); // Save the updated account information
+            break;
+        }
+    }
+}
+
 bool UserAccounts::isEligibleForPurchase(const std::string& username) const {
     auto it = std::find_if(accounts.begin(), accounts.end(), [&username](const UserAccount& account) {
         return account.username == username;

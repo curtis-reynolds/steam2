@@ -30,6 +30,7 @@ public:
     void deleteUser(const std::string& username);
     bool userExists(const std::string& username);
     void addCredit(const std::string& username, float amount);
+    void deductCredit(const std::string& username, float amount); 
     std::vector<std::string> getAllAccountsInfo() const;
     UserType getCurrentUserType(const std::string& username) const;
 
