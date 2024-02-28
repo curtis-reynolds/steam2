@@ -1,5 +1,6 @@
 login
-AdminUsername
+TestUser
 create
-Username
-full-standard
+UsernameExceeding15Chars
+full standard
+50

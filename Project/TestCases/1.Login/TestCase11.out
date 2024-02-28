@@ -1,3 +1,2 @@
-Please Enter Username
-Successful sell-standard login as sellStandardUser!
-Error: sell-standard users can't perform privileged transactions.
+User 'SellUser' logged in. Current user type: Sell Standard.
+Error: Only admin users can delete accounts.

@@ -1,5 +1,6 @@
 login
-AdminUsername
+TestUser
 create
-Username
-buy-standard
+SellUserExceeding15Chars
+sell standard
+50

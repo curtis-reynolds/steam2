@@ -1,3 +1,2 @@
-Please Enter Username
-Successful buy-standard login as UserBuy
-Error: buy-standard users can't create users
+User 'TestUser3' logged in. Current user type: Buy Standard.
+Error: Only admin users can create new accounts.

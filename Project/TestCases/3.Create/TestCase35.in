@@ -1,4 +1,6 @@
 login
-AdminUsername
+TestUser
 create
-UserSpecChar
+Username@!&%
+full standard
+50

@@ -117,9 +117,36 @@ void UserAccounts::createUser(const std::string& username, UserType type, float 
         return;
     }
 
+    // ensure the user isn't entering a blank username like spaces
+    if (username.length() == 0) {
+        std::cerr << "Error: Username cannot be blank." << std::endl;
+        return;
+    }
+
+    // ensure the username doesn't contain special characters
+    if (username.find_first_of("!@#$%^&*()_+-=[]{}|;:,.<>?") != std::string::npos) {
+        std::cerr << "Error: Username cannot contain special characters." << std::endl;
+        return;
+    }
+
+    // ensure the username isn't all spaces
+    if (username.find_first_not_of(" ") == std::string::npos) {
+        std::cerr << "Error: Username cannot be all spaces." << std::endl;
+        return;
+    }
+
+    // ensure the username doesn't contain tabs
+    if (username.find_first_of("\t") != std::string::npos) {
+        std::cerr << "Error: Username cannot contain tabs." << std::endl;
+        return;
+    }
+
     // If validation passes, creates a new UserAccount object and adds it to the accounts vector.
     UserAccount newAccount(username, type, credit);
     accounts.push_back(newAccount);
+
+    // print out success message
+    std::cout << "User '" << username << "' created successfully." << std::endl;
 
     // We could write changes to the file here or in a separate method
     saveAccounts();
@@ -144,7 +171,22 @@ void UserAccounts::deleteUser(const std::string& username) {
         gameInventory.removeGamesByUsername(username);
     }
 
+    // if there is no username entered
+    if (username.length() == 0) {
+        std::cerr << "Error: Username cannot be blank." << std::endl;
+        return;
+    }
+
+    // if the username is just spaces
+    if (username.find_first_not_of(" ") == std::string::npos) {
+        std::cerr << "Error: Username cannot be blank." << std::endl;
+        return;
+    }
+
     accounts.erase(it, accounts.end());
+    
+    // print deletion message
+    std::cout << "User '" << username << "' deleted successfully." << std::endl;
 
     // We could write changes to the file here or in a separate method
     saveAccounts();
@@ -222,7 +264,7 @@ void UserAccounts::addCredit(const std::string& username, float amount) {
         if (account.username == username) {
             account.credit += amount; // Update the user's credit
             userFound = true;
-            std::cout << "Credit added successfully. New balance: $" << std::fixed << std::setprecision(2) << account.credit << std::endl;
+          //  std::cout << "Credit added successfully. New balance: $" << std::fixed << std::setprecision(2) << account.credit << std::endl;
             break; // Exit the loop once the user is found and credit is added
         }
     }

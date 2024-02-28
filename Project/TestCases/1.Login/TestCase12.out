@@ -1,5 +1,2 @@
-Please Enter Username
-Successful full-standard login as fullStandardUser!
-Enter amount of credit to add
-Credit added successfully
-New balance: $100.00.
+User 'FSUserTest' logged in. Current user type: Full Standard.
+Successfully added $100 to FSUserTest's account.

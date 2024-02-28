@@ -1,5 +1,2 @@
-Please Enter Username
-Successful admin login as UserAdmin!
-Enter game name
-Enter Game Price
-Price is too high.
+User 'TestUser' logged in. Current user type: Admin.
+Error: Price exceeds maximum allowed value.

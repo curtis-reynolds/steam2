@@ -1,7 +1,2 @@
-Please Enter Username
-Successful admin login as AdminUsername
-Please enter username for new user
-Please indicate the type of user (full-standard
- buy-standard
- sell-standard)
-Error: Username should be less than 15 characters.
+User 'TestUser' logged in. Current user type: Admin.
+Error: Username exceeds maximum length of 15 characters.
