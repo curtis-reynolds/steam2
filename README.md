@@ -12,11 +12,11 @@ This project aims to create a Digital Distribution Service similar to Steam, whe
 To compile the Steam 2 Front End, ensure you have a C++ compiler installed (e.g., GCC). Navigate to Project/Source and run the following command in the terminal:
 
 ```bash
-g++ -o steam2 main.cpp UserSession.cpp UserAccounts.cpp GameInventory.cpp TransactionProcessing.cpp FileIO.cpp Utilities.cpp AdminActions.cpp
+g++ -o steam2 main.cpp UserSession.cpp UserAccounts.cpp GameInventory.cpp TransactionProcessing.cpp FileIO.cpp Utilities.cpp AdminActions.cpp GameCollection.cpp
 ```
 Then run
 ```bash
-steam2
+steam2 user_accounts.txt availablegames.txt gamescollection.txt transout.atf
 ```
 
 ## Features
