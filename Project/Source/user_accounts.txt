@@ -1,5 +1,5 @@
-TestUser        AA 000190.00
-TestUser2       AA 000130.00
+TestUser        AA 000590.00
+TestUser2       AA 000132.50
 TestUser3       BS 000300.00
 SellUser        SS 000040.00
 FSUserTest      FS 000130.00

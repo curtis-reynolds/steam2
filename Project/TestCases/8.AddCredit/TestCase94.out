@@ -1,5 +1,2 @@
-Please Enter Username
-Successful admin login as AdminUsername!
-Enter user to give credit to
-Enter amount
-Error: User account does not exist.
+User 'TestUser' logged in. Current user type: Admin.
+Error: User 'NonExistingUser' not found.

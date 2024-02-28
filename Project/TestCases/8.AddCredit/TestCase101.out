@@ -1,3 +1,2 @@
-Please Enter Username
-Successful admin login as AdminUsername!
-Error: No user account specified.
+User 'TestUser' logged in. Current user type: Admin.
+Error: User '' not found.

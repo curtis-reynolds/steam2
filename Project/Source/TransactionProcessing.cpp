@@ -149,7 +149,7 @@ void TransactionProcessing::processAddCreditTransaction(const std::vector<std::s
 
     // Add the credit to the user's account
     userAccounts.addCredit(username, amount);
-    std::cout << "Successfully added $" << amount << " to " << username << "'s account." << std::endl;
+    //std::cout << "Successfully added $" << amount << " to " << username << "'s account." << std::endl;
 
     // Save transaction to the daily transaction file
 }
