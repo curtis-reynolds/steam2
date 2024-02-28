@@ -275,6 +275,10 @@ void UserAccounts::addCredit(const std::string& username, float amount) {
         return;
     }
 
+    // print success message
+    // like std::cout << "Refund of $" << amount << " from '" << sellerUsername << "' to '" << buyerUsername << "' processed successfully." << std::endl;
+    std::cout << "Refund of $" << amount << " to " << username << "'s account." << std::endl;
+
     // After updating the credit for the user, save the updated accounts back to the file.
     saveAccounts();
 }

@@ -57,6 +57,8 @@ void TransactionProcessing::processSellTransaction(const std::vector<std::string
 
     // Add the game to the inventory
     gameInventory.addGame(gameName, price, sellerUsername);
+
+    // Save transaction to the daily transaction file
 }
 
 // Processes a buy transaction, allowing a user to purchase a game.
@@ -105,6 +107,8 @@ void TransactionProcessing::processBuyTransaction(const std::vector<std::string>
     gameCollection.addGameToUser(buyerUsername, gameName);
 
     std::cout << "Purchase successful. " << gameName << " has been added to " << buyerUsername << "'s collection." << std::endl;
+
+    // save transaction to the daily transaction file
 }
 
 
@@ -148,7 +152,6 @@ void TransactionProcessing::processAddCreditTransaction(const std::vector<std::s
     std::cout << "Successfully added $" << amount << " to " << username << "'s account." << std::endl;
 
     // Save transaction to the daily transaction file
-    // This part requires implementation based on how you're handling transaction logging
 }
 
 
@@ -162,6 +165,18 @@ void TransactionProcessing::processRefund(const std::string& buyerUsername, cons
     }
     if (!userAccounts.userExists(sellerUsername)) {
         std::cerr << "Error: Seller username does not exist." << std::endl;
+        return;
+    }
+
+    // ensure the amount isn't just 0
+    if (amount <= 0) {
+        std::cerr << "Error: Invalid refund amount." << std::endl;
+        return;
+    }
+
+    // if buyer and seller are same username return error
+    if (buyerUsername == sellerUsername) {
+        std::cerr << "Error: Buyer and seller usernames cannot be the same." << std::endl;
         return;
     }
 
@@ -181,8 +196,8 @@ void TransactionProcessing::processRefund(const std::string& buyerUsername, cons
     userAccounts.addCredit(buyerUsername, amount); // Add the refund amount to the buyer's account
     userAccounts.deductCredit(sellerUsername, amount); // Deduct the refund amount from the seller's account
 
-    std::cout << "Refund of $" << amount << " from '" << sellerUsername << "' to '" << buyerUsername << "' processed successfully." << std::endl;
+    //std::cout << "Refund of $" << amount << " from '" << sellerUsername << "' to '" << buyerUsername << "' processed successfully." << std::endl;
     
-    // Optionally, log this transaction to the daily transaction file
+    // log this transaction to the daily transaction file
 }
 

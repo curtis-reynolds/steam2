@@ -1,7 +1,8 @@
 TestUser        AA 000190.00
 TestUser2       AA 000130.00
-TestUser3       BS 000260.00
-SellUser        SS 000140.00
+TestUser3       BS 000300.00
+SellUser        SS 000040.00
 FSUserTest      FS 000130.00
 NoCredits       BS 000000.00
+OverMax         FS 999990.00
 END             __ 000000000
