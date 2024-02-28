@@ -1,5 +1,2 @@
-Please Enter Username
-Successful admin login as AdminUsername!
-Enter user to give credit to
-Enter amount
-Error: Amount must be greater than $0.00.
+User 'TestUser' logged in. Current user type: Admin.
+Error: Invalid amount. Must be between $0 and $1000.

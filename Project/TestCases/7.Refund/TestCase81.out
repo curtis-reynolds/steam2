@@ -1,6 +1,2 @@
-Please Enter Username
-Successful admin login as AdminUsername!
-Buyer's username
-Seller's username
-Amount of credit to transfer
-Error: Refund amount must be a valid number.
+User 'TestUser' logged in. Current user type: Admin.
+Invalid input for amount. Please enter a numeric value.

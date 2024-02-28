@@ -1,4 +1,3 @@
-Successful non-admin login!
-Enter user to give credit to
-Enter amount
-Error: Daily limit exceeded.
+User 'SellUser' logged in. Current user type: Sell Standard.
+$500 added to SellUser's account.
+Error: Daily Limit exceeded.

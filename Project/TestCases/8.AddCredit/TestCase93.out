@@ -1,2 +1,3 @@
-Logged out successfully
-Error: No user logged in.
+User 'TestUser' logged in. Current user type: Admin.
+User 'TestUser' logged out.
+Please login to access this feature.

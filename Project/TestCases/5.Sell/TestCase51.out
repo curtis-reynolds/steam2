@@ -1,4 +1,2 @@
-Please Enter Username
-Successful admin login as UserAdmin!
-Enter game name
- Sorry that game name is already taken. 
+User 'TestUser' logged in. Current user type: Admin.
+Error: Game already exists in inventory.

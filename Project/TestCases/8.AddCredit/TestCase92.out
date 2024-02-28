@@ -1,5 +1,2 @@
-Successful non-admin login!
-Enter user to give credit to
-Enter amount
-Credit added successfully to UserAccount
-New balance: $200.00.
+User 'FSUserTest' logged in. Current user type: Full Standard.
+$200 added to FSUserTest's account.

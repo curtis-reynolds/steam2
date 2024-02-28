@@ -1,3 +1,2 @@
-Please Enter Username
-Successful buy-standard login as buyStandardUser!
-Error: buy-standard users can't perform privileged transactions.
+User 'TestUser3' logged in. Current user type: Buy Standard.
+Error: Only admin users can delete accounts.

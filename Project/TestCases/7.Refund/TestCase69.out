@@ -1,7 +1,2 @@
-Please Enter Username
-Successful admin login as AdminUsername!
-Buyer's username
-Seller's username
-Amount of credit to transfer
-Initiating refund...
-Refund successful from SellerUser to BuyerUser amount $100.00!
+User 'TestUser' logged in. Current user type: Admin.
+$20 added to TestUser3's account.

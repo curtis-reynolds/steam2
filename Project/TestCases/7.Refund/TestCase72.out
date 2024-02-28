@@ -1,3 +1,2 @@
-Please Enter Username
-Successful sell-standard login as sellStandardUser!
-Error: Unauthorized transaction type for sell-standard user.
+User 'SellUser' logged in. Current user type: Sell Standard.
+This action is only available to admin users.

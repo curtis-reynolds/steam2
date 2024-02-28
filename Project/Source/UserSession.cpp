@@ -58,7 +58,16 @@ void UserSession::login() {
             currentUserType = UserType::None; // Handle unknown user type
         }
 
-        std::cout << "User '" << currentUser << "' logged in with $" << std::fixed << std::setprecision(2) << credit << " available credit." << std::endl;
+        // convert userType to string
+        switch (currentUserType) {
+            case UserType::Admin: userTypeStr = "Admin"; break;
+            case UserType::FullStandard: userTypeStr = "Full Standard"; break;
+            case UserType::BuyStandard: userTypeStr = "Buy Standard"; break;
+            case UserType::SellStandard: userTypeStr = "Sell Standard"; break;
+            default: userTypeStr = "Unknown"; break;
+        }
+
+        std::cout << "User '" << currentUser << "' logged in. Current user type: "  << userTypeStr << "." << std::endl;
         break;
     }
 

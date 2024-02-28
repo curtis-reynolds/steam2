@@ -66,15 +66,43 @@ void GameInventory::addGame(const std::string& gameName, float price, const std:
         std::cerr << "Error: Game name exceeds maximum length of 25 characters." << std::endl;
         return;
     }
+    // check if game name is blank
+    if (gameName.length() == 0) {
+        std::cerr << "Error: Game name cannot be blank." << std::endl;
+        return;
+    }
+    // if game name is just spaces
+    if (gameName.find_first_not_of(' ') == std::string::npos) {
+        std::cerr << "Error: Game name cannot be just spaces." << std::endl;
+        return;
+    }
+    // if game name has special characters
+    if (gameName.find_first_of("!@#$%^&*()_+{}|:<>?") != std::string::npos) {
+        std::cerr << "Error: Game name cannot contain special characters." << std::endl;
+        return;
+    }
     // Checks if the price exceeds the maximum allowed value.
     if (price > 999.99) {
         std::cerr << "Error: Price exceeds maximum allowed value." << std::endl;
+        return;
+    }
+    // Checks if the price is less than or equal to zero.
+    if (price <= 0) {
+        std::cerr << "Error: Price must be greater than zero." << std::endl;
+        return;
+    }
+    // check if the price is just blank
+    if (std::to_string(price).length() == 0) {
+        std::cerr << "Error: Price cannot be blank." << std::endl;
         return;
     }
 
     // If all checks pass, creates a new Game object and adds it to the inventory vector.
     Game newGame(gameName, price, sellerUsername);
     inventory.push_back(newGame);
+
+    // print success message
+    std::cout << "Game '" << gameName << "' is now up for sale." << std::endl;
 
     // Then, calls saveInventory to write the updated inventory back to the file.
     saveInventory();

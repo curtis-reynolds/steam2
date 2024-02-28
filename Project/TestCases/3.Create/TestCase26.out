@@ -1,7 +1,2 @@
-Please Enter Username
-Successful admin login as AdminUsername
-Please enter username for new user
-Please indicate the type of user (full-standard
- buy-standard
- sell-standard)
-Sell-standard User has been created
+User 'TestUser' logged in. Current user type: Admin.
+User 'UserSell' created successfully.

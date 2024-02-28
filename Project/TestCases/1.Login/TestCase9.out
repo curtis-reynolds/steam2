@@ -1,3 +1,2 @@
-Please Enter Username
-Successful full-standard login as fullStandardUser!
-Error: full-standard users can't perform privileged transactions.
+User 'FSUserTest' logged in. Current user type: Full Standard.
+Error: Only admin users can delete accounts.

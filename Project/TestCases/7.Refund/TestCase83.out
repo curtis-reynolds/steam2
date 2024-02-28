@@ -1,6 +1,2 @@
-Please Enter Username
-Successful admin login as AdminUsername!
-Buyer's username
-Seller's username
-Amount of credit to transfer
-Error: Buyer and seller cannot be the same user.
+User 'TestUser' logged in. Current user type: Admin.
+Error: Buyer and seller usernames cannot be the same.

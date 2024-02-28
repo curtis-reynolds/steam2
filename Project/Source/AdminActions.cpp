@@ -21,7 +21,7 @@ void AdminActions::createUser(const std::string& username, UserType userType, fl
     }
     // Create the user account
     userAccounts.createUser(username, userType, initialCredit);
-    std::cout << "User '" << username << "' created successfully." << std::endl;
+   // std::cout << "User '" << username << "' created successfully." << std::endl;
 }
 
 // Deletes an existing user from the system by their username.
@@ -34,7 +34,7 @@ void AdminActions::deleteUser(const std::string& username) {
     }
     // Delete the user account
     userAccounts.deleteUser(username);
-    std::cout << "User '" << username << "' deleted successfully." << std::endl;
+  //  std::cout << "User '" << username << "' deleted successfully." << std::endl;
 }
 
 // Issues a refund from one user's account (seller) to another (buyer) by their usernames and the specified amount.

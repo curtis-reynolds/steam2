@@ -8,7 +8,7 @@
 class GameCollection {
 private:
     std::unordered_map<std::string, std::vector<std::string>> userGameCollections; // Maps usernames to lists of owned games
-    std::string collectionFilePath = "gamescollection.txt"; // Path to the game collection file
+    std::string collectionFilePath; // Path to the game collection file
 
     void loadCollection(); // Load game collections from a file
     void saveCollection(); // Save game collections to a file

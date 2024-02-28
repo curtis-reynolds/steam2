@@ -1,3 +1,2 @@
-Please Enter Username
-Successful buy-standard login as buyStandardUser!
-Error: Unauthorized transaction type for buy-standard user.
+User 'TestUser3' logged in. Current user type: Buy Standard.
+This action is only available to admin users.

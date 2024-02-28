@@ -1,4 +1,2 @@
-Please Enter Username
-Successful admin login as UserAdmin!
-Enter game name
-Invalid name for game
+User 'TestUser' logged in. Current user type: Admin.
+Error: Game name cannot contain special characters.

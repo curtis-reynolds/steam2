@@ -1,3 +1,2 @@
-Please Enter Username
-Successful sell-standard login as sellStandardUser!
- You must be logged in any type of account except standard-sell to buy games.
+User 'SellUser' logged in. Current user type: Sell Standard.
+Error: Sell-standard accounts are not eligible to purchase games.

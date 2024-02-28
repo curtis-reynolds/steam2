@@ -1,4 +1,2 @@
-Please Enter Username
-Successful admin Login
-Enter username to delete
-Error: User to delete does not exist.
+User 'TestUser' logged in. Current user type: Admin.
+Error: User not found.

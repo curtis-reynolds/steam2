@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 
     // Main loop that keeps the application running until the user chooses to exit.
     while (!std::cin.eof() && running) {
-        displayMenu(); // Displays the main menu options to the user.
+        //displayMenu(); // Displays the main menu options to the user. Commented out for now
         std::string input;
         std::getline(std::cin, input); // Read the line of text
 
@@ -222,7 +222,6 @@ int main(int argc, char* argv[]) {
                 break;
             }
             case 6: { // Purchase Game (Buy-standard or Admin only)
-                // Assume userSession.getCurrentUserType() checks the logged-in user's type
                 UserType currentUserType = userSession.getCurrentUserType();
                 
                 // Check if the user is allowed to purchase (not SellStandard)
