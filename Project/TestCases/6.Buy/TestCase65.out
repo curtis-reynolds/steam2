@@ -1,6 +1,2 @@
-Please Enter Username
-Successful admin login as UserAdmin!
-Enter game name
-Enter sellers username
-Game has been added to your library!
-Sorry this game has become unavailable and as a result has been removed from your Game Library
+User 'TestUser' logged in. Current user type: Admin.
+Error: The specified game is not available for sale by the user SellUser.

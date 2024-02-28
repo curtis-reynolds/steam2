@@ -1,4 +1,2 @@
-Please Enter Username
-Successful admin login as UserAdmin!
-Enter game name
-You must enter a game name!
+User 'TestUser' logged in. Current user type: Admin.
+Error: Game name cannot be blank.

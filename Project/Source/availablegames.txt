@@ -1,2 +1,3 @@
 Game Name                 TestUser         020.00
+Game Name 2               TestUser         020.00
 END                                        000000

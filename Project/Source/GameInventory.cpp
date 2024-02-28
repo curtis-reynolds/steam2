@@ -91,6 +91,11 @@ void GameInventory::addGame(const std::string& gameName, float price, const std:
         std::cerr << "Error: Price must be greater than zero." << std::endl;
         return;
     }
+    // check if the price is just blank
+    if (std::to_string(price).length() == 0) {
+        std::cerr << "Error: Price cannot be blank." << std::endl;
+        return;
+    }
 
     // If all checks pass, creates a new Game object and adds it to the inventory vector.
     Game newGame(gameName, price, sellerUsername);

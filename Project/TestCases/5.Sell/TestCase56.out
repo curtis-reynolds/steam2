@@ -1,5 +1,2 @@
-Please Enter Username
-Successful admin login as UserAdmin!
-Enter game name
-Enter Game Price
-You must enter a price!
+User 'TestUser' logged in. Current user type: Admin.
+Error: Invalid price format.

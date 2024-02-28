@@ -1,4 +1,2 @@
-Please Enter Username
-Successful admin login as UserAdmin!
-Enter game name
-Sorry that game does not exist
+User 'TestUser3' logged in. Current user type: Buy Standard.
+Error: The specified game is not available for sale by the user TestUser.
