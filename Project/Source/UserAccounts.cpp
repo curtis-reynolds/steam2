@@ -188,6 +188,29 @@ void UserAccounts::deleteUser(const std::string& username) {
     // print deletion message
     std::cout << "User '" << username << "' deleted successfully." << std::endl;
 
+    // Write Delete Transaction to the Transaction file
+    std::ostringstream transactionStream;
+    transactionStream << std::left << std::setw(2) << "02" << "_"
+                      << std::setw(15) << username << "_"
+                      << std::setw(2) << userTypeToString(getCurrentUserType(username)) << "_"
+                      << std::right << std::setw(9) << std::setfill('0') 
+                      << std::fixed << std::setprecision(2) << getUserCredit(username);
+
+    // Record end of session transaction
+    recordTransaction(transactionStream.str());
+
+    // Open transaction file for appending
+    std::ofstream transactionFile("transout.atf", std::ios::app);
+
+    // Write each transaction including end of session
+    for (const auto& transaction : transactionLogs) {
+        transactionFile << transaction << std::endl;
+    }
+    transactionFile.close(); // Close the file
+
+    // Clear transaction logs for next session
+    transactionLogs.clear();
+
     // We could write changes to the file here or in a separate method
     saveAccounts();
 }
@@ -278,6 +301,29 @@ void UserAccounts::addCredit(const std::string& username, float amount) {
     // print success message
     std::cout << "$" << amount << " added to " << username << "'s account." << std::endl;
 
+    // Write AddCredit Transaction to the Transaction file
+    std::ostringstream transactionStream;
+    transactionStream << std::left << std::setw(2) << "06" << "_"
+                      << std::setw(15) << username << "_"
+                      << std::setw(2) << userTypeToString(getCurrentUserType(username)) << "_"
+                      << std::right << std::setw(9) << std::setfill('0') 
+                      << std::fixed << std::setprecision(2) << getUserCredit(username);
+
+    // Record end of session transaction
+    recordTransaction(transactionStream.str());
+
+    // Open transaction file for appending
+    std::ofstream transactionFile("transout.atf", std::ios::app);
+
+    // Write each transaction including end of session
+    for (const auto& transaction : transactionLogs) {
+        transactionFile << transaction << std::endl;
+    }
+    transactionFile.close(); // Close the file
+
+    // Clear transaction logs for next session
+    transactionLogs.clear();
+
     // After updating the credit for the user, save the updated accounts back to the file.
     saveAccounts();
 }
@@ -342,6 +388,29 @@ void UserAccounts::processPurchase(const std::string& buyerUsername, const std::
         sellerIt->credit += price;
     }
 
+    // Write Purchase Transaction to the Transaction file
+    std::ostringstream transactionStream;
+    transactionStream << std::left << std::setw(2) << "02" << "_"
+                      << std::setw(15) << sellerUsername << "_"
+                      << std::setw(15) << buyerUsername << "_"
+                      << std::right << std::setw(9)
+                      << std::fixed << std::setprecision(2) << price;
+
+    // Record end of session transaction
+    recordTransaction(transactionStream.str());
+
+    // Open transaction file for appending
+    std::ofstream transactionFile("transout.atf", std::ios::app);
+
+    // Write each transaction including end of session
+    for (const auto& transaction : transactionLogs) {
+        transactionFile << transaction << std::endl;
+    }
+    transactionFile.close(); // Close the file
+
+    // Clear transaction logs for next session
+    transactionLogs.clear();
+
     saveAccounts(); // Save the updated accounts information
 }
 
@@ -363,4 +432,8 @@ float UserAccounts::getUserCredit(const std::string& username) const {
     // If the user is not found, you might choose to return 0 or handle this case differently
     std::cerr << "Error: User '" << username << "' not found." << std::endl;
     return 0.0f;
+}
+
+void UserAccounts::recordTransaction(const std::string& transaction) {
+    transactionLogs.push_back(transaction);
 }

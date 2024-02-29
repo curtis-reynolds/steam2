@@ -26,6 +26,7 @@ private:
 public:
     UserAccounts();
     UserAccounts(const std::string& accountsFile);
+    std::vector<std::string> transactionLogs;
     void createUser(const std::string& username, UserType type, float credit);
     void deleteUser(const std::string& username);
     bool userExists(const std::string& username);
@@ -38,6 +39,7 @@ public:
     bool hasSufficientCredit(const std::string& username, float price) const; // Check if the buyer has enough credit
     void processPurchase(const std::string& buyerUsername, const std::string& sellerUsername, float price); // Process the purchase transaction
     float getUserCredit(const std::string& username) const; 
+    void recordTransaction(const std::string& transaction);
 
     // Other necessary member functions...
 };
