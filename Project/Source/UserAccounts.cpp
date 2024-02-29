@@ -196,7 +196,7 @@ void UserAccounts::deleteUser(const std::string& username) {
                       << std::right << std::setw(9) << std::setfill('0') 
                       << std::fixed << std::setprecision(2) << getUserCredit(username);
 
-    // Record end of session transaction
+    // Record Deletion of user transaction
     recordTransaction(transactionStream.str());
 
     // Open transaction file for appending
@@ -309,7 +309,7 @@ void UserAccounts::addCredit(const std::string& username, float amount) {
                       << std::right << std::setw(9) << std::setfill('0') 
                       << std::fixed << std::setprecision(2) << getUserCredit(username);
 
-    // Record end of session transaction
+    // Record addition of creddit transaction
     recordTransaction(transactionStream.str());
 
     // Open transaction file for appending
@@ -396,7 +396,7 @@ void UserAccounts::processPurchase(const std::string& buyerUsername, const std::
                       << std::right << std::setw(9)
                       << std::fixed << std::setprecision(2) << price;
 
-    // Record end of session transaction
+    // Record purchase transaction
     recordTransaction(transactionStream.str());
 
     // Open transaction file for appending

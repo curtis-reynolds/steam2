@@ -13,12 +13,14 @@ private:
 
 public:
     AdminActions(UserAccounts& userAccounts, TransactionProcessing& transactionProcessing);
+    std::vector<std::string> transactionLogs;
 
     void createUser(const std::string& username, UserType userType, float initialCredit);
     void deleteUser(const std::string& username);
     void issueRefund(const std::string& buyerUsername, const std::string& sellerUsername, float amount);
     void addCredit(const std::string& username, float amount);
     void displayAllAccounts() const;
+    void recordTransaction(const std::string& transaction);
 
     // Add other administrative functions as necessary
 };

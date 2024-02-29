@@ -1,5 +1,9 @@
 #include "AdminActions.h"
 #include <iostream>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <iomanip>
 // AdminActions class uses UserAccounts to manipulate user data and TransactionProcessing for refund operations.
 #include "UserAccounts.h"
 #include "TransactionProcessing.h"
@@ -42,6 +46,28 @@ void AdminActions::deleteUser(const std::string& username) {
 void AdminActions::issueRefund(const std::string& buyerUsername, const std::string& sellerUsername, float amount) {
     // Process the refund
     transactionProcessing.processRefund(buyerUsername, sellerUsername, amount);
+    // Write Purchase Transaction to the Transaction file
+    std::ostringstream transactionStream;
+    transactionStream << std::left << std::setw(2) << "05" << "_"
+                      << std::setw(15) << sellerUsername << "_"
+                      << std::setw(15) << buyerUsername << "_"
+                      << std::right << std::setw(9)
+                      << std::fixed << std::setprecision(2) << amount;
+
+    // Record refund transaction
+    recordTransaction(transactionStream.str());
+
+    // Open transaction file for appending
+    std::ofstream transactionFile("transout.atf", std::ios::app);
+
+    // Write each transaction including end of session
+    for (const auto& transaction : transactionLogs) {
+        transactionFile << transaction << std::endl;
+    }
+    transactionFile.close(); // Close the file
+
+    // Clear transaction logs for next session
+    transactionLogs.clear();
     //std::cout << "Refund of " << amount << " from '" << sellerUsername << "' to '" << buyerUsername << "' processed successfully." << std::endl;
 }
 
@@ -60,4 +86,8 @@ void AdminActions::displayAllAccounts() const {
     for (const auto& info : accountsInfo) {
         std::cout << info << std::endl;
     }
+}
+
+void AdminActions::recordTransaction(const std::string& transaction) {
+    transactionLogs.push_back(transaction);
 }

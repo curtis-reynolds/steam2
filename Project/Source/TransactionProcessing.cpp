@@ -1,5 +1,9 @@
 #include "TransactionProcessing.h"
 #include <iostream>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <iomanip>
 // TransactionProcessing class relies on UserAccounts and GameInventory to process transactions.
 #include "UserAccounts.h"
 #include "GameInventory.h"
@@ -59,6 +63,28 @@ void TransactionProcessing::processSellTransaction(const std::vector<std::string
     gameInventory.addGame(gameName, price, sellerUsername);
 
     // Save transaction to the daily transaction file
+    // Write Sell Transaction to the Transaction file
+    std::ostringstream transactionStream;
+    transactionStream << std::left << std::setw(2) << "03" << "_"
+                      << std::setw(15) << gameName << "_"
+                      << std::setw(15) << sellerUsername << "_"
+                      << std::right << std::setw(9)
+                      << std::fixed << std::setprecision(2) << price;
+
+    // Record sell transaction
+    recordTransaction(transactionStream.str());
+
+    // Open transaction file for appending
+    std::ofstream transactionFile("transout.atf", std::ios::app);
+
+    // Write each transaction including end of session
+    for (const auto& transaction : transactionLogs) {
+        transactionFile << transaction << std::endl;
+    }
+    transactionFile.close(); // Close the file
+
+    // Clear transaction logs for next session
+    transactionLogs.clear();
 }
 
 // Processes a buy transaction, allowing a user to purchase a game.
@@ -201,3 +227,6 @@ void TransactionProcessing::processRefund(const std::string& buyerUsername, cons
     // log this transaction to the daily transaction file
 }
 
+void TransactionProcessing::recordTransaction(const std::string& transaction) {
+    transactionLogs.push_back(transaction);
+}
