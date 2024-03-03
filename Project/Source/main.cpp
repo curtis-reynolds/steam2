@@ -67,6 +67,11 @@ int main(int argc, char* argv[]) {
         std::string input;
         std::getline(std::cin, input); // Read the line of text
 
+        // Check if the input is empty (blank line)
+        if (input.empty()) {
+            continue; // Skip to the next iteration of the loop
+        }
+
         // Map of string commands to choice numbers
         std::unordered_map<std::string, int> commandMap = {
             {"login", 1},
@@ -141,11 +146,11 @@ int main(int argc, char* argv[]) {
                 float initialCredit;
                 UserType userType;
 
-                std::cout << "Enter username: ";
+                // std::cout << "Enter username: ";
                 std::getline(std::cin, username);
-                std::cout << "Enter user type (Admin, FullStandard, BuyStandard, SellStandard): ";
+                // std::cout << "Enter user type (Admin, FullStandard, BuyStandard, SellStandard): ";
                 std::getline(std::cin, userTypeStr);
-                std::cout << "Enter initial credit: ";
+                // std::cout << "Enter initial credit: ";
                 std::getline(std::cin, initialCreditStr);
 
                 // Attempt to convert initialCreditStr to float
@@ -185,7 +190,7 @@ int main(int argc, char* argv[]) {
                 }
                 std::string username;
 
-                std::cout << "Enter username to delete: ";
+                // std::cout << "Enter username to delete: ";
                 std::getline(std::cin, username);
                 // Check if the user is attempting to delete their own account in the same session
                 if (username == userSession.getCurrentUser()) {
@@ -201,7 +206,7 @@ int main(int argc, char* argv[]) {
                     std::vector<std::string> args;
                     std::string gameName, sellerUsername, priceStr;
 
-                    std::cout << "Enter game name: ";
+                    // std::cout << "Enter game name: ";
                     std::getline(std::cin, gameName);
                     args.push_back(gameName);
 
@@ -209,7 +214,7 @@ int main(int argc, char* argv[]) {
                     sellerUsername = userSession.getCurrentUser();
                     args.push_back(sellerUsername);
 
-                    std::cout << "Enter price: ";
+                    // std::cout << "Enter price: ";
                     std::getline(std::cin, priceStr);
                     args.push_back(priceStr);
 
@@ -232,9 +237,9 @@ int main(int argc, char* argv[]) {
 
                 // Prompt for game name and seller's username
                 std::string gameName, sellerUsername;
-                std::cout << "Enter the name of the game you wish to purchase: ";
+                // std::cout << "Enter the name of the game you wish to purchase: ";
                 std::getline(std::cin, gameName);
-                std::cout << "Enter the seller's username: ";
+                // std::cout << "Enter the seller's username: ";
                 std::getline(std::cin, sellerUsername);
 
                 // Retrieve the buyer's username from the session
@@ -252,11 +257,11 @@ int main(int argc, char* argv[]) {
                 std::vector<std::string> args;
                 if (userSession.getCurrentUserType() == UserType::Admin) {
                     std::string username;
-                    std::cout << "Enter username: ";
+                    // std::cout << "Enter username: ";
                     std::getline(std::cin, username);
                     args.push_back(username);
                     std::string amountStr;
-                    std::cout << "Enter amount of credit to add: ";
+                    // std::cout << "Enter amount of credit to add: ";
                     std::getline(std::cin, amountStr);
                     args.push_back(amountStr);
                         
@@ -266,7 +271,7 @@ int main(int argc, char* argv[]) {
                 std::string username = userSession.getCurrentUser();
                 args.push_back(username);
                 std::string amountStr;
-                std::cout << "Enter amount of credit to add: ";
+                // std::cout << "Enter amount of credit to add: ";
                 std::getline(std::cin, amountStr);
                 args.push_back(amountStr);
 
@@ -281,17 +286,17 @@ int main(int argc, char* argv[]) {
                 }
                 // Ask for the buyer's username
                 std::string buyerUsername;
-                std::cout << "Enter the buyer's username: ";
+                // std::cout << "Enter the buyer's username: ";
                 std::getline(std::cin, buyerUsername);
 
                 // Ask for the seller's username
                 std::string sellerUsername;
-                std::cout << "Enter the seller's username: ";
+                // std::cout << "Enter the seller's username: ";
                 std::getline(std::cin, sellerUsername);
 
                 // Ask for the amount of credit to transfer
                 std::string amountStr;
-                std::cout << "Enter the amount of credit to transfer: ";
+                // std::cout << "Enter the amount of credit to transfer: ";
                 std::getline(std::cin, amountStr);
                 float amount;
                 try {
