@@ -136,7 +136,7 @@ int main(int argc, char* argv[]) {
             case 3: {// Create User (Admin only)
                 // First, check if the current user is an admin
                 if (userSession.getCurrentUserType() != UserType::Admin) {
-                    std::cerr << "Error: Only admin users can create new accounts." << std::endl;
+                    std::cout << "Error: Only admin users can create new accounts." << std::endl;
                     break; // Exit this case since the current user is not an admin
                 }
 
@@ -157,10 +157,10 @@ int main(int argc, char* argv[]) {
                 try {
                     initialCredit = std::stof(initialCreditStr);
                 } catch (const std::invalid_argument& ia) {
-                    std::cerr << "Invalid initial credit input, please enter a numeric value." << std::endl;
+                    std::cout << "Invalid initial credit input, please enter a numeric value." << std::endl;
                     break; // Exit this case to avoid creating a user with an invalid credit
                 } catch (const std::out_of_range& oor) {
-                    std::cerr << "Initial credit input is out of range." << std::endl;
+                    std::cout << "Initial credit input is out of range." << std::endl;
                     break;
                 }
 
@@ -175,7 +175,7 @@ int main(int argc, char* argv[]) {
                 } else if (userTypeStr == "sellstandard" || userTypeStr == "sell standard") {
                     userType = UserType::SellStandard;
                 } else {
-                    std::cerr << "Invalid user type specified. Please try again." << std::endl;
+                    std::cout << "Invalid user type specified. Please try again." << std::endl;
                     break; // Exit this case to avoid creating a user with an invalid type
                 }
 
@@ -185,7 +185,7 @@ int main(int argc, char* argv[]) {
             case 4: { // Delete User (Admin only)
                 // First check if the current user is an admin
                 if (userSession.getCurrentUserType() != UserType::Admin) {
-                    std::cerr << "Error: Only admin users can delete accounts." << std::endl;
+                    std::cout << "Error: Only admin users can delete accounts." << std::endl;
                     break; // Exit this case since the current user is not an admin
                 }
                 std::string username;
@@ -194,7 +194,7 @@ int main(int argc, char* argv[]) {
                 std::getline(std::cin, username);
                 // Check if the user is attempting to delete their own account in the same session
                 if (username == userSession.getCurrentUser()) {
-                    std::cerr << "Error: You cannot delete your own account." << std::endl;
+                    std::cout << "Error: You cannot delete your own account." << std::endl;
                     break; // Exit this case to avoid deleting the user's own account
                 }
 
@@ -302,10 +302,10 @@ int main(int argc, char* argv[]) {
                 try {
                     amount = std::stof(amountStr);
                 } catch (const std::invalid_argument& ia) {
-                    std::cerr << "Invalid input for amount. Please enter a numeric value." << std::endl;
+                    std::cout << "Invalid input for amount. Please enter a numeric value." << std::endl;
                     break; // Exit this case to avoid further processing with invalid input
                 } catch (const std::out_of_range& oor) {
-                    std::cerr << "Amount is out of range." << std::endl;
+                    std::cout << "Amount is out of range." << std::endl;
                     break; // Exit this case to avoid further processing with invalid input
                 }
 

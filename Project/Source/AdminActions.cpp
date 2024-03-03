@@ -20,7 +20,7 @@ AdminActions::AdminActions(UserAccounts& userAccounts, TransactionProcessing& tr
 void AdminActions::createUser(const std::string& username, UserType userType, float initialCredit) {
     // Check if user already exists
     if (userAccounts.userExists(username)) {
-        std::cerr << "Error: User '" << username << "' already exists." << std::endl;
+        std::cout << "Error: User '" << username << "' already exists." << std::endl;
         return;
     }
     // Create the user account
@@ -33,7 +33,7 @@ void AdminActions::createUser(const std::string& username, UserType userType, fl
 void AdminActions::deleteUser(const std::string& username) {
     // Check if user exists
     if (!userAccounts.userExists(username)) {
-        std::cerr << "Error: User '" << username << "' does not exist." << std::endl;
+        std::cout << "Error: User '" << username << "' does not exist." << std::endl;
         return;
     }
     // Delete the user account

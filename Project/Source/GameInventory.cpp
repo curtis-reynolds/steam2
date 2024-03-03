@@ -58,42 +58,42 @@ void GameInventory::addGame(const std::string& gameName, float price, const std:
     if (std::any_of(inventory.begin(), inventory.end(), [&](const Game& game) {
         return game.gameName == gameName;
     })) {
-        std::cerr << "Error: Game already exists in inventory." << std::endl;
+        std::cout << "Error: Game already exists in inventory." << std::endl;
         return;
     }
     // Checks if the game name exceeds the maximum allowed length.
     if (gameName.length() > 25) {
-        std::cerr << "Error: Game name exceeds maximum length of 25 characters." << std::endl;
+        std::cout << "Error: Game name exceeds maximum length of 25 characters." << std::endl;
         return;
     }
     // check if game name is blank
     if (gameName.length() == 0) {
-        std::cerr << "Error: Game name cannot be blank." << std::endl;
+        std::cout << "Error: Game name cannot be blank." << std::endl;
         return;
     }
     // if game name is just spaces
     if (gameName.find_first_not_of(' ') == std::string::npos) {
-        std::cerr << "Error: Game name cannot be just spaces." << std::endl;
+        std::cout << "Error: Game name cannot be just spaces." << std::endl;
         return;
     }
     // if game name has special characters
     if (gameName.find_first_of("!@#$%^&*()_+{}|:<>?") != std::string::npos) {
-        std::cerr << "Error: Game name cannot contain special characters." << std::endl;
+        std::cout << "Error: Game name cannot contain special characters." << std::endl;
         return;
     }
     // Checks if the price exceeds the maximum allowed value.
     if (price > 999.99) {
-        std::cerr << "Error: Price exceeds maximum allowed value." << std::endl;
+        std::cout << "Error: Price exceeds maximum allowed value." << std::endl;
         return;
     }
     // Checks if the price is less than or equal to zero.
     if (price <= 0) {
-        std::cerr << "Error: Price must be greater than zero." << std::endl;
+        std::cout << "Error: Price must be greater than zero." << std::endl;
         return;
     }
     // check if the price is just blank
     if (std::to_string(price).length() == 0) {
-        std::cerr << "Error: Price cannot be blank." << std::endl;
+        std::cout << "Error: Price cannot be blank." << std::endl;
         return;
     }
 

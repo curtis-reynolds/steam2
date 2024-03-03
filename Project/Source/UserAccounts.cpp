@@ -103,41 +103,41 @@ void UserAccounts::createUser(const std::string& username, UserType type, float 
     if (std::any_of(accounts.begin(), accounts.end(), [&](const UserAccount& account) {
         return account.username == username;
     })) {
-        std::cerr << "Error: Username already exists." << std::endl;
+        std::cout << "Error: Username already exists." << std::endl;
         return;
     }
     // Also checks if the username exceeds the maximum allowed length, enforcing constraints on user data.
     if (username.length() > 15) {
-        std::cerr << "Error: Username exceeds maximum length of 15 characters." << std::endl;
+        std::cout << "Error: Username exceeds maximum length of 15 characters." << std::endl;
         return;
     }
     // Check if the initial credit exceeds the maximum allowed value.
     if (credit > 999999.99) {
-        std::cerr << "Error: Initial credit exceeds maximum allowed value." << std::endl;
+        std::cout << "Error: Initial credit exceeds maximum allowed value." << std::endl;
         return;
     }
 
     // ensure the user isn't entering a blank username like spaces
     if (username.length() == 0) {
-        std::cerr << "Error: Username cannot be blank." << std::endl;
+        std::cout << "Error: Username cannot be blank." << std::endl;
         return;
     }
 
     // ensure the username doesn't contain special characters
     if (username.find_first_of("!@#$%^&*()_+-=[]{}|;:,.<>?") != std::string::npos) {
-        std::cerr << "Error: Username cannot contain special characters." << std::endl;
+        std::cout << "Error: Username cannot contain special characters." << std::endl;
         return;
     }
 
     // ensure the username isn't all spaces
     if (username.find_first_not_of(" ") == std::string::npos) {
-        std::cerr << "Error: Username cannot be all spaces." << std::endl;
+        std::cout << "Error: Username cannot be all spaces." << std::endl;
         return;
     }
 
     // ensure the username doesn't contain tabs
     if (username.find_first_of("\t") != std::string::npos) {
-        std::cerr << "Error: Username cannot contain tabs." << std::endl;
+        std::cout << "Error: Username cannot contain tabs." << std::endl;
         return;
     }
 
@@ -162,7 +162,7 @@ void UserAccounts::deleteUser(const std::string& username) {
     });
     // If the user is not found, an error message is displayed.
     if (it == accounts.end()) {
-        std::cerr << "Error: User not found." << std::endl;
+        std::cout << "Error: User not found." << std::endl;
         return;
     }
 
@@ -173,13 +173,13 @@ void UserAccounts::deleteUser(const std::string& username) {
 
     // if there is no username entered
     if (username.length() == 0) {
-        std::cerr << "Error: Username cannot be blank." << std::endl;
+        std::cout << "Error: Username cannot be blank." << std::endl;
         return;
     }
 
     // if the username is just spaces
     if (username.find_first_not_of(" ") == std::string::npos) {
-        std::cerr << "Error: Username cannot be blank." << std::endl;
+        std::cout << "Error: Username cannot be blank." << std::endl;
         return;
     }
 
@@ -272,11 +272,11 @@ void UserAccounts::addCredit(const std::string& username, float amount) {
     for (const auto& account : accounts) {
         if (account.username == username) {
             if (account.credit == 999999.99) {
-                std::cerr << "Error: User already has maximum credit." << std::endl;
+                std::cout << "Error: User already has maximum credit." << std::endl;
                 return;
             }
             if (account.credit + amount > 999999.99) {
-                std::cerr << "Error: Adding the specified amount would exceed the maximum credit." << std::endl;
+                std::cout << "Error: Adding the specified amount would exceed the maximum credit." << std::endl;
                 return;
             }
         }
@@ -294,7 +294,7 @@ void UserAccounts::addCredit(const std::string& username, float amount) {
 
     if (!userFound) {
         // If the user is not found, display an error message.
-        std::cerr << "Error: User '" << username << "' not found." << std::endl;
+        std::cout << "Error: User '" << username << "' not found." << std::endl;
         return;
     }
 
@@ -430,7 +430,7 @@ float UserAccounts::getUserCredit(const std::string& username) const {
         }
     }
     // If the user is not found, you might choose to return 0 or handle this case differently
-    std::cerr << "Error: User '" << username << "' not found." << std::endl;
+    std::cout << "Error: User '" << username << "' not found." << std::endl;
     return 0.0f;
 }
 

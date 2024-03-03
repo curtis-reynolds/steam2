@@ -52,10 +52,10 @@ void TransactionProcessing::processSellTransaction(const std::vector<std::string
     try {
         price = std::stof(args[2]);
     } catch (const std::invalid_argument& e) {
-        std::cerr << "Error: Invalid price format." << std::endl;
+        std::cout << "Error: Invalid price format." << std::endl;
         return;
     } catch (const std::out_of_range& e) {
-        std::cerr << "Error: Price is out of range." << std::endl;
+        std::cout << "Error: Price is out of range." << std::endl;
         return;
     }
 
@@ -104,13 +104,13 @@ void TransactionProcessing::processBuyTransaction(const std::vector<std::string>
 
     // if the seller username does not match an existing user, return an error
     if (!userAccounts.userExists(sellerUsername)) {
-        std::cerr << "Error: The specified seller does not exist." << std::endl;
+        std::cout << "Error: The specified seller does not exist." << std::endl;
         return;
     }
 
     // Validate that the game exists and is available for sale
     if (!gameInventory.gameExists(gameName)) {
-        std::cerr << "Error: The specified game is not available for sale by the user " << sellerUsername << "." << std::endl;
+        std::cout << "Error: The specified game is not available for sale by the user " << sellerUsername << "." << std::endl;
         return;
     }
 
@@ -118,13 +118,13 @@ void TransactionProcessing::processBuyTransaction(const std::vector<std::string>
 
     // Check if the buyer has sufficient credit
     if (!userAccounts.hasSufficientCredit(buyerUsername, gamePrice)) {
-        std::cerr << "Error: The buyer does not have sufficient credit to complete the purchase." << std::endl;
+        std::cout << "Error: The buyer does not have sufficient credit to complete the purchase." << std::endl;
         return;
     }
 
     // Check if the buyer already owns the game
     if (gameCollection.ownsGame(buyerUsername, gameName)) {
-        std::cerr << "Error: The buyer already owns a copy of this game." << std::endl;
+        std::cout << "Error: The buyer already owns a copy of this game." << std::endl;
         return;
     }
 
@@ -161,15 +161,15 @@ void TransactionProcessing::processAddCreditTransaction(const std::vector<std::s
     try {
         amount = std::stof(args[1]);
     } catch (const std::invalid_argument& e) {
-        std::cerr << "Error: Invalid amount format." << std::endl;
+        std::cout << "Error: Invalid amount format." << std::endl;
         return;
     } catch (const std::out_of_range& e) {
-        std::cerr << "Error: Amount is out of range." << std::endl;
+        std::cout << "Error: Amount is out of range." << std::endl;
         return;
     }
 
     if (amount <= 0 || amount > 1000) {
-        std::cerr << "Error: Invalid amount. Must be between $0 and $1000." << std::endl;
+        std::cout << "Error: Invalid amount. Must be between $0 and $1000." << std::endl;
         return;
     }
 
@@ -186,35 +186,35 @@ void TransactionProcessing::processAddCreditTransaction(const std::vector<std::s
 void TransactionProcessing::processRefund(const std::string& buyerUsername, const std::string& sellerUsername, float amount) {
     // Verify both accounts exist
     if (!userAccounts.userExists(buyerUsername)) {
-        std::cerr << "Error: Buyer username does not exist." << std::endl;
+        std::cout << "Error: Buyer username does not exist." << std::endl;
         return;
     }
     if (!userAccounts.userExists(sellerUsername)) {
-        std::cerr << "Error: Seller username does not exist." << std::endl;
+        std::cout << "Error: Seller username does not exist." << std::endl;
         return;
     }
 
     // ensure the amount isn't just 0
     if (amount <= 0) {
-        std::cerr << "Error: Invalid refund amount." << std::endl;
+        std::cout << "Error: Invalid refund amount." << std::endl;
         return;
     }
 
     // if buyer and seller are same username return error
     if (buyerUsername == sellerUsername) {
-        std::cerr << "Error: Buyer and seller usernames cannot be the same." << std::endl;
+        std::cout << "Error: Buyer and seller usernames cannot be the same." << std::endl;
         return;
     }
 
     // check if the seller is SellStandard user
     if (userAccounts.getCurrentUserType(sellerUsername) != UserType::SellStandard) {
-        std::cerr << "Error: Seller is not a standard seller." << std::endl;
+        std::cout << "Error: Seller is not a standard seller." << std::endl;
         return;
     } 
 
     // Check if the seller has enough credit
     if (!userAccounts.hasSufficientCredit(sellerUsername, amount)) {
-        std::cerr << "Error: Seller does not have sufficient credit to cover the refund." << std::endl;
+        std::cout << "Error: Seller does not have sufficient credit to cover the refund." << std::endl;
         return;
     }
 
