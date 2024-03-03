@@ -47,3 +47,173 @@
 00_TestUser       _AA_000590.00
 00_TestUser       _AA_000590.00
 00_TestUser       _AA_000590.00
+06_FSUserTest     _FS_000230.00
+06_TestUser3      _BS_000400.00
+06_SellUser       _SS_000140.00
+00_FSUserTest     _FS_000230.00
+00_TestUser3      _BS_000400.00
+00_SellUser       _SS_000140.00
+00_TestUser       _AA_000590.00
+00_TestUser       _AA_000590.00
+00_TestUser       _AA_000590.00
+00_TestUser       _AA_000590.00
+02_UserFull       ____000000.00
+03_Game Name 2    _TestUser       _    20.00
+03_GameName1      _SellUser       _    20.00
+03_GameName??&!$  _TestUser       _    20.00
+03_GameName23     _TestUser       _  1000.00
+03_Game Name      _TestUser       _    20.00
+03_New Game       _TestUser       _    20.00
+03_Another Game   _TestUser       _    30.00
+00_TestUser       _AA_000590.00
+03_My Game 3      _TestUser       _    20.00
+03_               _TestUser       _    20.00
+02_TestUser       _FSUserTest     _    20.00
+02_TestUser       _TestUser3      _    20.00
+00_TestUser       _AA_000630.00
+06_TestUser3      _BS_000400.00
+05_SellUser       _TestUser3      _    20.00
+05_SellUser       _NonExistingBuyer_   100.00
+05_NonExistingSeller_TestUser3      _    20.00
+05_SellUser       _TestUser3      _ 10000.00
+00_TestUser       _AA_000630.00
+05_SellUser       _TestUser3      _  1500.00
+05_SellUser       _TestUser3      _     0.00
+05_SellUser       _TestUser3      _   -50.00
+05_SellUser       _OverMax        _    20.00
+05_SellUser       _SellUser       _   100.00
+05_SellUser       _TestUser33     _   100.00
+05_IncorrectSeller_TestUser3      _   100.00
+06_TestUser2      _AA_000134.50
+06_TestUser3      _BS_000402.00
+06_TestUser       _AA_000830.00
+06_FSUserTest     _FS_000310.00
+06_TestUser3      _BS_000502.00
+06_FSUserTest     _FS_000510.00
+00_TestUser       _AA_000830.00
+06_FSUserTest     _FS_000610.00
+06_TestUser3      _BS_000602.00
+06_SellUser       _SS_000200.00
+00_FSUserTest     _FS_000610.00
+00_TestUser3      _BS_000602.00
+00_SellUser       _SS_000200.00
+00_TestUser       _AA_000830.00
+00_TestUser       _AA_000830.00
+00_TestUser       _AA_000830.00
+00_TestUser       _AA_000830.00
+02_UserFull       ____000000.00
+03_Game Name 2    _TestUser       _    20.00
+03_GameName1      _SellUser       _    20.00
+03_GameName??&!$  _TestUser       _    20.00
+03_GameName23     _TestUser       _  1000.00
+03_Game Name      _TestUser       _    20.00
+03_New Game       _TestUser       _    20.00
+03_Another Game   _TestUser       _    30.00
+00_TestUser       _AA_000830.00
+03_My Game 3      _TestUser       _    20.00
+03_               _TestUser       _    20.00
+00_TestUser       _AA_000830.00
+06_TestUser3      _BS_000622.00
+05_SellUser       _TestUser3      _    20.00
+05_SellUser       _NonExistingBuyer_   100.00
+05_NonExistingSeller_TestUser3      _    20.00
+05_SellUser       _TestUser3      _ 10000.00
+00_TestUser       _AA_000830.00
+05_SellUser       _TestUser3      _  1500.00
+05_SellUser       _TestUser3      _     0.00
+05_SellUser       _TestUser3      _   -50.00
+05_SellUser       _OverMax        _    20.00
+05_SellUser       _SellUser       _   100.00
+05_SellUser       _TestUser33     _   100.00
+05_IncorrectSeller_TestUser3      _   100.00
+06_TestUser2      _AA_000136.50
+06_TestUser3      _BS_000624.00
+06_TestUser       _AA_001030.00
+06_FSUserTest     _FS_000710.00
+06_TestUser3      _BS_000724.00
+06_FSUserTest     _FS_000910.00
+00_TestUser       _AA_001030.00
+06_FSUserTest     _FS_001010.00
+06_TestUser3      _BS_000824.00
+06_SellUser       _SS_000260.00
+00_FSUserTest     _FS_001010.00
+00_TestUser3      _BS_000824.00
+00_SellUser       _SS_000260.00
+00_TestUser       _AA_001030.00
+00_TestUser       _AA_001030.00
+00_TestUser       _AA_001030.00
+00_TestUser       _AA_001030.00
+02_UserFull       ____000000.00
+03_Game Name 2    _TestUser       _    20.00
+03_GameName1      _SellUser       _    20.00
+03_GameName??&!$  _TestUser       _    20.00
+03_GameName23     _TestUser       _  1000.00
+03_Game Name      _TestUser       _    20.00
+03_New Game       _TestUser       _    20.00
+03_Another Game   _TestUser       _    30.00
+00_TestUser       _AA_001030.00
+03_My Game 3      _TestUser       _    20.00
+03_               _TestUser       _    20.00
+00_TestUser       _AA_001030.00
+06_TestUser3      _BS_000844.00
+05_SellUser       _TestUser3      _    20.00
+05_SellUser       _NonExistingBuyer_   100.00
+05_NonExistingSeller_TestUser3      _    20.00
+05_SellUser       _TestUser3      _ 10000.00
+00_TestUser       _AA_001030.00
+05_SellUser       _TestUser3      _  1500.00
+05_SellUser       _TestUser3      _     0.00
+05_SellUser       _TestUser3      _   -50.00
+05_SellUser       _OverMax        _    20.00
+05_SellUser       _SellUser       _   100.00
+05_SellUser       _TestUser33     _   100.00
+05_IncorrectSeller_TestUser3      _   100.00
+06_TestUser2      _AA_000138.50
+06_TestUser3      _BS_000846.00
+06_TestUser       _AA_001230.00
+06_FSUserTest     _FS_001110.00
+06_TestUser3      _BS_000946.00
+06_FSUserTest     _FS_001310.00
+00_TestUser       _AA_001230.00
+06_FSUserTest     _FS_001410.00
+06_TestUser3      _BS_001046.00
+06_SellUser       _SS_000320.00
+00_FSUserTest     _FS_001410.00
+00_TestUser3      _BS_001046.00
+00_SellUser       _SS_000320.00
+00_TestUser       _AA_001230.00
+00_TestUser       _AA_001230.00
+00_TestUser       _AA_001230.00
+00_TestUser       _AA_001230.00
+02_UserFull       ____000000.00
+03_Game Name 2    _TestUser       _    20.00
+03_GameName1      _SellUser       _    20.00
+03_GameName??&!$  _TestUser       _    20.00
+03_GameName23     _TestUser       _  1000.00
+03_Game Name      _TestUser       _    20.00
+03_New Game       _TestUser       _    20.00
+03_Another Game   _TestUser       _    30.00
+00_TestUser       _AA_001230.00
+03_My Game 3      _TestUser       _    20.00
+03_               _TestUser       _    20.00
+00_TestUser       _AA_001230.00
+06_TestUser3      _BS_001066.00
+05_SellUser       _TestUser3      _    20.00
+05_SellUser       _NonExistingBuyer_   100.00
+05_NonExistingSeller_TestUser3      _    20.00
+05_SellUser       _TestUser3      _ 10000.00
+00_TestUser       _AA_001230.00
+05_SellUser       _TestUser3      _  1500.00
+05_SellUser       _TestUser3      _     0.00
+05_SellUser       _TestUser3      _   -50.00
+05_SellUser       _OverMax        _    20.00
+05_SellUser       _SellUser       _   100.00
+05_SellUser       _TestUser33     _   100.00
+05_IncorrectSeller_TestUser3      _   100.00
+06_TestUser2      _AA_000140.50
+06_TestUser3      _BS_001068.00
+06_TestUser       _AA_001430.00
+06_FSUserTest     _FS_001510.00
+06_TestUser3      _BS_001168.00
+06_FSUserTest     _FS_001710.00
+00_TestUser       _AA_001430.00

@@ -1,8 +1,10 @@
-TestUser        AA 000590.00
-TestUser2       AA 000132.50
-TestUser3       BS 000300.00
-SellUser        SS 000040.00
-FSUserTest      FS 000130.00
+TestUser        AA 001430.00
+TestUser2       AA 000140.50
+TestUser3       BS 001168.00
+SellUser        SS 000280.00
+FSUserTest      FS 001710.00
 NoCredits       BS 000000.00
 OverMax         FS 999990.00
+UserBuy         BS 000050.00
+UserSell        SS 000050.00
 END             __ 000000000
