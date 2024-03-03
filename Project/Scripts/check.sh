@@ -25,7 +25,6 @@ echo "Executing as user: $USER"
 
 # Ensure output directory exists
 mkdir -p "$outputDir"
-
 # Loop through each test case directory
 for categoryDir in "$testCasesDir"/*; do
     testCategory=$(basename "$categoryDir")
@@ -36,12 +35,18 @@ for categoryDir in "$testCasesDir"/*; do
         testName=$(basename -s .in "$inputFile")
         expectedOutputFile="$categoryDir/$testName.out"
 
-        # Run the program with the input file
-        echo "Running test $inputFile"
-        echo "Outputting to $outputDir/$testName.out"
-        "$exePath" "$userAccounts" "$availableGames" "$gamesCollection" "$transactionOutput" < "$inputFile" > "$outputDir/$testName.out"
-
-        # Remove newlines from new output file
-        awk 'NR > 1 { print prev } { prev = $0 } END { printf "%s", prev }' "$outputDir/$testName.out" > "$outputDir/$testName.tmp" && mv "$outputDir/$testName.tmp" "$outputDir/$testName.out"
+        # Compare output files with expected
+        diffOutput=$(diff "$outputDir/$testName.out" "$expectedOutputFile")
+        if [ $? -eq 0 ]; then
+            echo "Test $inputFile passed"
+        else
+            echo "Test $inputFile failed"
+            echo "Expected Output:<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+            cat "$expectedOutputFile"
+            echo "Actual Output:>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+            cat "$outputDir/$testName.out"
+            #echo "Differences:"
+            #echo "$diffOutput"
+        fi
     done
 done

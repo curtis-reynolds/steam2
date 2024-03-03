@@ -1,2 +1,2 @@
 Please enter your username: User 'TestUser' logged in. Current user type: Admin.
-Error: User not found.
+Error: User 'NonExistingUser' does not exist.
