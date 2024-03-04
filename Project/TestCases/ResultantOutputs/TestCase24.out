@@ -1,2 +1,2 @@
 Please enter your username: User 'TestUser' logged in. Current user type: Admin.
-User 'UserFull' created successfully.
+Error: User 'UserFull' already exists.

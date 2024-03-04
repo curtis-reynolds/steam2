@@ -217,3 +217,52 @@
 06_TestUser3      _BS_001168.00
 06_FSUserTest     _FS_001710.00
 00_TestUser       _AA_001430.00
+06_FSUserTest     _FS_001810.00
+06_TestUser3      _BS_001268.00
+06_SellUser       _SS_000380.00
+02_User1          ____000000.00
+00_FSUserTest     _FS_001810.00
+00_TestUser3      _BS_001268.00
+00_SellUser       _SS_000380.00
+00_TestUser       _AA_001430.00
+00_TestUser       _AA_001430.00
+00_TestUser       _AA_001430.00
+00_TestUser       _AA_001430.00
+02_UserFull       ____000000.00
+03_Game Name 2    _TestUser       _    20.00
+03_GameName1      _SellUser       _    20.00
+03_GameName??&!$  _TestUser       _    20.00
+03_GameName23     _TestUser       _  1000.00
+03_Game Name      _TestUser       _    20.00
+03_New Game       _TestUser       _    20.00
+03_Another Game   _TestUser       _    30.00
+00_TestUser       _AA_001430.00
+03_My Game 3      _TestUser       _    20.00
+03_               _TestUser       _    20.00
+02_TestUser       _FSUserTest     _    20.00
+02_TestUser       _TestUser3      _    20.00
+02_TestUser       _FSUserTest     _    20.00
+00_TestUser       _AA_001490.00
+02_TestUser       _TestUser2      _    20.00
+06_TestUser3      _BS_001268.00
+05_SellUser       _TestUser3      _    20.00
+05_SellUser       _NonExistingBuyer_   100.00
+05_NonExistingSeller_TestUser3      _    20.00
+05_SellUser       _TestUser3      _ 10000.00
+00_TestUser       _AA_001510.00
+05_SellUser       _TestUser3      _  1500.00
+05_SellUser       _TestUser3      _     0.00
+05_SellUser       _TestUser3      _   -50.00
+05_SellUser       _OverMax        _    20.00
+05_SellUser       _SellUser       _   100.00
+05_SellUser       _TestUser33     _   100.00
+05_IncorrectSeller_TestUser3      _   100.00
+06_TestUser2      _AA_000122.50
+06_TestUser3      _BS_001270.00
+06_TestUser       _AA_001710.00
+06_FSUserTest     _FS_001870.00
+06_TestUser3      _BS_001370.00
+06_SellUser       _SS_000390.00
+06_FSUserTest     _FS_002070.00
+00_TestUser       _AA_001710.00
+06_SellUser9      _SS_000780.00
