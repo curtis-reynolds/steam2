@@ -1,2 +1,3 @@
 Please enter your username: User 'TestUser' logged in. Current user type: Admin.
 User 'UserFull' deleted successfully.
+Error: User 'UserFull' not found.
