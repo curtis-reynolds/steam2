@@ -1,0 +1,10 @@
+Enter transaction code (or 'exit' to quit): Enter username: Login successful.
+Enter transaction code (or 'exit' to quit): Available Games:
+Game Name                     Seller              Price     
+existinggame                  sellstd             20.00     
+------------------------------------------------------------
+existinggame2                 buystdwcredit       50.00     
+------------------------------------------------------------
+validgamename                 sellstd             100.00    
+------------------------------------------------------------
+Enter transaction code (or 'exit' to quit): 
