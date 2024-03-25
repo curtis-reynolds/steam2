@@ -2,10 +2,10 @@ import Transactions
 
 def main():
     #Main function to load, process, and append transactions.
-    user_accounts_file = 'Project/Source/user_accounts.txt'
-    available_games_file = 'Project/Source/availablegames.txt'
-    games_collection_file = 'Project/Source/gamescollection.txt'
-    daily_transactions_file = 'Project/Source/daily_transactions.txt'
+    user_accounts_file = '../data/user_accounts.txt'
+    available_games_file = '../data/availablegames.txt'
+    games_collection_file = '../data/gamescollection.txt'
+    daily_transactions_file = '../data/daily_transactions.txt'
 
     # Process transactions and append them to the respective files
     transactions = Transactions()
