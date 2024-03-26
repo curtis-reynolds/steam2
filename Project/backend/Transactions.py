@@ -15,28 +15,28 @@ class Transactions:
         
         # Create instances of the UserAccounts and Games classes
         games = Games()
-        user_accounts = UserAccounts()
+        useraccounts = UserAccounts()
 
         # Process transactions and append them to the respective files. 
         with open(transactions, 'r') as file:
             for line in file:
                 if line.startswith('01'):
-                    user_accounts.create_account(line, user_accounts)
+                    useraccounts.create_account(line, user_accounts)
                     print('Created user account')
                 elif line.startswith('02'):
-                    user_accounts.delete_account(line, user_accounts)
+                    useraccounts.delete_account(line, user_accounts)
                     print('Deleted user account')
                 elif line.startswith('03'):
                     games.sell_game(line, available_games)
                     print('Sell game transaction')
                 elif line.startswith('04'):
-                    games.buy_game(line, games_collection, user_accounts)
+                    games.buy_game(line, games_collection, user_accounts, available_games)
                     print('Buy game transaction')
                 elif line.startswith('05'):
-                    user_accounts.refund(line, user_accounts)
+                    useraccounts.refund(line, user_accounts)
                     print('Refund transaction')
                 elif line.startswith('06'):
-                    user_accounts.add_credit(line, user_accounts)
+                    useraccounts.add_credit(line, user_accounts)
                     print('Add credit transaction')
                 elif line.startswith('00'):
                     print('End of transactions file')

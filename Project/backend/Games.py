@@ -5,13 +5,22 @@ class Games:
         pass
 
     @staticmethod
-    def buy_game(line_04, games_collection, user_accounts):
+    def buy_game(line_04, games_collection, user_accounts, available_games):
         utility = Utilities()
         parts = line_04.split()
         game_price = float(parts[-1])
         buyer_username = parts[-2]
         seller_username = parts[-3]
         game_name = ' '.join(parts[1:-3])  # Adjusted for transaction code and price/seller/buyer.
+
+        #Check if the game exists in the available games collection.
+        with open(available_games, 'r') as file:
+            games = file.readlines()
+            game_parts = games.split()
+            game_name = ' '.join(game_parts[0:-2])
+            if game_name not in games:
+                print(f"ERROR: The game '{game_name}' does not exist in the available games collection.")
+                return
 
         # Update user accounts.
         updated_accounts = []
