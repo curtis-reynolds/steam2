@@ -1,9 +1,10 @@
-import Utilities
+from Utilities import Utilities
 
 class Games: 
     def __init__(self):
         pass
 
+    @staticmethod
     def buy_game(line_04, games_collection, user_accounts):
         utility = Utilities()
         parts = line_04.split()
@@ -53,6 +54,7 @@ class Games:
         with open(games_collection, 'w') as file:
             file.writelines(games)
 
+    @staticmethod
     def sell_game(line_03, available_games):
     # Extract game name, seller, and price from the line, taking into account spaces in the game name.
         utility = Utilities()

@@ -1,9 +1,10 @@
-import Utilities
+from Utilities import Utilities
 
 class UserAccounts: 
     def __init__(self):
         pass
 
+    @staticmethod
     def create_account(line_01, user_accounts):
     # Create a new user account and append it to the user_accounts list.
     # Getting the information from the line passed to the function.
@@ -33,6 +34,7 @@ class UserAccounts:
             file.write(f"{formatted_username} {user_type} {formatted_credit}\n")  # Append the new user account.
             file.write("END" + " " * 25)  # Re-add the "END" line at the end.
 
+    @staticmethod
     def delete_account(line_02, user_accounts):
         # Delete a user account from the user_accounts list.
         # Extract the username to delete from the provided line.
@@ -53,6 +55,7 @@ class UserAccounts:
         with open(user_accounts, 'w') as file:
             file.writelines(updated_accounts)
 
+    @staticmethod
     def refund(line_05, user_accounts):
         utility = Utilities()
         parts = line_05.split()
@@ -89,6 +92,7 @@ class UserAccounts:
         with open(user_accounts, 'w') as file:
             file.writelines(updated_accounts)
 
+    @staticmethod
     def add_credit(line, user_accounts):
         utility = Utilities()
         parts = line.split()

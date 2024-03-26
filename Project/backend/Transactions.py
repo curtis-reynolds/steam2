@@ -1,6 +1,6 @@
 import os
-import UserAccounts
-import Games
+from UserAccounts import UserAccounts
+from Games import Games
 
 class Transactions: 
     def __init__(self):
@@ -8,18 +8,16 @@ class Transactions:
 
     @staticmethod
     def process_transactions(transactions, user_accounts, available_games, games_collection):
+        # Check if the transactions file exists before attempting to open it
         if not os.path.exists(transactions):
             print(f"ERROR: The file {transactions} does not exist.")
             return
-        if not os.path.exists(games):
-            print(f"ERROR: The file {transactions} does not exist.")
-            return
+        
+        # Create instances of the UserAccounts and Games classes
         games = Games()
         user_accounts = UserAccounts()
+
         # Process transactions and append them to the respective files. 
-        # Check if the transactions file exists before attempting to open it
-        
-        
         with open(transactions, 'r') as file:
             for line in file:
                 if line.startswith('01'):
@@ -27,21 +25,21 @@ class Transactions:
                     print('Created user account')
                 elif line.startswith('02'):
                     user_accounts.delete_account(line, user_accounts)
-                    print('delete user account')
+                    print('Deleted user account')
                 elif line.startswith('03'):
                     games.sell_game(line, available_games)
-                    print('sell')
+                    print('Sell game transaction')
                 elif line.startswith('04'):
                     games.buy_game(line, games_collection, user_accounts)
-                    print('buy')
+                    print('Buy game transaction')
                 elif line.startswith('05'):
                     user_accounts.refund(line, user_accounts)
-                    print('refund')
+                    print('Refund transaction')
                 elif line.startswith('06'):
                     user_accounts.add_credit(line, user_accounts)
-                    print('add_credit')
+                    print('Add credit transaction')
                 elif line.startswith('00'):
-                    print('end of file')
+                    print('End of transactions file')
                 else:
                     print('ERROR: Invalid transaction code')
                     
