@@ -6,14 +6,19 @@ class Transactions:
     def __init__(self):
         pass
 
+    @staticmethod
     def process_transactions(transactions, user_accounts, available_games, games_collection):
+        if not os.path.exists(transactions):
+            print(f"ERROR: The file {transactions} does not exist.")
+            return
+        if not os.path.exists(games):
+            print(f"ERROR: The file {transactions} does not exist.")
+            return
         games = Games()
         user_accounts = UserAccounts()
         # Process transactions and append them to the respective files. 
         # Check if the transactions file exists before attempting to open it
-        if not os.path.exists(transactions):
-            print(f"ERROR: The file {transactions} does not exist.")
-            return
+        
         
         with open(transactions, 'r') as file:
             for line in file:
