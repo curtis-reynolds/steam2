@@ -43,5 +43,8 @@
         "typeinfo": "cpp",
         "ctime": "cpp",
         "iomanip": "cpp"
-    }
+    },
+    "python.analysis.extraPaths": [
+        "./Project/backend"
+    ]
 }

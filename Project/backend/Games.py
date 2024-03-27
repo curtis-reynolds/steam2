@@ -13,76 +13,80 @@ class Games:
         seller_username = parts[-3]
         game_name = ' '.join(parts[1:-3])  # Adjusted for transaction code and price/seller/buyer.
 
-        #Check if the game exists in the available games file.
+        # Check if the game exists in the available games file.
         with open(available_games, 'r') as file:
             games = file.readlines()
 
-            # Assume the specific game name you're looking for is stored in `game_name`
-            # For example: game_name = "Example Game"
-
             game_exists = False
             for line in games:
-                # Split the line into parts and reconstruct the game name without the last two elements
-                game_parts = line.strip().split()  # Now this is correctly applied to each line (a string)
-                current_game_name = ' '.join(game_parts[0:-2])  # Adjust the slicing as needed
-                if game_name == current_game_name:  # Checking if the game name matches
+                game_parts = line.strip().split()
+                current_game_name = ' '.join(game_parts[0:-2])
+                if game_name == current_game_name:
                     game_exists = True
-                    break  # Exit the loop if the game is found
+                    break
 
             if not game_exists:
                 print(f"ERROR: The game '{game_name}' does not exist in the available games collection.")
+                return  # Exit the function if the game does not exist
 
         # Update user accounts.
         updated_accounts = []
         end_line_user_accounts = None
+        buyer_found = False  # Flag to track if the buyer is found
+        seller_found = False  # Flag to track if the seller is found
         with open(user_accounts, 'r') as file:
             accounts = file.readlines()
 
         for account in accounts:
             if account.strip() == "END":
-                end_line_user_accounts = account  # Save the "END" line with its spaces
+                end_line_user_accounts = account
                 break
             if account.strip() == "":
                 continue
-            # username, user_type, credit = account.strip().split()
-            # credit = float(credit)
             try:
-                # Attempt to unpack the line into exactly three parts
                 username, user_type, credit = account.strip().split()
                 credit = float(credit)
-
             except ValueError:
-                # This block is executed if the above unpacking fails due to the line not having exactly three parts
                 print(f"WARNING: Skipping malformed account line: {account.strip()}")
-                continue 
+                continue
 
             if username == buyer_username:
+                buyer_found = True  # Mark the buyer as found
                 if credit < game_price:
                     print(f"ERROR: User '{buyer_username}' does not have enough credit to buy the game.")
-                    return
-                credit -= game_price
+                    return  # Exit if the buyer does not have enough credit
             elif username == seller_username:
-                credit += game_price
+                seller_found = True  # Mark the seller as found
 
             updated_accounts.append(f"{utility.format_username(username)} {user_type} {utility.format_credit(credit)}\n")
+
+        if not seller_found:  # Check if the seller was not found after looping through all accounts
+            print(f"ERROR: Seller '{seller_username}' is not found.")
+            return  # Exit the function if the seller is not found
+
+        if not buyer_found:  # Check if the buyer was not found
+            print(f"ERROR: Buyer '{buyer_username}' is not found.")
+            return
 
         with open(user_accounts, 'w') as file:
             file.writelines(updated_accounts)
             if end_line_user_accounts:
-                file.write(end_line_user_accounts)  # Re-add the "END" line
+                file.write(end_line_user_accounts)
 
-        # Update the games collection, managing the "END" line.
+        # Update the games collection.
         with open(games_collection, 'r') as file:
             games = file.readlines()
 
         if games and games[-1].strip() == "END":
-            games = games[:-1]  # Remove the last "END" line if present.
+            games = games[:-1]
 
-        games.append(f"{utility.format_game_name(game_name)} {utility.format_username_game_collection(buyer_username)}" + '\n')
-        games.append("END".ljust(42))  # Re-add the "END" line with padding.
+        games.append(f"{utility.format_game_name(game_name)} {utility.format_username_game_collection(buyer_username)}\n")
+        games.append("END".ljust(42))
 
         with open(games_collection, 'w') as file:
             file.writelines(games)
+
+
 
     @staticmethod
     def sell_game(line_03, available_games):
