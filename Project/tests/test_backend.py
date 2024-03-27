@@ -167,20 +167,25 @@ def test_seller_username_not_found(capsys):
     assert captured.out.strip() == expected_output.strip()
 
 #Test Case 10
-# def test_game_doesnt_exist_test(capsys): 
-#     # Simulate the contents of the transactions file
-#     mock_file_contents = "04 Starcraft           TestUser        SellUser       045.00"
+def test_game_doesnt_exist_test(capsys): 
+    transactions_file = 'tests/dataTC10/dailytransactions.txt'
+    user_accounts_file = 'tests/dataTC10/currentaccounts.txt'
+    available_games_file = 'tests/dataTC10/availablegames.txt'
+    games_collection_file = 'tests/dataTC10/gamescollection.txt'
 
-#     with patch("builtins.open", mock_open(read_data=mock_file_contents)), \
-#           patch("os.path.exists", return_value=True):
-#          Transactions.process_transactions('../data/dailytransactions.txt', '../data/currentaccounts.txt', 
-#                                                '../data/availablegames.txt', '../data/gamescollection.txt')
+    Transactions.process_transactions(transactions_file, user_accounts_file, 
+                                      available_games_file, games_collection_file)
          
-#     # Capture the printed output
-#     captured = capsys.readouterr()
+    # Capture the printed output
+    captured = capsys.readouterr()
 
-#     # Assert that the captured output matches the expected output
-#     assert captured.out.strip() == "ERROR: The game 'Starcraft' does not exist in the available games collection."
+    expected_output = "ERROR: The game 'Starcraft' does not exist in the available games collection.\nBuy game transaction\n"
+
+    print("Captured:", repr(captured.out))
+    print("Expected:", repr(expected_output))
+
+    # Assert that the captured output matches the expected output
+    assert captured.out.strip() == expected_output.strip()
 
 #Path Coverage Tests 
 #Path Coverage Test 1
