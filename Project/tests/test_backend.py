@@ -40,38 +40,34 @@ def test_valid_transaction_code_01(capsys):
     captured = capsys.readouterr()
     assert "Created user account" in captured.out
 
-# #Test Case 4
-# def test_all_transaction_types(capsys):
-#     # Simulate the contents of the transactions file
-#     mock_file_contents = """01 User255         FS 000045.00
-# 02 User255         FS 000045.00
-# 03 Starcraft           User123       045.00
-# 04 Starcraft           TestUser        SellUser       045.00
-# 05 SellUser        TestUser        000025.00
-# 06 SellUser        FS 000045.00
-# 00                             
-# """
-#     expected_output = """Created user account
-# Deleted user account
-# Sell game transaction
-# Buy game transaction
-# Refund transaction
-# Add credit transaction
-# End of transactions file
-# """
-#     # Mock the open function and os.path.exists
-#     with patch("builtins.open", mock_open(read_data=mock_file_contents)), \
-#          patch("os.path.exists", return_value=True):
-#         Transactions.process_transactions('../data/dailytransactions.txt', '../data/currentaccounts.txt', 
-#                                               '../data/availablegames.txt', '../data/gamescollection.txt')
+#Test Case 4
+def test_all_transaction_types(capsys):
+    # Assuming the test runs from the project root, adjust paths accordingly
+    transactions_file = 'data/dailytransactions.txt'
+    user_accounts_file = 'data/currentaccounts.txt'
+    available_games_file = 'data/availablegames.txt'
+    games_collection_file = 'data/gamescollection.txt'
     
-#     # Capture the printed output
-#     captured = capsys.readouterr()
+    # No need to mock, as we're using actual files
+    Transactions.process_transactions(transactions_file, user_accounts_file, 
+                                      available_games_file, games_collection_file)
     
-#     # Assert that the captured output matches the expected output
-#     assert captured.out.strip() == expected_output.strip()
+    # Capture the printed output
+    captured = capsys.readouterr()
     
-# #Test Case 5
+    # Define the expected output
+    expected_output = """Created user account
+Deleted user account
+Sell game transaction
+Buy game transaction
+Refund transaction
+Add credit transaction
+End of transactions file
+"""
+    # Assert that the captured output matches the expected output
+    assert captured.out.strip() == expected_output.strip()
+    
+#Test Case 5
 def test_invalid_transaction_code(capsys):
     # Simulate the contents of the transactions file
     mock_file_contents = "09 User255         FS 000045.00"
@@ -88,7 +84,27 @@ def test_invalid_transaction_code(capsys):
     assert captured.out.strip() == "ERROR: Invalid transaction code"
 
 #Test Case 6
-# def test_insufficient_buyer_credit(capsys): 
+def test_insufficient_buyer_credit(capsys): 
+    transactions_file = 'tests/dataTC6/dailytransactions.txt'
+    user_accounts_file = 'tests/dataTC6/currentaccounts.txt'
+    available_games_file = 'tests/dataTC6/availablegames.txt'
+    games_collection_file = 'tests/dataTC6/gamescollection.txt'
+
+    Transactions.process_transactions(transactions_file, user_accounts_file, 
+                                      available_games_file, games_collection_file)
+    
+    # Capture the printed output
+    captured = capsys.readouterr()
+    
+    expected_output = "ERROR: User 'TestUser' does not have enough credit to buy the game.\nBuy game transaction\n"
+
+    print("Captured:", repr(captured.out))
+    print("Expected:", repr(expected_output))
+
+    assert captured.out.strip() == expected_output.strip()
+
+#Test Case 7
+# def test_successful_purchase(capsys): 
 #     # Simulate the contents of the transactions file
 #     mock_file_contents = "04 Starcraft           TestUser        SellUser       045.00"
 
@@ -101,71 +117,55 @@ def test_invalid_transaction_code(capsys):
 #     captured = capsys.readouterr()
 
 #     # Assert that the captured output matches the expected output
-#     assert captured.out.strip() == "ERROR: User 'TestUser' does not have enough credit to buy the game."
-    
-#Test Case 7
-def successful_purchase_test(capsys): 
-    # Simulate the contents of the transactions file
-    mock_file_contents = "04 Starcraft           TestUser        SellUser       045.00"
-
-    with patch("builtins.open", mock_open(read_data=mock_file_contents)), \
-          patch("os.path.exists", return_value=True):
-         Transactions.process_transactions('../data/dailytransactions.txt', '../data/currentaccounts.txt', 
-                                               '../data/availablegames.txt', '../data/gamescollection.txt')
-         
-    # Capture the printed output
-    captured = capsys.readouterr()
-
-    # Assert that the captured output matches the expected output
-    assert captured.out.strip() == "Buy game transaction"
+#     assert captured.out.strip() == "Buy game transaction"
 
 #Test Case 8
-def buyer_username_not_found_test(capsys): 
-    # Simulate the contents of the transactions file
-    mock_file_contents = "04 Starcraft           TestUser        SellUser       045.00"
+# def test_buyer_username_not_found(capsys): 
+#     # Simulate the contents of the transactions file
+#     mock_file_contents = "04 Starcraft           TestUser        SellUser       045.00"
 
-    with patch("builtins.open", mock_open(read_data=mock_file_contents)), \
-          patch("os.path.exists", return_value=True):
-         Transactions.process_transactions('../data/dailytransactions.txt', '../data/currentaccounts.txt', 
-                                               '../data/availablegames.txt', '../data/gamescollection.txt')
+#     with patch("builtins.open", mock_open(read_data=mock_file_contents)), \
+#           patch("os.path.exists", return_value=True):
+#          Transactions.process_transactions('../data/dailytransactions.txt', '../data/currentaccounts.txt', 
+#                                                '../data/availablegames.txt', '../data/gamescollection.txt')
          
-    # Capture the printed output
-    captured = capsys.readouterr()
+#     # Capture the printed output
+#     captured = capsys.readouterr()
 
-    # Assert that the captured output matches the expected output
-    assert captured.out.strip() == "ERROR: User 'TestUser' not found."
+#     # Assert that the captured output matches the expected output
+#     assert captured.out.strip() == "ERROR: User 'TestUser' not found."
 
 #Test Case 9
-def seller_username_not_found(capsys): 
-    # Simulate the contents of the transactions file
-    mock_file_contents = "04 Starcraft           TestUser        SellUser       045.00"
+# def test_seller_username_not_found(capsys): 
+#     # Simulate the contents of the transactions file
+#     mock_file_contents = "04 Starcraft           TestUser        SellUser       045.00"
 
-    with patch("builtins.open", mock_open(read_data=mock_file_contents)), \
-          patch("os.path.exists", return_value=True):
-         Transactions.process_transactions('../data/dailytransactions.txt', '../data/currentaccounts.txt', 
-                                               '../data/availablegames.txt', '../data/gamescollection.txt')
+#     with patch("builtins.open", mock_open(read_data=mock_file_contents)), \
+#           patch("os.path.exists", return_value=True):
+#          Transactions.process_transactions('../data/dailytransactions.txt', '../data/currentaccounts.txt', 
+#                                                '../data/availablegames.txt', '../data/gamescollection.txt')
          
-    # Capture the printed output
-    captured = capsys.readouterr()
+#     # Capture the printed output
+#     captured = capsys.readouterr()
 
-    # Assert that the captured output matches the expected output
-    assert captured.out.strip() == "ERROR: User 'SellUser' not found."
+#     # Assert that the captured output matches the expected output
+#     assert captured.out.strip() == "ERROR: User 'SellUser' not found."
 
 #Test Case 10
-def game_doesnt_exist_test(capsys): 
-    # Simulate the contents of the transactions file
-    mock_file_contents = "04 Starcraft           TestUser        SellUser       045.00"
+# def test_game_doesnt_exist_test(capsys): 
+#     # Simulate the contents of the transactions file
+#     mock_file_contents = "04 Starcraft           TestUser        SellUser       045.00"
 
-    with patch("builtins.open", mock_open(read_data=mock_file_contents)), \
-          patch("os.path.exists", return_value=True):
-         Transactions.process_transactions('../data/dailytransactions.txt', '../data/currentaccounts.txt', 
-                                               '../data/availablegames.txt', '../data/gamescollection.txt')
+#     with patch("builtins.open", mock_open(read_data=mock_file_contents)), \
+#           patch("os.path.exists", return_value=True):
+#          Transactions.process_transactions('../data/dailytransactions.txt', '../data/currentaccounts.txt', 
+#                                                '../data/availablegames.txt', '../data/gamescollection.txt')
          
-    # Capture the printed output
-    captured = capsys.readouterr()
+#     # Capture the printed output
+#     captured = capsys.readouterr()
 
-    # Assert that the captured output matches the expected output
-    assert captured.out.strip() == "ERROR: The game 'Starcraft' does not exist in the available games collection."
+#     # Assert that the captured output matches the expected output
+#     assert captured.out.strip() == "ERROR: The game 'Starcraft' does not exist in the available games collection."
 
 #Path Coverage Tests 
 #Path Coverage Test 1

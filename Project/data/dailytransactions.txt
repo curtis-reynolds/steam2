@@ -1,1 +1,7 @@
-04 Starcraft           TestUser        SellUser       045.00
+01 User255         FS 000045.00
+02 User255         FS 000045.00
+03 Game Name           User123       045.00
+04 Game Name           TestUser        SellUser       045.00
+05 SellUser        TestUser        000025.00
+06 SellUser        FS 000045.00
+00                             

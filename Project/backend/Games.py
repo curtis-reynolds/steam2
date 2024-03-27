@@ -13,14 +13,24 @@ class Games:
         seller_username = parts[-3]
         game_name = ' '.join(parts[1:-3])  # Adjusted for transaction code and price/seller/buyer.
 
-        #Check if the game exists in the available games collection.
+        #Check if the game exists in the available games file.
         with open(available_games, 'r') as file:
             games = file.readlines()
-            game_parts = games.split()
-            game_name = ' '.join(game_parts[0:-2])
-            if game_name not in games:
+
+            # Assume the specific game name you're looking for is stored in `game_name`
+            # For example: game_name = "Example Game"
+
+            game_exists = False
+            for line in games:
+                # Split the line into parts and reconstruct the game name without the last two elements
+                game_parts = line.strip().split()  # Now this is correctly applied to each line (a string)
+                current_game_name = ' '.join(game_parts[0:-2])  # Adjust the slicing as needed
+                if game_name == current_game_name:  # Checking if the game name matches
+                    game_exists = True
+                    break  # Exit the loop if the game is found
+
+            if not game_exists:
                 print(f"ERROR: The game '{game_name}' does not exist in the available games collection.")
-                return
 
         # Update user accounts.
         updated_accounts = []
@@ -32,8 +42,19 @@ class Games:
             if account.strip() == "END":
                 end_line_user_accounts = account  # Save the "END" line with its spaces
                 break
-            username, user_type, credit = account.strip().split()
-            credit = float(credit)
+            if account.strip() == "":
+                continue
+            # username, user_type, credit = account.strip().split()
+            # credit = float(credit)
+            try:
+                # Attempt to unpack the line into exactly three parts
+                username, user_type, credit = account.strip().split()
+                credit = float(credit)
+
+            except ValueError:
+                # This block is executed if the above unpacking fails due to the line not having exactly three parts
+                print(f"WARNING: Skipping malformed account line: {account.strip()}")
+                continue 
 
             if username == buyer_username:
                 if credit < game_price:

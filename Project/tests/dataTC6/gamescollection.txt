@@ -10,11 +10,4 @@ Game Name                 SellUser
 Game Name                 SellUser       
 Game Name                 SellUser       
 Game Name                 SellUser       
-Game Name                 TestUser       
-Game Name                 SellUser       
-Game Name                 SellUser       
-Game Name                 SellUser       
-Game Name                 SellUser       
-Game Name                 SellUser       
-Game Name                 SellUser       
 END                                       
