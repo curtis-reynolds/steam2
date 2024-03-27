@@ -29,6 +29,15 @@ class Games:
                 print(f"ERROR: The game '{game_name}' does not exist in the available games collection.")
                 return  # Exit the function if the game does not exist
 
+        # Check if the buyer already owns the game in the games collection.
+        with open(games_collection, 'r') as file:
+            owned_games = file.readlines()
+
+            for line in owned_games:
+                if game_name in line and buyer_username in line:
+                    print(f"ERROR: Buyer '{buyer_username}' already owns the game '{game_name}'.")
+                    return  # Exit the function if the buyer already owns the game
+
         # Update user accounts.
         updated_accounts = []
         end_line_user_accounts = None
@@ -55,8 +64,10 @@ class Games:
                 if credit < game_price:
                     print(f"ERROR: User '{buyer_username}' does not have enough credit to buy the game.")
                     return  # Exit if the buyer does not have enough credit
+                credit -= game_price
             elif username == seller_username:
                 seller_found = True  # Mark the seller as found
+                credit += game_price
 
             updated_accounts.append(f"{utility.format_username(username)} {user_type} {utility.format_credit(credit)}\n")
 
@@ -73,7 +84,7 @@ class Games:
             if end_line_user_accounts:
                 file.write(end_line_user_accounts)
 
-        # Update the games collection.
+        # Proceed to update the games collection if all checks pass.
         with open(games_collection, 'r') as file:
             games = file.readlines()
 
@@ -85,6 +96,7 @@ class Games:
 
         with open(games_collection, 'w') as file:
             file.writelines(games)
+
 
 
 

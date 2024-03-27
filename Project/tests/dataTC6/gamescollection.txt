@@ -1,16 +1,1 @@
-Game Name                 TestUser2      
-Game Name 2               TestUser3      
-Game Name12               FSUserTest     
-Game Name 2               FSUserTest     
-Game Name                 FSUserTest     
-Game Name                 SellUser       
-Game Name                 SellUser       
-Game Name                 SellUser       
-Game Name                 SellUser       
-Game Name                 SellUser       
-Game Name                 SellUser       
-Game Name                 SellUser       
-Game Name                 TestUser       
-Game Name                 TestUser       
-Game Name                 TestUser       
 END                                       
