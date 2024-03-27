@@ -320,7 +320,28 @@ def test_game_successfully_bought(capsys):
 
 #Path Coverage Test 7
 def test_buy_game_already_exists(capsys): 
-    pass
+    # Set up file paths
+    d = Path("tests/dataPC7")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "user_accounts.txt"
+    available_games_file = d / "available_games.txt"
+    games_collection_file = d / "games_collection.txt"
+
+    transactions_file.write_text("04 Game Name           TestUser        TestUser3      020.00\n00                                                          ")
+    user_accounts_file.write_text("TestUser         AA 000909.00\nTestUser3        BS 001370.00\nEND                          ")
+    available_games_file.write_text("Game Name                 TestUser         020.00\nEND                                              ")
+    games_collection_file.write_text("Game Name                 TestUser3      \nEND                                       ")
+
+    Transactions.process_transactions(transactions_file, user_accounts_file, 
+                                    available_games_file, games_collection_file)
+    
+    # Capture the printed output
+    captured = capsys.readouterr()
+
+    expected_output = "ERROR: Buyer '{buyer_username}' already owns the game '{game_name}'."
+
+    assert captured.out.strip() == expected_output.strip()
 
 #Path Coverage Test 8
 def test_game_exists(capsys):
@@ -344,7 +365,6 @@ def test_game_exists(capsys):
     assert captured.out.strip() == expected_output.strip()
  
 #Path Coverage Test 9
-# def test_seller_credited(capsys): 
 def test_game_price_added_to_seller_account():
     # Set up file paths
     d = Path("tests/dataPC9")
