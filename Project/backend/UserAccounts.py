@@ -15,6 +15,18 @@ class UserAccounts:
         formatted_username = utility.format_username(username)
         formatted_credit = utility.format_credit(credit)
 
+        if user_type not in ['AA', 'FS', 'BS', 'SS']:
+            print("ERROR: Invalid user type.")
+            return
+
+        if len(username) > 15:
+            print("ERROR: Username must be 15 characters or less.")
+            return
+        
+        if float(credit) > 999.99:
+            print("ERROR: Credit exceeds maximum value.")
+            return
+
         # First, check if the username has already been taken by reading the file.
         with open(user_accounts, 'r') as file:
             accounts = file.readlines()
@@ -39,6 +51,12 @@ class UserAccounts:
         # Delete a user account from the user_accounts list.
         # Extract the username to delete from the provided line.
         username = line_02.split()[1]
+
+        with open(user_accounts, 'r') as file:
+            accounts = file.readlines()
+            if username not in accounts:
+                print(f"ERROR: User '{username}' not found.")
+                return
 
         # Initialize an empty list to hold all accounts except the one to delete.
         updated_accounts = []

@@ -101,13 +101,31 @@ class Games:
 
 
     @staticmethod
-    def sell_game(line_03, available_games):
+    def sell_game(line_03, available_games, user_accounts):
     # Extract game name, seller, and price from the line, taking into account spaces in the game name.
         utility = Utilities()
         parts = line_03.split()
         price = parts[-1]
         seller = parts[-2]
         game_name = ' '.join(parts[1:-2])  # Skip the first part (transaction code) and the last two parts (seller and price).
+
+        if len(game_name) > 19:
+            print(f"ERROR: the name of the game '{game_name}' is too long.")
+            return
+
+        if float(price) >= 1000: 
+            print(f"ERROR: The price exceeds maximum value.")
+            return
+
+        with open(available_games, 'r') as file:
+            if any(game_name in line for line in file):
+                print(f"ERROR: '{game_name}' already exists.")
+                return  # Exit the function if the game already exists in the collection.
+            
+        with open(user_accounts, 'r') as file:
+            if not any(seller in line for line in file):
+                print(f"ERROR: Seller '{seller}' not found.")
+                return  # Exit the function if the seller is not found in the user accounts.
 
         # Assuming format_game_name and format_price are functions that format the game name and price.
         game_name = utility.format_game_name(game_name)

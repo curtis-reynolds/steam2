@@ -22,12 +22,12 @@ class Transactions:
             for line in file:
                 if line.startswith('01'):
                     useraccounts.create_account(line, user_accounts)
-                    print('Created user account')
+                    print('Create user account transaction')
                 elif line.startswith('02'):
                     useraccounts.delete_account(line, user_accounts)
-                    print('Deleted user account')
+                    print('Deleted account transaction')
                 elif line.startswith('03'):
-                    games.sell_game(line, available_games)
+                    games.sell_game(line, available_games, user_accounts)
                     print('Sell game transaction')
                 elif line.startswith('04'):
                     games.buy_game(line, games_collection, user_accounts, available_games)
