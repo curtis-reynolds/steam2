@@ -1,0 +1,3 @@
+TestUser         AA 000009.00
+TestUser3        BS 001370.00
+END                          

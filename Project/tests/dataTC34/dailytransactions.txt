@@ -1,0 +1,3 @@
+01 NewUser         AA 000000
+06 NewUser         AA 010.00
+00                                                          

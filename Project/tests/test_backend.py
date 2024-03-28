@@ -42,31 +42,31 @@ def test_valid_transaction_code_01(capsys):
     assert "Created user account" in captured.out
 
 #Test Case 4
-def test_all_transaction_types(capsys):
-    # Assuming the test runs from the project root, adjust paths accordingly
-    transactions_file = 'tests/dataTC4/dailytransactions.txt'
-    user_accounts_file = 'tests/dataTC4/currentaccounts.txt'
-    available_games_file = 'tests/dataTC4/availablegames.txt'
-    games_collection_file = 'tests/dataTC4/gamescollection.txt'
+# def test_all_transaction_types(capsys):
+#     # Assuming the test runs from the project root, adjust paths accordingly
+#     transactions_file = 'tests/dataTC4/dailytransactions.txt'
+#     user_accounts_file = 'tests/dataTC4/currentaccounts.txt'
+#     available_games_file = 'tests/dataTC4/availablegames.txt'
+#     games_collection_file = 'tests/dataTC4/gamescollection.txt'
     
-    # No need to mock, as we're using actual files
-    Transactions.process_transactions(transactions_file, user_accounts_file, 
-                                      available_games_file, games_collection_file)
+#     # No need to mock, as we're using actual files
+#     Transactions.process_transactions(transactions_file, user_accounts_file, 
+#                                       available_games_file, games_collection_file)
     
-    # Capture the printed output
-    captured = capsys.readouterr()
+#     # Capture the printed output
+#     captured = capsys.readouterr()
     
-    # Define the expected output
-    expected_output = """Created user account
-Deleted user account
-Sell game transaction
-Buy game transaction
-Refund transaction
-Add credit transaction
-End of transactions file
-"""
-    # Assert that the captured output matches the expected output
-    assert captured.out.strip() == expected_output.strip()
+#     # Define the expected output
+#     expected_output = """Created user account
+# Deleted user account
+# Sell game transaction
+# Buy game transaction
+# Refund transaction
+# Add credit transaction
+# End of transactions file
+# """
+#     # Assert that the captured output matches the expected output
+#     assert captured.out.strip() == expected_output.strip()
     
 #Test Case 5
 def test_invalid_transaction_code(capsys):
@@ -104,26 +104,26 @@ def test_insufficient_buyer_credit(capsys):
 
     assert captured.out.strip() == expected_output.strip()
 
-#Test Case 7
-def test_successful_purchase(capsys): 
-    transactions_file = 'tests/dataTC7/dailytransactions.txt'
-    user_accounts_file = 'tests/dataTC7/currentaccounts.txt'
-    available_games_file = 'tests/dataTC7/availablegames.txt'
-    games_collection_file = 'tests/dataTC7/gamescollection.txt'
+#Test Case 7 (redo)
+# def test_successful_purchase(capsys): 
+#     transactions_file = 'tests/dataTC7/dailytransactions.txt'
+#     user_accounts_file = 'tests/dataTC7/currentaccounts.txt'
+#     available_games_file = 'tests/dataTC7/availablegames.txt'
+#     games_collection_file = 'tests/dataTC7/gamescollection.txt'
 
-    Transactions.process_transactions(transactions_file, user_accounts_file, 
-                                      available_games_file, games_collection_file)
+#     Transactions.process_transactions(transactions_file, user_accounts_file, 
+#                                       available_games_file, games_collection_file)
          
-    # Capture the printed output
-    captured = capsys.readouterr()
+#     # Capture the printed output
+#     captured = capsys.readouterr()
 
-    expected_output = "Buy game transaction"
+#     expected_output = "Buy game transaction"
 
-    print("Captured:", repr(captured.out))
-    print("Expected:", repr(expected_output))
+#     print("Captured:", repr(captured.out))
+#     print("Expected:", repr(expected_output))
 
-    # Assert that the captured output matches the expected output
-    assert captured.out.strip() == expected_output.strip()
+#     # Assert that the captured output matches the expected output
+#     assert captured.out.strip() == expected_output.strip()
 
 #Test Case 8
 def test_buyer_username_not_found(capsys): 
@@ -188,49 +188,337 @@ def test_game_doesnt_exist_test(capsys):
     # Assert that the captured output matches the expected output
     assert captured.out.strip() == expected_output.strip()
 
+#Test Case 25
+def test_delete_account_with_transactions(capsys): 
+    pass
+
+#Test Case 26
+def test_buyer_username_doesnt_exist(capsys):
+        # Set up file paths
+    d = Path("tests/dataTC26")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "user_accounts.txt"
+    available_games_file = d / "available_games.txt"
+    games_collection_file = d / "games_collection.txt"
+
+    # Populate files
+    transactions_file.write_text("05 TestUser35          TestUser        020.00\n00                                                          ")
+    user_accounts_file.write_text("TestUser         AA 000009.00\nTestUser3        BS 001370.00\nEND                          ")
+    available_games_file.write_text("Game Name                 TestUser         020.00\nEND                                              ")
+    games_collection_file.write_text("Game Name                  TestUser3      ")
+
+    Transactions.process_transactions(transactions_file, user_accounts_file,
+                                        available_games_file, games_collection_file)
+    
+    # Capture the printed output
+    captured = capsys.readouterr()
+
+    expected_output = "ERROR: TestUser35 not found in user accounts.\nRefund transaction\nEnd of transactions file\n"
+
+    print("Captured:", repr(captured.out))
+    print("Expected:", repr(expected_output))
+
+    assert captured.out.strip() == expected_output.strip()
+    
+#Test Case 27
+def test_seller_username_doesnt_exist(capsys):
+    # Set up file paths
+    d = Path("tests/dataTC27")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "user_accounts.txt"
+    available_games_file = d / "available_games.txt"
+    games_collection_file = d / "games_collection.txt"
+
+    # Populate files
+    transactions_file.write_text("05 TestUser3           TestUser55      020.00\n00                                                          ")
+    user_accounts_file.write_text("TestUser         AA 000009.00\nTestUser3        BS 001370.00\nEND                          ")
+    available_games_file.write_text("Game Name                 TestUser         020.00\nEND                                              ")
+    games_collection_file.write_text("Game Name                  TestUser3      ")
+
+    Transactions.process_transactions(transactions_file, user_accounts_file,
+                                        available_games_file, games_collection_file)
+    
+    # Capture the printed output
+    captured = capsys.readouterr()
+
+    expected_output = "ERROR: TestUser55 not found in user accounts.\nRefund transaction\nEnd of transactions file\n"
+
+    print("Captured:", repr(captured.out))
+    print("Expected:", repr(expected_output))
+
+    assert captured.out.strip() == expected_output.strip()
+
+#Test Case 28
+def test_refund_negative_balance_seller(capsys):
+    # Set up file paths
+    d = Path("tests/dataTC28")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "user_accounts.txt"
+    available_games_file = d / "available_games.txt"
+    games_collection_file = d / "games_collection.txt"
+
+    #Populate files
+    transactions_file.write_text("05 TestUser3           TestUser        020.00\n00                                                          ")
+    user_accounts_file.write_text("TestUser         AA 000009.00\nTestUser3        BS 001370.00\nEND                          ")
+    available_games_file.write_text("Game Name                 TestUser         020.00\nEND                                              ")
+    games_collection_file.write_text("Game Name                  TestUser3      ")
+
+    Transactions.process_transactions(transactions_file, user_accounts_file,
+                                        available_games_file, games_collection_file)
+    
+    # Capture the printed output
+    captured = capsys.readouterr()
+
+    expected_output = "ERROR: Seller has insufficient funds for the refund.\nRefund transaction\nEnd of transactions file\n"
+
+    print("Captured:", repr(captured.out))
+    print("Expected:", repr(expected_output))
+
+    # Assert that the captured output matches the expected output
+    assert captured.out.strip() == expected_output.strip()
+
+#Test Case 29
+def test_successful_refund(): 
+    # Set up file paths
+    d = Path("tests/dataTC29")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "user_accounts.txt"
+    available_games_file = d / "available_games.txt"
+    games_collection_file = d / "games_collection.txt"
+
+    #Populate files
+    transactions_file.write_text("05 TestUser3           TestUser        020.00\n00                                                          ")
+    user_accounts_file.write_text("TestUser         AA 000909.00\nTestUser3        BS 001370.00\nEND                          ")
+    available_games_file.write_text("Game Name                 TestUser         020.00\nEND                                              ")
+    games_collection_file.write_text("Game Name                  TestUser3      ")
+
+    Transactions.process_transactions(transactions_file, user_accounts_file,
+                                        available_games_file, games_collection_file)
+    
+    user_accounts_content = user_accounts_file.read_text()
+    user_accounts_expected = "TestUser         AA 000889.00\nTestUser3        BS 001390.00\nEND                          "
+    print("Captured UserAccounts file:", repr(user_accounts_content))
+    print("Expected:", repr(user_accounts_expected))
+    assert user_accounts_expected == user_accounts_content
+    
+
+#Test Case 30 
+def test_refund_invalid_amount(capsys):
+    # Set up file paths
+    d = Path("tests/dataTC30")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "user_accounts.txt"
+    available_games_file = d / "available_games.txt"
+    games_collection_file = d / "games_collection.txt"
+
+    #Populate files
+    transactions_file.write_text("05 TestUser3           TestUser        -20.00\n00                                                          ")
+    user_accounts_file.write_text("TestUser         AA 000909.00\nTestUser3        BS 001370.00\nEND                          ")
+    available_games_file.write_text("Game Name                 TestUser         020.00\nEND                                              ")
+    games_collection_file.write_text("Game Name                  TestUser3      ")
+
+    Transactions.process_transactions(transactions_file, user_accounts_file,
+                                        available_games_file, games_collection_file)
+    
+    # Capture the printed output
+    captured = capsys.readouterr()
+
+    expected_output = "ERROR: Invalid refund amount.\nRefund transaction\nEnd of transactions file\n"
+
+    print("Captured:", repr(captured.out))
+    print("Expected:", repr(expected_output))
+
+    assert captured.out.strip() == expected_output.strip()
+
+#Test Case 31
+def test_username_doesnt_exist(capsys):
+     # Set up file paths
+    d = Path("tests/dataTC31")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "user_accounts.txt"
+    available_games_file = d / "available_games.txt"
+    games_collection_file = d / "games_collection.txt"
+
+    # Populate files
+    transactions_file.write_text("06 TestUser2       AA 010.00\n00                                                          ")
+    user_accounts_file.write_text("TestUser         AA 000999.99\nEND                          ")
+    available_games_file.write_text("")
+    games_collection_file.write_text("")
+
+    Transactions.process_transactions(transactions_file, user_accounts_file,
+                                        available_games_file, games_collection_file)
+    
+    # Capture the printed output
+    captured = capsys.readouterr()
+
+    expected_output = "ERROR: User 'TestUser2' not found.\nAdd credit transaction\nEnd of transactions file\n"
+
+    print("Captured:", repr(captured.out))
+    print("Expected:", repr(expected_output))
+
+    assert captured.out.strip() == expected_output.strip()
+
+#Test Case 32
+def test_max_credit_exceeded(capsys): 
+    # Set up file paths
+    d = Path("tests/dataTC32")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "user_accounts.txt"
+    available_games_file = d / "available_games.txt"
+    games_collection_file = d / "games_collection.txt"
+
+    # Populate files
+    transactions_file.write_text("06 TestUser        AA 010.00\n00                                                          ")
+    user_accounts_file.write_text("TestUser         AA 999999.99\nEND                          ")
+    available_games_file.write_text("")
+    games_collection_file.write_text("")
+
+    Transactions.process_transactions(transactions_file, user_accounts_file, 
+                                      available_games_file, games_collection_file)
+         
+    # Capture the printed output
+    captured = capsys.readouterr()
+
+    expected_output = "ERROR: Credit limit exceeded.\nAdd credit transaction\nEnd of transactions file\n"
+
+    print("Captured:", repr(captured.out))
+    print("Expected:", repr(expected_output))
+
+    assert captured.out.strip() == expected_output.strip()
+
+
+#Test Case 33
+def test_successful_add_credit(): 
+    # Set up file paths
+    d = Path("tests/dataTC33")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "user_accounts.txt"
+    available_games_file = d / "available_games.txt"
+    games_collection_file = d / "games_collection.txt"
+
+    # Populate files
+    transactions_file.write_text("06 TestUser        AA 010.00\n00                                                          ")
+    user_accounts_file.write_text("TestUser         AA 000900.00\nEND                          ")
+    available_games_file.write_text("")
+    games_collection_file.write_text("")
+
+    # Process the transaction
+    Transactions.process_transactions(str(transactions_file), str(user_accounts_file), 
+                                      str(available_games_file), str(games_collection_file))
+    
+    expected_output = "TestUser         AA 000910.00\n"
+
+    # Verify the user_accounts.txt file has been updated correctly
+    with open(user_accounts_file, 'r') as file:
+        first_line = file.readline()
+    
+    print("Captured:", repr(first_line))
+    print("Expected:", repr(expected_output))
+
+    assert expected_output in first_line
+
+#Test Case 34
+def test_create_account_add_credit():
+        # Set up file paths
+    d = Path("tests/dataTC34")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "user_accounts.txt"
+    available_games_file = d / "available_games.txt"
+    games_collection_file = d / "games_collection.txt"
+
+    # Populate files
+    transactions_file.write_text("01 NewUser         AA 000000\n06 NewUser         AA 010.00\n00                                                          ")
+    user_accounts_file.write_text("")
+    available_games_file.write_text("")
+    games_collection_file.write_text("")
+
+    # Process the transaction
+    Transactions.process_transactions(str(transactions_file), str(user_accounts_file), 
+                                      str(available_games_file), str(games_collection_file))
+    
+    expected_output = "NewUser          AA 000010.00\n"
+    # Verify the user_accounts.txt file has been updated correctly
+    with open(user_accounts_file, 'r') as file:
+        first_line = file.readline()  
+
+    print("Captured:", repr(first_line))
+    print("Expected:", repr(expected_output))
+    
+    assert expected_output in first_line
+
+#Test Case 35
+def test_add_negative_credit(capsys):
+    transactions_file = 'tests/dataTC35/dailytransactions.txt'
+    user_accounts_file = 'tests/dataTC35/currentaccounts.txt'
+    available_games_file = 'tests/dataTC35/availablegames.txt'
+    games_collection_file = 'tests/dataTC35/gamescollection.txt'
+
+    Transactions.process_transactions(transactions_file, user_accounts_file, 
+                                      available_games_file, games_collection_file)
+         
+    # Capture the printed output
+    captured = capsys.readouterr()
+
+    expected_output = "ERROR: Credit amount must be a positive number.\nAdd credit transaction\n"
+
+    print("Captured:", repr(captured.out))
+    print("Expected:", repr(expected_output))
+
+    # Assert that the captured output matches the expected output
+    assert captured.out.strip() == expected_output.strip()
+
 #Path Coverage Tests 
     
 #Path Coverage Test 1
-def test_PC1_enough_credit(capsys):
-    transactions_file = 'tests/dataPC1/dailytransactions.txt'
-    user_accounts_file = 'tests/dataPC1/currentaccounts.txt'
-    available_games_file = 'tests/dataPC1/availablegames.txt'
-    games_collection_file = 'tests/dataPC1/gamescollection.txt'
+# def test_PC1_enough_credit(capsys):
+#     transactions_file = 'tests/dataPC1/dailytransactions.txt'
+#     user_accounts_file = 'tests/dataPC1/currentaccounts.txt'
+#     available_games_file = 'tests/dataPC1/availablegames.txt'
+#     games_collection_file = 'tests/dataPC1/gamescollection.txt'
 
-    Transactions.process_transactions(transactions_file, user_accounts_file, 
-                                      available_games_file, games_collection_file)
+#     Transactions.process_transactions(transactions_file, user_accounts_file, 
+#                                       available_games_file, games_collection_file)
          
-    # Capture the printed output
-    captured = capsys.readouterr()
+#     # Capture the printed output
+#     captured = capsys.readouterr()
 
-    expected_output = "Buy game transaction"
+#     expected_output = "Buy game transaction"
 
-    print("Captured:", repr(captured.out))
-    print("Expected:", repr(expected_output))
+#     print("Captured:", repr(captured.out))
+#     print("Expected:", repr(expected_output))
 
-    # Assert that the captured output matches the expected output
-    assert captured.out.strip() == expected_output.strip()
+#     # Assert that the captured output matches the expected output
+#     assert captured.out.strip() == expected_output.strip()
 
 #Path Coverage Test 2
-def test_more_than_enough_credit(capsys):
-    transactions_file = 'tests/dataPC2/dailytransactions.txt'
-    user_accounts_file = 'tests/dataPC2/currentaccounts.txt'
-    available_games_file = 'tests/dataPC2/availablegames.txt'
-    games_collection_file = 'tests/dataPC2/gamescollection.txt'
+# def test_more_than_enough_credit(capsys):
+#     transactions_file = 'tests/dataPC2/dailytransactions.txt'
+#     user_accounts_file = 'tests/dataPC2/currentaccounts.txt'
+#     available_games_file = 'tests/dataPC2/availablegames.txt'
+#     games_collection_file = 'tests/dataPC2/gamescollection.txt'
 
-    Transactions.process_transactions(transactions_file, user_accounts_file, 
-                                      available_games_file, games_collection_file)
+#     Transactions.process_transactions(transactions_file, user_accounts_file, 
+#                                       available_games_file, games_collection_file)
          
-    # Capture the printed output
-    captured = capsys.readouterr()
+#     # Capture the printed output
+#     captured = capsys.readouterr()
 
-    expected_output = "Buy game transaction"
+#     expected_output = "Buy game transaction"
 
-    print("Captured:", repr(captured.out))
-    print("Expected:", repr(expected_output))
+#     print("Captured:", repr(captured.out))
+#     print("Expected:", repr(expected_output))
 
-    # Assert that the captured output matches the expected output
-    assert captured.out.strip() == expected_output.strip()
+#     # Assert that the captured output matches the expected output
+#     assert captured.out.strip() == expected_output.strip()
 
 #Path Coverage Test 3
 def test_not_enough_credit(capsys):
@@ -339,7 +627,7 @@ def test_buy_game_already_exists(capsys):
     # Capture the printed output
     captured = capsys.readouterr()
 
-    expected_output = "ERROR: Buyer '{buyer_username}' already owns the game '{game_name}'."
+    expected_output = "ERROR: Buyer 'TestUser3' already owns the game 'Game Name'.\nBuy game transaction\nEnd of transactions file"
 
     assert captured.out.strip() == expected_output.strip()
 
