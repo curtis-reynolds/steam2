@@ -26,6 +26,10 @@ distribution-system ../data/currentaccounts.txt ../data/availablegames.txt ../da
 ### Back End
 - **Batch Processing**: Runs at 12:00am daily to update user accounts and game listings based on transactions recorded by the Front End.
 
+#### Running the Back End Tests
+- Navigate to the Project folder in your terminal
+- Type 'pytest' in your terminal and hit enter 
+
 ## Development and Testing
 - Development follows XP (Extreme Programming) practices, with periodic adaptations to project requirements.
 - Testing includes a comprehensive suite of test cases covering all functionalities and edge cases, ensuring robustness and reliability.
