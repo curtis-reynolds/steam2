@@ -48,30 +48,35 @@ class UserAccounts:
 
     @staticmethod
     def delete_account(line_02, user_accounts):
-        # Delete a user account from the user_accounts list.
         # Extract the username to delete from the provided line.
         username = line_02.split()[1]
 
-        with open(user_accounts, 'r') as file:
-            accounts = file.readlines()
-            if username not in accounts:
-                print(f"ERROR: User '{username}' not found.")
-                return
-
-        # Initialize an empty list to hold all accounts except the one to delete.
+        user_found = False
         updated_accounts = []
 
         with open(user_accounts, 'r') as file:
             accounts = file.readlines()
 
-        # Filter out the account to delete.
-        for account in accounts:
-            if not account.startswith(username):
-                updated_accounts.append(account)
+            if not accounts:
+                print("ERROR: No user accounts found.")
+                return
 
-        # Write the updated list back to the file.
+            # Check if the user exists and filter out the account to delete.
+            for account in accounts:
+                account_username = account.split()[0]  # Assuming username is the first item on each line.
+                if account_username == username:
+                    user_found = True
+                else:
+                    updated_accounts.append(account)
+
+        if not user_found:
+            print(f"ERROR: User '{username}' not found.")
+            return
+
+        # Write the updated list back to the file if the user was found and removed.
         with open(user_accounts, 'w') as file:
             file.writelines(updated_accounts)
+
 
     @staticmethod
     def refund(line_05, user_accounts):

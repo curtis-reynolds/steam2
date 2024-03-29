@@ -1,2 +1,1 @@
-TestUser         AA 000909.00
 END                          

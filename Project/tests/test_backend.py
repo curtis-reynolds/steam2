@@ -43,13 +43,26 @@ def test_valid_transaction_code_01(capsys):
 
 #Test Case 4
 def test_all_transaction_types(capsys):
-    # Assuming the test runs from the project root, adjust paths accordingly
-    transactions_file = 'tests/dataTC4/dailytransactions.txt'
-    user_accounts_file = 'tests/dataTC4/currentaccounts.txt'
-    available_games_file = 'tests/dataTC4/availablegames.txt'
-    games_collection_file = 'tests/dataTC4/gamescollection.txt'
+    d = Path("tests/dataTC4")
+    d.mkdir(parents=True, exist_ok=True)
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "currentaccounts.txt"
+    available_games_file = d / "availablegames.txt"
+    games_collection_file = d / "gamescollection.txt"
+
+    transactions_file.write_text("01 User255         FS 000045.00\n02 User255         FS 000045.00\n\
+03 Game Name           User123       045.00\n\
+04 Game Name           TestUser        SellUser       045.00\n\
+05 SellUser        TestUser        000025.00\n\
+06 SellUser        FS 000045.00\n\
+00                             ")
+    user_accounts_file.write_text("TestUser         AA 000005.00\n\
+SellUser         SS 004140.00\n\
+User123          SS 000050.00\n\
+END                          ")
+    available_games_file.write_text("")
+    games_collection_file.write_text("")
     
-    # No need to mock, as we're using actual files
     Transactions.process_transactions(transactions_file, user_accounts_file, 
                                       available_games_file, games_collection_file)
     
@@ -57,14 +70,17 @@ def test_all_transaction_types(capsys):
     captured = capsys.readouterr()
     
     # Define the expected output
-    expected_output = """Created user account
-Deleted user account
+    expected_output = """Create user account transaction
+Deleted account transaction
 Sell game transaction
 Buy game transaction
 Refund transaction
 Add credit transaction
 End of transactions file
 """
+
+    print("Captured:", repr(captured.out))
+    print("Expected:", repr(expected_output))
     # Assert that the captured output matches the expected output
     assert captured.out.strip() == expected_output.strip()
     
@@ -104,26 +120,31 @@ def test_insufficient_buyer_credit(capsys):
 
     assert captured.out.strip() == expected_output.strip()
 
-#Test Case 7 (redo)
-# def test_successful_purchase(capsys): 
-#     transactions_file = 'tests/dataTC7/dailytransactions.txt'
-#     user_accounts_file = 'tests/dataTC7/currentaccounts.txt'
-#     available_games_file = 'tests/dataTC7/availablegames.txt'
-#     games_collection_file = 'tests/dataTC7/gamescollection.txt'
+#Test Case 7 
+def test_successful_purchase(capsys): 
+    d = Path("tests/dataTC7")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "currentaccounts.txt"
+    available_games_file = d / "availablegames.txt"
+    games_collection_file = d / "gamescollection.txt"
 
-#     Transactions.process_transactions(transactions_file, user_accounts_file, 
-#                                       available_games_file, games_collection_file)
+    transactions_file.write_text("04 Game Name           SellUser        TestUser       045.00")
+    user_accounts_file.write_text("TestUser         AA 999279.00\nSellUser         SS 001395.00\nEND                          ")
+    available_games_file.write_text("Game Name                 TestUser         020.00\nEND                                              ")
+    games_collection_file.write_text("")
+
+    Transactions.process_transactions(transactions_file, user_accounts_file, 
+                                      available_games_file, games_collection_file)
          
-#     # Capture the printed output
-#     captured = capsys.readouterr()
+    expected_output = "Game Name                 TestUser       \n"
+    with open(games_collection_file, 'r') as file:
+        first_line = file.readline()  # Read and discard the first line
+        second_line = file.readline().strip()
 
-#     expected_output = "Buy game transaction"
-
-#     print("Captured:", repr(captured.out))
-#     print("Expected:", repr(expected_output))
-
-#     # Assert that the captured output matches the expected output
-#     assert captured.out.strip() == expected_output.strip()
+    print("Captured:", repr(first_line))
+    print("Expected:", repr(expected_output))
+    assert expected_output in first_line
 
 #Test Case 8
 def test_buyer_username_not_found(capsys): 
@@ -537,6 +558,36 @@ def test_successful_delete_account():
     print("Expected:", repr(expected_output))
     assert expected_output in actual_output
 
+#Test Case 23
+def test_delete_user_useraccounts_empty(capsys): 
+    # Set up file paths
+    d = Path("tests/dataTC23")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "user_accounts.txt"
+    available_games_file = d / "available_games.txt"
+    games_collection_file = d / "games_collection.txt"
+    
+    # Populate files
+    transactions_file.write_text("02 TestUser         AA 000000\n00                                                          ")
+    user_accounts_file.write_text("")
+    available_games_file.write_text("")
+    games_collection_file.write_text("")
+
+    Transactions.process_transactions(transactions_file, user_accounts_file,
+                                        available_games_file, games_collection_file)
+    
+
+    expected_output = "ERROR: No user accounts found.\nDeleted account transaction\nEnd of transactions file\n"
+    
+    # Capture the printed output
+    captured = capsys.readouterr()
+
+    print("Captured:", repr(captured.out))
+    print("Expected:", repr(expected_output))
+
+    assert captured.out.strip() == expected_output.strip()
+
 #Test Case 24
 def test_account_delete_only_account():
         # Set up file paths
@@ -565,6 +616,37 @@ def test_account_delete_only_account():
     print("Captured:", repr(actual_output))
     print("Expected:", repr(expected_output))
     assert expected_output in actual_output
+
+#Test Case 25
+def test_delete_with_existing_transactions(): 
+    # Set up file paths
+    d = Path("tests/dataTC25")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "user_accounts.txt"
+    available_games_file = d / "available_games.txt"
+    games_collection_file = d / "games_collection.txt"
+
+    # Populate files
+    transactions_file.write_text("02 TestUser         AA 00000\n05 TestUser2         TestUser        020.00\n00                                                          ")
+    user_accounts_file.write_text("TestUser         AA 000909.00\nTestUser2        AA 000000.00\nEND                          ")
+    available_games_file.write_text("Game Name                 TestUser         020.00\nEND                                              ")
+    games_collection_file.write_text("")
+
+    Transactions.process_transactions(transactions_file, user_accounts_file,
+                                        available_games_file, games_collection_file)
+    
+    expected_output = "TestUser2        AA 000000.00\n"
+
+    # Verify the user_accounts.txt file has been updated correctly
+    with open(user_accounts_file, 'r') as file:
+        first_line = file.readline()  # Read and discard the first line
+        second_line = file.readline().strip()
+
+    print("Captured:", repr(first_line))
+    print("Second line:", repr(second_line))
+    print("Expected:", repr(expected_output))
+    assert expected_output in first_line
 
 #Test Case 26
 def test_buyer_username_doesnt_exist(capsys):
@@ -854,10 +936,17 @@ def test_add_negative_credit(capsys):
     
 #Path Coverage Test 1
 def test_PC1_enough_credit(capsys):
-    transactions_file = 'tests/dataPC1/dailytransactions.txt'
-    user_accounts_file = 'tests/dataPC1/currentaccounts.txt'
-    available_games_file = 'tests/dataPC1/availablegames.txt'
-    games_collection_file = 'tests/dataPC1/gamescollection.txt'
+    d = Path("tests/dataPC1")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "currentaccounts.txt"
+    available_games_file = d / "availablegames.txt"
+    games_collection_file = d / "gamescollection.txt"
+
+    transactions_file.write_text("04 Game Name           SellUser        TestUser       045.00")
+    user_accounts_file.write_text("TestUser         AA 999279.00\nSellUser         SS 001395.00\nEND                          ")
+    available_games_file.write_text("Game Name                 TestUser         020.00\nEND                                              ")
+    games_collection_file.write_text("")
 
     Transactions.process_transactions(transactions_file, user_accounts_file, 
                                       available_games_file, games_collection_file)
@@ -874,11 +963,19 @@ def test_PC1_enough_credit(capsys):
     assert captured.out.strip() == expected_output.strip()
 
 #Path Coverage Test 2
-def test_more_than_enough_credit(capsys):
-    transactions_file = 'tests/dataPC2/dailytransactions.txt'
-    user_accounts_file = 'tests/dataPC2/currentaccounts.txt'
-    available_games_file = 'tests/dataPC2/availablegames.txt'
-    games_collection_file = 'tests/dataPC2/gamescollection.txt'
+def test_PC2_more_than_enough_credit(capsys):
+    d = Path("tests/dataPC2")
+    d.mkdir(parents=True, exist_ok=True) 
+    transactions_file = d / "dailytransactions.txt"
+    user_accounts_file = d / "currentaccounts.txt"
+    available_games_file = d/ "availablegames.txt"
+    games_collection_file = d / "gamescollection.txt"
+
+    # Populate files
+    transactions_file.write_text("04 Game Name           SellUser        TestUser       045.00")
+    user_accounts_file.write_text("TestUser         AA 999279.00\nSellUser         SS 001395.00\nEND                          ")
+    available_games_file.write_text("Game Name                 TestUser         020.00\nEND                                              ")
+    games_collection_file.write_text("")
 
     Transactions.process_transactions(transactions_file, user_accounts_file, 
                                       available_games_file, games_collection_file)
@@ -895,7 +992,7 @@ def test_more_than_enough_credit(capsys):
     assert captured.out.strip() == expected_output.strip()
 
 #Path Coverage Test 3
-def test_not_enough_credit(capsys):
+def test_PC3_not_enough_credit(capsys):
     transactions_file = 'tests/dataPC3/dailytransactions.txt'
     user_accounts_file = 'tests/dataPC3/currentaccounts.txt'
     available_games_file = 'tests/dataPC3/availablegames.txt'
@@ -915,7 +1012,7 @@ def test_not_enough_credit(capsys):
     assert captured.out.strip() == expected_output.strip()
 
 #Path Coverage Test 4
-def test_buyer_not_found(capsys):
+def test_PC4_buyer_not_found(capsys):
     transactions_file = 'tests/dataPC4/dailytransactions.txt'
     user_accounts_file = 'tests/dataPC4/currentaccounts.txt'
     available_games_file = 'tests/dataPC4/availablegames.txt'
@@ -936,7 +1033,7 @@ def test_buyer_not_found(capsys):
     assert captured.out.strip() == expected_output.strip()
 
 #Path Coverage Test 5
-def test_seller_not_found(capsys):
+def test_PC5_seller_not_found(capsys):
     transactions_file = 'tests/dataPC5/dailytransactions.txt'
     user_accounts_file = 'tests/dataPC5/currentaccounts.txt'
     available_games_file = 'tests/dataPC5/availablegames.txt'
@@ -957,7 +1054,7 @@ def test_seller_not_found(capsys):
     assert captured.out.strip() == expected_output.strip()
 
 #Path Coverage Test 6
-def test_game_successfully_bought(capsys):
+def test_PC6_game_successfully_bought(capsys):
     d = Path("tests/dataPC6")
     d.mkdir(parents=True, exist_ok=True) 
     transactions_file = d / "dailytransactions.txt"
@@ -981,7 +1078,7 @@ def test_game_successfully_bought(capsys):
     assert "Game Name                 TestUser3" in first_line
 
 #Path Coverage Test 7
-def test_buy_game_already_exists(capsys): 
+def test_PC7_buy_game_already_exists(capsys): 
     # Set up file paths
     d = Path("tests/dataPC7")
     d.mkdir(parents=True, exist_ok=True) 
@@ -1006,7 +1103,7 @@ def test_buy_game_already_exists(capsys):
     assert captured.out.strip() == expected_output.strip()
 
 #Path Coverage Test 8
-def test_game_exists(capsys):
+def test_PC8_game_exists(capsys):
     transactions_file = 'tests/dataPC8/dailytransactions.txt'
     user_accounts_file = 'tests/dataPC8/currentaccounts.txt'
     available_games_file = 'tests/dataPC8/availablegames.txt'
@@ -1027,7 +1124,7 @@ def test_game_exists(capsys):
     assert captured.out.strip() == expected_output.strip()
  
 #Path Coverage Test 9
-def test_game_price_added_to_seller_account():
+def test_PC9_game_price_added_to_seller_account():
     # Set up file paths
     d = Path("tests/dataPC9")
     d.mkdir(parents=True, exist_ok=True) 
@@ -1052,7 +1149,7 @@ def test_game_price_added_to_seller_account():
     assert "TestUser         AA 000929.00" in first_line
     
 #Path Coverage Test 10
-def test_game_price_deducted_from_buyer_account():
+def test_PC10_game_price_deducted_from_buyer_account():
     # Set up file paths
     d = Path("tests/dataPC10")
     d.mkdir(parents=True, exist_ok=True) 
