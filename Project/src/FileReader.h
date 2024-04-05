@@ -24,6 +24,10 @@ public:
         return fileStream.is_open();
     }
 
+    void trimEnd(std::string& str) {
+        str.erase(std::remove(str.begin(), str.end(), '\r'), str.end());
+    }
+
     // Function to read user data from the file and populate the given vector of users
     void readUsers(std::vector<User> &users)
     {
@@ -34,12 +38,13 @@ public:
             endLine.resize(28, '_');
             while (std::getline(fileStream, line))
             {
+                trimEnd(line); 
                 // Check for the END line to stop reading
                 if (line == endLine)
                     break;
 
                 // Ensure the line has the correct length
-                if (line.length() == 28)
+                if (line.length() == 28) 
                 {
                     // Extract username, userType, and credit information from the line
                     std::string username = line.substr(0, 16);
@@ -80,6 +85,7 @@ public:
             endLine.resize(49, '_');
             while (std::getline(fileStream, line))
             {
+                trimEnd(line);
                 // Check for the END line to stop reading
                 if (line == endLine)
                     break;
@@ -105,7 +111,7 @@ public:
                 else
                 {
                     // Notify about an error if the line length is invalid and skip the line
-                    std::cerr << "Error: Invalid line length. Skipping line." << std::endl;
+                    std::cerr << "Error: Invalid line length. Skipping line." << line.length() << std::endl;
                     std::cerr << "Debug: Line contents - " << line << std::endl;
                 }
             }
@@ -128,6 +134,7 @@ public:
             endLine.resize(42, '_');
             while (std::getline(fileStream, line))
             {
+                trimEnd(line);
                 // Check for the END line to stop reading
                 if (line == endLine)
                     break;

@@ -1,2 +1,2 @@
-Game Name                 TestUser3      
-END                                       
+existinggame2______________admin__________
+END_______________________________________

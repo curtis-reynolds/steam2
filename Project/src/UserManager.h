@@ -47,6 +47,14 @@ public:
         // Create a new user object with the provided information
         User newUser(username, userType, 0.0);
 
+        // if the user account is AccountManager and they are trying to create an Admin account
+        // do not let them
+        if (currentUser.getType() == 4 && newUser.getType() == 1)
+        {
+            std::cout << "AccountManager cannot create an Admin account." << std::endl;
+            return User("", 0, 0.0);
+        }
+
         // Add the new user to the vector of users
         users.push_back(newUser);
 
@@ -68,8 +76,8 @@ public:
     // Function to delete a user
     User deleteUser()
     {
-        // Check if the current user is an admin
-        if (currentUser.getType() != Admin)
+        // Check if the current user is an admin or account manager
+        if (currentUser.getType() != Admin && currentUser.getType() != AccountManager)
         {
             std::cout << "User unauthorized to perform this action." << std::endl;
             // Return a default-constructed User object to indicate an error
@@ -89,6 +97,19 @@ public:
         {
             std::cout << "Invalid username or attempting to delete the current user account." << std::endl;
             // Return a default-constructed User object to indicate an error
+            return User("", 0, 0.0);
+        }
+
+        // if the user account is AccountManager and they are trying to delete an Admin account
+        // do not let them
+        if (currentUser.getType() == AccountManager && userToDelete -> getType() == Admin)
+        {
+            std::cout << "AccountManager cannot delete an Admin account." << std::endl;
+            return User("", 0, 0.0);
+        }
+        if (currentUser.getType() == 4 && userToDelete -> getType() == 1)
+        {
+            std::cout << "AccountManager cannot delete an Admin account." << std::endl;
             return User("", 0, 0.0);
         }
 
@@ -271,7 +292,7 @@ private:
         int userType;
         while (true)
         {
-            std::cout << "Enter user type (1-admin, 2-full-standard, 3-buy-standard, 4-sell-standard): ";
+            std::cout << "Enter user type (1-admin, 2-full-standard, 3-buy-standard, 4-sell-standard, 5-account-manager): ";
             std::cin >> userType;
 
             // If invalid input, clear the input buffer and try again
@@ -282,7 +303,7 @@ private:
             }
 
             // If the input is a valid user type, break out of the loop
-            if (userType == 1 || userType == 2 || userType == 3 || userType == 4)
+            if (userType == 1 || userType == 2 || userType == 3 || userType == 4 || userType == 5)
                 break;
         }
 

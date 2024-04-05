@@ -1,3 +1,25 @@
-02 TestUser         AA 00000
-05 TestUser2         TestUser        020.00
-00                                                          
+00_admin___________AA_000100.00
+04_existinggame2_______buystdwcredit___admin__________050.00
+00_admin___________AA_000100.00
+01_AMTest__________  _000000.00
+00_admin___________AA_000050.00
+00_AMTest__________AM_000000.00
+00_admin___________AA_000050.00
+00_admin___________AA_000050.00
+00_AMTest__________AM_000000.00
+00_AMTest__________AM_000000.00
+00_AMTest__________AM_000000.00
+01_admintest2______FS_000000.00
+00_AMTest__________AM_000000.00
+01_admintest5______FS_000000.00
+02_admintest5______FS_000000.00
+00_AMTest__________AM_000000.00
+00_AMTest__________AM_000000.00
+00_AMTest__________AM_000000.00
+02_admintest1______AA_000000.00
+02_testadmin_______AA_000000.00
+02_admintest2______AA_000000.00
+02_admintest3______AA_000000.00
+02_admintest4______AA_000000.00
+02_admintest5______AA_000000.00
+00_admin___________AA_000050.00

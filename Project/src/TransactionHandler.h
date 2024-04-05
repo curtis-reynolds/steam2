@@ -160,7 +160,7 @@ private:
     // Helper function to handle the "create" transaction
     void handleCreateTransaction()
     {
-        if (sharedData.getCurrentUser().getType() != Admin)
+        if (sharedData.getCurrentUser().getType() != Admin && sharedData.getCurrentUser().getType() != AccountManager)
         {
             std::cout << "User unauthorized" << std::endl;
         }
@@ -174,7 +174,7 @@ private:
     // Helper function to handle the "delete" transaction
     void handleDeleteTransaction()
     {
-        if (sharedData.getCurrentUser().getType() != Admin)
+        if (sharedData.getCurrentUser().getType() != Admin && sharedData.getCurrentUser().getType() != AccountManager)
         {
             std::cout << "User unauthorized" << std::endl;
         }
@@ -195,7 +195,7 @@ private:
     // Helper function to handle the "refund" transaction
     void handleRefundTransaction()
     {
-        if (sharedData.getCurrentUser().getType() != Admin)
+        if (sharedData.getCurrentUser().getType() != Admin && sharedData.getCurrentUser().getType() != AccountManager)
         {
             std::cout << "User unauthorized" << std::endl;
         }
@@ -214,7 +214,7 @@ private:
     // Helper function to handle the "addcredit" transaction
     void handleAddCreditTransaction()
     {
-        if (sharedData.getCurrentUser().getType() != Admin)
+        if (sharedData.getCurrentUser().getType() != Admin && sharedData.getCurrentUser().getType() != AccountManager)
         {
             std::cout << "User unauthorized" << std::endl;
         }
@@ -237,7 +237,7 @@ private:
     // Helper function to handle the "listusers" transaction
     void handleListUsersTransaction()
     {
-        if (sharedData.getCurrentUser().getType() != Admin)
+        if (sharedData.getCurrentUser().getType() != Admin && sharedData.getCurrentUser().getType() != AccountManager)
         {
             std::cout << "User unauthorized" << std::endl;
         }

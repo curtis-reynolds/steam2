@@ -59,6 +59,13 @@ public:
             return Game("", "", 0.0);
         }
 
+        // if the user is AccountManager, do not let them sell a game
+        if (sharedData.getCurrentUser().getType() == UserType::AccountManager)
+        {
+            std::cout << "Error: AccountManager users cannot perform this transaction." << std::endl;
+            return Game("", "", 0.0);
+        }
+
         std::string gameName;
         double price;
 
@@ -123,6 +130,13 @@ public:
             std::cout << "A game has already been purchased in this session. "
                          "You can only buy one game per session."
                       << std::endl;
+            return Game("", "", 0.0);
+        }
+
+        // if the user is AccountManager, do not let them buy a game
+        if (sharedData.getCurrentUser().getType() == UserType::AccountManager)
+        {
+            std::cout << "Error: AccountManager users cannot perform this transaction." << std::endl;
             return Game("", "", 0.0);
         }
 

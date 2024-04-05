@@ -39,6 +39,12 @@ int main(int argc, char *argv[])
         // Check for exit condition
         if (transactionCode == "exit")
         {
+            // if the user is still logged in, tell them to log out before exiting
+            if (sharedData.getCurrentUser().getUsername() != "")
+            {
+                std::cout << "Please log out before exiting." << std::endl;
+                continue; // Skip the rest of the loop and ask for another transaction
+            }
             break; // Exit the loop and end the program
         }
 

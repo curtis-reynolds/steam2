@@ -1,3 +1,5 @@
-TestUser         AA 000909.00
-TestUser2        AA 000000.00
-END                          
+nonadmin________FS_000000.00
+admin___________AA_000050.00
+buystdwcredit___FS_005050.00
+AMTest__________AM_000000.00
+END_________________________
