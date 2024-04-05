@@ -8,12 +8,23 @@ This project aims to create a Digital Distribution Service similar to Steam, whe
 
 ## Run Instructions
 
-### Running the Project
-To run the Steam 2 Front End, ensure you have a C++ compiler installed (e.g., GCC). Navigate to Project/src and run the following command in the terminal:
+### Compiling the Project
+To compile the Steam 2 Front End, ensure you have a C++ compiler installed (e.g., GCC). Navigate to Project/src and run the following command in the terminal:
 
 ```bash
-distribution-system ../data/currentaccounts.txt ../data/availablegames.txt ../data/gamescollection.txt ../data/dailytransactions.txt
+g++ main.cpp -o GameDistributionSystem
 ```
+
+### Running the Project
+To run the Steam 2 Front End, ensure that you are still inside Project/src and run the following command in the terminal:
+
+```bash
+GameDistributionSystem ../data/currentaccounts.txt ../data/availablegames.txt ../data/gamescollection.txt ../data/dailytransactions.txt
+```
+
+### Running the Back End Tests
+- Navigate to the Project folder in your terminal
+- Type 'pytest' in your terminal and hit enter 
 
 ## Features
 
@@ -25,10 +36,6 @@ distribution-system ../data/currentaccounts.txt ../data/availablegames.txt ../da
 
 ### Back End
 - **Batch Processing**: Runs at 12:00am daily to update user accounts and game listings based on transactions recorded by the Front End.
-
-#### Running the Back End Tests
-- Navigate to the Project folder in your terminal
-- Type 'pytest' in your terminal and hit enter 
 
 ## Development and Testing
 - Development follows XP (Extreme Programming) practices, with periodic adaptations to project requirements.
