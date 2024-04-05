@@ -16,7 +16,7 @@ g++ main.cpp -o GameDistributionSystem
 ```
 
 ### Running the Project
-To run the Steam 2 Front End navigate to Project/src and run the following command in the terminal:
+To run the Steam 2 Front End, ensure that you are still inside Project/src and run the following command in the terminal:
 
 ```bash
 GameDistributionSystem ../data/currentaccounts.txt ../data/availablegames.txt ../data/gamescollection.txt ../data/dailytransactions.txt
