@@ -35,7 +35,7 @@ public:
         {
             std::string line;
             std::string endLine = "END";
-            endLine.resize(28, '_');
+            endLine.resize(28, ' ');
             while (std::getline(fileStream, line))
             {
                 trimEnd(line); 
@@ -49,7 +49,7 @@ public:
                     // Extract username, userType, and credit information from the line
                     std::string username = line.substr(0, 16);
                     // Remove underscores from username
-                    username.erase(std::remove(username.begin(), username.end(), '_'), username.end());
+                    username.erase(std::remove(username.begin(), username.end(), ' '), username.end());
 
                     std::string userTypeCode = line.substr(16, 2);
                     int userType = getUserTypeFromCode(userTypeCode);
@@ -82,7 +82,7 @@ public:
         {
             std::string line;
             std::string endLine = "END";
-            endLine.resize(49, '_');
+            endLine.resize(49, ' ');
             while (std::getline(fileStream, line))
             {
                 trimEnd(line);
@@ -96,11 +96,11 @@ public:
                     // Extract game name, seller's username, and price information from the line
                     std::string gameName = line.substr(0, 25);
                     // Remove spaces from game name
-                    gameName.erase(std::remove(gameName.begin(), gameName.end(), '_'), gameName.end());
+                    gameName.erase(std::remove(gameName.begin(), gameName.end(), ' '), gameName.end());
 
                     std::string sellerUsername = line.substr(25, 16);
                     // Remove spaces from seller's username
-                    sellerUsername.erase(std::remove(sellerUsername.begin(), sellerUsername.end(), '_'), sellerUsername.end());
+                    sellerUsername.erase(std::remove(sellerUsername.begin(), sellerUsername.end(), ' '), sellerUsername.end());
 
                     double price = std::stod(line.substr(43, 6));
 
@@ -131,7 +131,7 @@ public:
             // Read and assign games collection data to users
             std::string line;
             std::string endLine = "END";
-            endLine.resize(42, '_');
+            endLine.resize(42, ' ');
             while (std::getline(fileStream, line))
             {
                 trimEnd(line);
@@ -146,8 +146,8 @@ public:
                     std::string ownerUsername = line.substr(25, 16);
 
                     // Remove spaces from game name and owner name
-                    gameName.erase(std::remove(gameName.begin(), gameName.end(), '_'), gameName.end());
-                    ownerUsername.erase(std::remove(ownerUsername.begin(), ownerUsername.end(), '_'), ownerUsername.end());
+                    gameName.erase(std::remove(gameName.begin(), gameName.end(), ' '), gameName.end());
+                    ownerUsername.erase(std::remove(ownerUsername.begin(), ownerUsername.end(), ' '), ownerUsername.end());
 
                     // Find the user with the matching username
                     auto it = std::find_if(users.begin(), users.end(), [ownerUsername](const User &user)

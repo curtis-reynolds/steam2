@@ -48,9 +48,9 @@ private:
         if (fileStream.is_open())
         {
             std::string gameName = game.getGameName();
-            gameName.resize(26, '_'); // Ensure the game name is 26 characters long
+            gameName.resize(26, ' '); // Ensure the game name is 26 characters long
             std::string sellerName = game.getSellerName();
-            sellerName.resize(15, '_'); // Ensure the seller name is 16 characters long
+            sellerName.resize(15, ' '); // Ensure the seller name is 16 characters long
 
             // Format the credit with leading zeros and ".00" suffix
             std::ostringstream formattedPriceStream;
@@ -58,8 +58,8 @@ private:
             std::string formattedPrice = formattedPriceStream.str();
 
             // Write the user information to the file
-            fileStream << std::setw(26) << std::left << gameName << "_"
-                       << std::setw(15) << std::left << sellerName << "_"
+            fileStream << std::setw(26) << std::left << gameName << " "
+                       << std::setw(15) << std::left << sellerName << " "
                        << formattedPrice << "\n";
         }
         else
@@ -74,11 +74,11 @@ private:
         if (fileStream.is_open())
         {
             std::string gameName = game.getGameName();
-            gameName.resize(26, '_'); // Ensure the game name is 26 characters long
-            username.resize(15, '_'); // Ensure the seller name is 15 characters long
+            gameName.resize(26, ' '); // Ensure the game name is 26 characters long
+            username.resize(15, ' '); // Ensure the seller name is 15 characters long
 
             // Write the user information to the file
-            fileStream << std::setw(26) << std::left << gameName << "_"
+            fileStream << std::setw(26) << std::left << gameName << " "
                        << std::setw(15) << std::left << username << "\n";
         }
         else
@@ -116,7 +116,7 @@ private:
                 // Extract username from the line
                 std::string gameLineUsername = line.substr(26, 15);
                 // Remove underscores from username
-                gameLineUsername.erase(std::remove(gameLineUsername.begin(), gameLineUsername.end(), '_'), gameLineUsername.end());
+                gameLineUsername.erase(std::remove(gameLineUsername.begin(), gameLineUsername.end(), ' '), gameLineUsername.end());
 
                 // If the username does not match the one to be removed, write the line to the temporary file
                 if (gameLineUsername != username)
@@ -174,7 +174,7 @@ private:
                 // Extract seller username from the line
                 std::string gameLineSellerUsername = line.substr(26, 15);
                 // Remove underscores from seller username
-                gameLineSellerUsername.erase(std::remove(gameLineSellerUsername.begin(), gameLineSellerUsername.end(), '_'), gameLineSellerUsername.end());
+                gameLineSellerUsername.erase(std::remove(gameLineSellerUsername.begin(), gameLineSellerUsername.end(), ' '), gameLineSellerUsername.end());
 
                 // If the seller username does not match the one to be removed, write the line to the temporary file
                 if (gameLineSellerUsername != username)

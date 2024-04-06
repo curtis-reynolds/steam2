@@ -66,7 +66,7 @@ public:
 
             std::string line;
             std::string endLine = "END";
-            endLine.resize(length, '_');
+            endLine.resize(length, ' ');
 
             // Read and store all lines except the last two
             while (std::getline(inFile, line))
@@ -108,7 +108,7 @@ public:
             fileStream.open(filename, std::ios::app);
 
             std::string endLine = "END";
-            endLine.resize(length, '_');
+            endLine.resize(length, ' ');
 
             // Write END line at the end of file
             fileStream << std::setw(length) << std::left << endLine

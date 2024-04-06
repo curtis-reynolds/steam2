@@ -1,3 +1,4 @@
-existinggame_______________sellstd_________020.00
-existinggame2______________buystdwcredit___050.00
-END______________________________________________
+existinggame               sellstd         020.00
+existinggame2              buystdwcredit   050.00
+The Knight's Tale          UserTest2       050.00
+END                                              

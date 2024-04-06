@@ -49,7 +49,7 @@ private:
         if (fileStream.is_open())
         {
             std::string username = user.getUsername();
-            username.resize(16, '_'); // Ensure the username is 16 characters long
+            username.resize(16, ' '); // Ensure the username is 16 characters long
 
             std::string userType = userTypes[user.getType() - 1]; // Get user type code
 
@@ -60,7 +60,7 @@ private:
 
             // Write the user information to the file
             fileStream << std::setw(16) << std::left << username
-                       << std::setw(2) << std::left << userType << "_"
+                       << std::setw(2) << std::left << userType << " "
                        << formattedCredit << "\n";
 
             // Reopen the file in append mode
@@ -96,7 +96,7 @@ private:
                 // Extract username from the line
                 std::string userLineUsername = line.substr(0, 16);
                 // Remove underscores from username
-                userLineUsername.erase(std::remove(userLineUsername.begin(), userLineUsername.end(), '_'), userLineUsername.end());
+                userLineUsername.erase(std::remove(userLineUsername.begin(), userLineUsername.end(), ' '), userLineUsername.end());
 
                 // If the username does not match the one to be removed, write the line to the temporary file
                 if (userLineUsername != username)

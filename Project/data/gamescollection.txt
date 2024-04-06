@@ -1,2 +1,2 @@
-existinggame2______________admin__________
-END_______________________________________
+existinggame2              admin          
+END                                       

@@ -23,7 +23,7 @@ public:
     void addUserTransaction(const std::string &transactionCode, User &user)
     {
         std::string username = user.getUsername();
-        username.resize(16, '_'); // Ensure the username is 16 characters long
+        username.resize(16, ' '); // Ensure the username is 16 characters long
 
         std::string userCode = getUserCodeFromType(user.getType());
 
@@ -32,10 +32,10 @@ public:
 
         std::ostringstream transactionFields;
         transactionFields << std::setw(16) << std::left << username
-                          << std::setw(2) << std::left << userCode << "_"
+                          << std::setw(2) << std::left << userCode << " "
                           << formattedCredit << "\n";
 
-        std::string transactionString = transactionCode + "_" + transactionFields.str();
+        std::string transactionString = transactionCode + " " + transactionFields.str();
 
         addTransaction(transactionString);
     }
@@ -50,11 +50,11 @@ public:
         std::string formattedCredit = formatCredit(refundCredit, 9);
 
         std::ostringstream transactionFields;
-        transactionFields << std::setw(15) << std::left << sellerUsername << "_"
-                          << std::setw(15) << std::left << buyerUsername << "_"
+        transactionFields << std::setw(15) << std::left << sellerUsername << " "
+                          << std::setw(15) << std::left << buyerUsername << " "
                           << formattedCredit << "\n";
 
-        std::string transactionString = "05_" + transactionFields.str();
+        std::string transactionString = "05 " + transactionFields.str();
 
         addTransaction(transactionString);
     }
@@ -63,20 +63,20 @@ public:
     void addSellTransaction(Game &game)
     {
         std::string sellerUsername = game.getSellerName();
-        sellerUsername.resize(13, '_'); // Ensure the seller username is 13 characters long
+        sellerUsername.resize(13, ' '); // Ensure the seller username is 13 characters long
 
         std::string gameName = game.getGameName();
-        gameName.resize(19, '_'); // Ensure the game name is 19 characters long
+        gameName.resize(19, ' '); // Ensure the game name is 19 characters long
 
         // Format the credit with leading zeros and ".00" suffix
         std::string formattedCredit = formatCredit(game.getPrice(), 6);
 
         std::ostringstream transactionFields;
-        transactionFields << std::setw(19) << std::left << gameName << "_"
-                          << std::setw(13) << std::left << sellerUsername << "_"
+        transactionFields << std::setw(19) << std::left << gameName << " "
+                          << std::setw(13) << std::left << sellerUsername << " "
                           << formattedCredit << "\n";
 
-        std::string transactionString = "03_" + transactionFields.str();
+        std::string transactionString = "03 " + transactionFields.str();
 
         addTransaction(transactionString);
     }
@@ -85,23 +85,23 @@ public:
     void addBuyTransaction(Game &game, std::string &buyerUsername)
     {
         std::string sellerUsername = game.getSellerName();
-        sellerUsername.resize(15, '_'); // Ensure the seller username is 15 characters long
+        sellerUsername.resize(15, ' '); // Ensure the seller username is 15 characters long
 
         std::string gameName = game.getGameName();
-        gameName.resize(19, '_'); // Ensure the game name is 19 characters long
+        gameName.resize(19, ' '); // Ensure the game name is 19 characters long
 
-        buyerUsername.resize(14, '_'); // Ensure the buyer username is 14 characters long
+        buyerUsername.resize(14, ' '); // Ensure the buyer username is 14 characters long
 
         // Format the credit with leading zeros and ".00" suffix
         std::string formattedCredit = formatCredit(game.getPrice(), 6);
 
         std::ostringstream transactionFields;
-        transactionFields << std::setw(19) << std::left << gameName << "_"
-                          << std::setw(15) << std::left << sellerUsername << "_"
-                          << std::setw(14) << std::left << buyerUsername << "_"
+        transactionFields << std::setw(19) << std::left << gameName << " "
+                          << std::setw(15) << std::left << sellerUsername << " "
+                          << std::setw(14) << std::left << buyerUsername << " "
                           << formattedCredit << "\n";
 
-        std::string transactionString = "04_" + transactionFields.str();
+        std::string transactionString = "04 " + transactionFields.str();
 
         addTransaction(transactionString);
     }
