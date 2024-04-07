@@ -1,0 +1,267 @@
+Comparing *.out with expected output...
+diff: ../testing/expected_outputs/*.out: No such file or directory
+Comparing TC01.out with expected output...
+Comparing TC02.out with expected output...
+0a1
+> Invalid username
+Comparing TC03.out with expected output...
+0a1,2
+> You must login first
+> Invalid username
+Comparing TC04.out with expected output...
+0a1,2
+> Login successful.
+> You are already logged in
+Comparing TC05.out with expected output...
+0a1,2
+> Login successful.
+> Logout successful.
+Comparing TC06.out with expected output...
+0a1,2
+> Login successful.
+> You are already logged in
+Comparing TC07.out with expected output...
+0a1,2
+> Login successful.
+> Logout successful.
+Comparing TC08.out with expected output...
+0a1,2
+> Login successful.
+> User unauthorized
+Comparing TC09.out with expected output...
+0a1,2
+> Login successful.
+> User unauthorized
+Comparing TC10.out with expected output...
+0a1,2
+> Login successful.
+> User unauthorized
+Comparing TC11.out with expected output...
+0a1
+> You must login first
+Comparing TC12.out with expected output...
+0a1,3
+> Login successful.
+> Logout successful.
+> You must login first
+Comparing TC13.out with expected output...
+0a1,3
+> Login successful.
+> Logout successful.
+> You must login first
+Comparing TC14.out with expected output...
+0a1,3
+> Login successful.
+> Logout successful.
+> You must login first
+Comparing TC15.out with expected output...
+0a1,3
+> Login successful.
+> Logout successful.
+> You must login first
+Comparing TC16.out with expected output...
+0a1,3
+> Login successful.
+> Logout successful.
+> You must login first
+Comparing TC17.out with expected output...
+0a1,3
+> Login successful.
+> Logout successful.
+> You must login first
+Comparing TC18.out with expected output...
+0a1,3
+> Login successful.
+> Logout successful.
+> You must login first
+Comparing TC19.out with expected output...
+0a1,3
+> Login successful.
+> Logout successful.
+> Login successful.
+Comparing TC20.out with expected output...
+0a1,3
+> Login successful.
+> Logout successful.
+> Invalid username
+Comparing TC21.out with expected output...
+0a1,2
+> Login successful.
+> Username length should be less than 15 characters
+Comparing TC22.out with expected output...
+0a1,2
+> Login successful.
+>  User created successfully.
+Comparing TC23.out with expected output...
+0a1,2
+> Login successful.
+>  User created successfully.
+Comparing TC24.out with expected output...
+0a1,2
+> Login successful.
+>  User created successfully.
+Comparing TC25.out with expected output...
+0a1,2
+> Login successful.
+> Invalid username or attempting to delete the current user account.
+Comparing TC26.out with expected output...
+0a1,2
+> Login successful.
+> Invalid username or attempting to delete the current user account.
+Comparing TC27.out with expected output...
+0a1,2
+> Login successful.
+> User deleted successfully.
+Comparing TC28.out with expected output...
+0a1,2
+> Login successful.
+> You do not have the privilege to sell a game.
+Comparing TC29.out with expected output...
+0a1,2
+> Login successful.
+> Invalid game name length. Maximum length is 25 characters.
+Comparing TC30.out with expected output...
+0a1,2
+> Login successful.
+> A game with the same name already exists. Please choose a unique name.
+Comparing TC31.out with expected output...
+0a1,2
+> Login successful.
+> Invalid price. The price must be between $0.01 and $999.99.
+Comparing TC32.out with expected output...
+0a1,2
+> Login successful.
+> Game listed for sale.
+Comparing TC33.out with expected output...
+0a1,2
+> Login successful.
+> You do not have the privilege to sell a game.
+Comparing TC34.out with expected output...
+0a1,2
+> Login successful.
+> Error: Game not found in the available games. 
+Comparing TC35.out with expected output...
+0a1,2
+> Login successful.
+> Error: Game not found in the available games. 
+Comparing TC36.out with expected output...
+0a1,2
+> Login successful.
+> Error: The buyer does not have enough money to purchase the game.
+Comparing TC37.out with expected output...
+0a1,2
+> Login successful.
+> Game purchased successfully.
+Comparing TC38.out with expected output...
+0a1,2
+> Login successful.
+> Error: Buyer or seller does not exist.
+Comparing TC39.out with expected output...
+0a1,2
+> Login successful.
+> Error: Buyer or seller does not exist.
+Comparing TC40.out with expected output...
+0a1,2
+> Login successful.
+> Error: The maximum amount of credit to refund is $999,999.99.
+Comparing TC41.out with expected output...
+0a1,2
+> Login successful.
+> Refund successful. Transferred 100 credits from buystdwcredit to sellstd.
+Comparing TC42.out with expected output...
+0a1,2
+> Login successful.
+> Error: Username does not exist in the system.
+Comparing TC43.out with expected output...
+0a1,2
+> Login successful.
+> Error: Maximum $1000.00 can be added to an account in a given session.
+Comparing TC44.out with expected output...
+0a1,2
+> Login successful.
+> Credit added successfully. New credit for user nonadmin: 100
+Comparing TC45.out with expected output...
+0a1,2
+> Login successful.
+> User unauthorized
+Comparing TC46.out with expected output...
+0a1,2
+> Login successful.
+> User unauthorized
+Comparing TC47.out with expected output...
+0a1,2
+> Login successful.
+> Store is empty.
+Comparing TC48.out with expected output...
+0a1,10
+> Enter transaction code (or 'exit' to quit): Enter username: Login successful.
+> Enter transaction code (or 'exit' to quit): Available Games:
+> Game Name                     Seller              Price     
+> existinggame                  sellstd             20.00     
+> ------------------------------------------------------------
+> existinggame2                 buystdwcredit       50.00     
+> ------------------------------------------------------------
+> validgamename                 sellstd             100.00    
+> ------------------------------------------------------------
+> Enter transaction code (or 'exit' to quit): 
+\ No newline at end of file
+Comparing TC49.out with expected output...
+0a1,10
+> Enter transaction code (or 'exit' to quit): Enter username: Login successful.
+> Enter transaction code (or 'exit' to quit): Available Games:
+> Game Name                     Seller              Price     
+> existinggame                  sellstd             20.00     
+> ------------------------------------------------------------
+> existinggame2                 buystdwcredit       50.00     
+> ------------------------------------------------------------
+> validgamename                 sellstd             100.00    
+> ------------------------------------------------------------
+> Enter transaction code (or 'exit' to quit): 
+\ No newline at end of file
+Comparing TC50.out with expected output...
+0a1,2
+> Login successful.
+> User unauthorized
+Comparing TC51.out with expected output...
+0a1,16
+> Enter transaction code (or 'exit' to quit): Enter username: Login successful.
+> Enter transaction code (or 'exit' to quit): User Information:
+> Username            User Type      Credit    
+> admin               Admin          0.00      
+> ---------------------------------------------
+> fullstd             Full-Standard  0.00      
+> ---------------------------------------------
+> buystd              Buy-Standard   0.00      
+> ---------------------------------------------
+> sellstd             Sell-Standard  200.00    
+> ---------------------------------------------
+> buystdwcredit       Full-Standard  4800.00   
+> ---------------------------------------------
+> nonadmin            Full-Standard  100.00    
+> ---------------------------------------------
+> Enter transaction code (or 'exit' to quit): 
+\ No newline at end of file
+Comparing TC52.out with expected output...
+0a1,3
+> Login successful.
+> Game listed for sale.
+> A new game for sale has already been added in this session. You can only add one game per session.
+Comparing TC53.out with expected output...
+0a1,3
+> Login successful.
+> Game purchased successfully.
+> A game has already been purchased in this session. You can only buy one game per session.
+Comparing TC54.out with expected output...
+0a1,2
+> Login successful.
+> Error: You are the seller of the game.
+Comparing TC55.out with expected output...
+0a1,2
+> Login successful.
+> Error: The buyer already has a copy of the game in their collection.
+Comparing Merged.dt with expected output...
+diff: ../testing/expected_outputs/Merged.dt: No such file or directory
+Comparing base files with expected outputs...
+diff: ../testing/expected_outputs/currentaccounts.txt: No such file or directory
+diff: ../testing/expected_outputs/gamescollection.txt: No such file or directory
+diff: ../testing/expected_outputs/availablegames.txt: No such file or directory
