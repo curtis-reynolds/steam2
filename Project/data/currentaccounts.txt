@@ -3,4 +3,10 @@ admin           AA 000050.00
 buystdwcredit   FS 005050.00
 AMTest          AM 000000.00
 UserTest2       SS 000000.00
+Carlos          AA 000050.00
+AbdullahSaw     FS 000000.00
+AbdullahMoh     SS 000000.00
+Curtis          AM 000500.00
+NewTestUser     SS 000505.00
+
 END                         
